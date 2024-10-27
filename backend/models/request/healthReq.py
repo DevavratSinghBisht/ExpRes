@@ -1,4 +1,4 @@
 from pydantic import BaseModel
 
-class HealthModel(BaseModel):
+class HealthReq(BaseModel):
     health: bool = True
