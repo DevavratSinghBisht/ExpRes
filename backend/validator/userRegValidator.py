@@ -1,5 +1,5 @@
 from .baseValidator import BaseValidator
-from models.request import UserRegReq
+from model.request import UserRegReq
 
 class UserRegValidator(BaseValidator):
     

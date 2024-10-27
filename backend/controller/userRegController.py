@@ -1,6 +1,6 @@
 from .baseController import BaseController
-from models.request import UserRegReq
-from models.response import UserRegResp
+from model.request import UserRegReq
+from model.response import UserRegResp
 
 from utils import get_encoding
 

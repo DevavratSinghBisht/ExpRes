@@ -1,5 +1,5 @@
 from .baseValidator import BaseValidator
-from models.request import UserLoginReq
+from model.request import UserLoginReq
 
 class UserLoginValidator(BaseValidator):
     

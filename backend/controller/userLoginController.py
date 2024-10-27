@@ -1,7 +1,7 @@
 from .baseController import BaseController
 
-from models.request import UserLoginReq
-from models.response import UserLoginResp
+from model.request import UserLoginReq
+from model.response import UserLoginResp
 
 class UserLoginController(BaseController):
 

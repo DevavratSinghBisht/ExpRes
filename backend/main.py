@@ -3,8 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from config import ALLOW_ORIGINS, ALLOW_CREDENTIALS, ALLOW_METHODS, ALLOW_HEADERS
 
-from models.request import HealthReq, UserRegReq, UserLoginReq
-from models.response import UserRegResp, UserLoginResp
+from model.request import HealthReq, UserRegReq, UserLoginReq
+from model.response import UserRegResp, UserLoginResp
 from validator import UserRegValidator, UserLoginValidator
 from controller import UserRegController, UserLoginController
 app = FastAPI()
