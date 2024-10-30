@@ -19,11 +19,11 @@ app.add_middleware(
 
 
 @app.get('/')
-def health_check() -> HealthReq:
+async def health_check() -> HealthReq:
     return HealthReq()
 
 @app.post('/userRegister')
-def userRegister(data: UserRegReq) -> UserRegResp:
+async def userRegister(data: UserRegReq) -> UserRegResp:
 
     # data validation
     validator = UserRegValidator()
@@ -36,7 +36,7 @@ def userRegister(data: UserRegReq) -> UserRegResp:
     return resp
 
 @app.post('/userLogin')
-def userLogin(data: UserLoginReq) -> UserLoginResp:
+async def userLogin(data: UserLoginReq) -> UserLoginResp:
 
     # data validation
     validator = UserLoginValidator()

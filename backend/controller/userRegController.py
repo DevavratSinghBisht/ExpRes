@@ -9,7 +9,7 @@ class UserRegController(BaseController):
     def __init__(self):
         super().__init__()
 
-    def forward(self, data: UserRegReq) -> UserRegResp:
+    async def forward(self, data: UserRegReq) -> UserRegResp:
         
         super().forward()
         data.password = get_encoding(data.password)

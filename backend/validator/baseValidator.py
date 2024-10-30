@@ -6,7 +6,7 @@ class BaseValidator(ABC):
         super().__init__()
 
     @abstractmethod
-    def validate(self):
+    async def validate(self):
         '''
         '''
         pass
