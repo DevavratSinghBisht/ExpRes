@@ -1,13 +1,21 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 from config import ALLOW_ORIGINS, ALLOW_CREDENTIALS, ALLOW_METHODS, ALLOW_HEADERS
 
 from model.request import HealthReq, UserRegReq, UserLoginReq
 from model.response import UserRegResp, UserLoginResp
+
 from validator import UserRegValidator, UserLoginValidator
+
 from controller import UserRegController, UserLoginController
+
+from utils import ChatConnectionManager
+from utils import chatHTML
+
 app = FastAPI()
+chatConnectionManager = ChatConnectionManager()
 
 app.add_middleware(
     CORSMiddleware,
@@ -18,8 +26,8 @@ app.add_middleware(
 )
 
 
-@app.get('/')
-async def health_check() -> HealthReq:
+@app.get('/health')
+async def health() -> HealthReq:
     return HealthReq()
 
 @app.post('/userRegister')
@@ -47,3 +55,19 @@ async def userLogin(data: UserLoginReq) -> UserLoginResp:
     resp = controller.forward(data)
 
     return resp
+
+@app.get("/")
+async def get():
+    return HTMLResponse(chatHTML)
+
+@app.websocket("/ws/{client_id}")
+async def websocket_endpoint(websocket: WebSocket, client_id: int):
+    await chatConnectionManager.connect(websocket)
+    try:
+        while True:
+            data = await websocket.receive_text()
+            await chatConnectionManager.send_personal_message(f"You wrote: {data}", websocket)
+            await chatConnectionManager.broadcast(f"Client #{client_id} says: {data}")
+    except WebSocketDisconnect:
+        chatConnectionManager.disconnect(websocket)
+        await chatConnectionManager.broadcast(f"Client #{client_id} left the chat")

@@ -1,6 +1,6 @@
 import hashlib
 
-def get_encoding(data:str, hasher:str = "sha256"):
+def getEncoding(data:str, hasher:str = "sha256"):
 
     data_bytes = data.encode('utf-8')
 
