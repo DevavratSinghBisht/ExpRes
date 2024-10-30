@@ -1,3 +1,4 @@
+# Will be removed lateron
 chatHTML = """
 <!DOCTYPE html>
 <html>
