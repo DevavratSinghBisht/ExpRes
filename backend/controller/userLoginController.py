@@ -8,7 +8,7 @@ class UserLoginController(BaseController):
     def __init__(self):
         super().__init__()
 
-    def forward(self, data: UserLoginReq) -> UserLoginResp:
+    async def forward(self, data: UserLoginReq) -> UserLoginResp:
         super().forward()
         
         resp = UserLoginResp(status=True)

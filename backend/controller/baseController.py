@@ -6,5 +6,5 @@ class BaseController(ABC):
         super().__init__()
 
     @abstractmethod
-    def forward(self):
+    async def forward(self):
         pass

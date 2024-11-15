@@ -6,7 +6,7 @@ class UserLoginValidator(BaseValidator):
     def __init__(self):
         pass
 
-    def validate(self, data:UserLoginReq):
+    async def validate(self, data:UserLoginReq):
         '''
         '''
         super().validate()

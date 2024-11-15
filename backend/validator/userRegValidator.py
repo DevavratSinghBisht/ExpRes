@@ -6,6 +6,6 @@ class UserRegValidator(BaseValidator):
     def __init__(self):
         pass
 
-    def validate(self, data:UserRegReq):
+    async def validate(self, data:UserRegReq):
         super().validate()
         data.password == data.password2
