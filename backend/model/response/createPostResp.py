@@ -1,4 +1,4 @@
 from pydantic import BaseModel
 
-class createPostResp(BaseModel):
+class CreatePostResp(BaseModel):
     post_status : str
