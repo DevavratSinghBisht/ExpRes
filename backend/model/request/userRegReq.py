@@ -10,3 +10,4 @@ class UserRegReq(BaseModel):
     email       : str
     password    : str
     password2   : str
+    profilePicture : str
