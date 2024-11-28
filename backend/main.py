@@ -2,8 +2,15 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 
-from model.request import HealthReq, UserRegReq, UserLoginReq
-from model.response import UserRegResp, UserLoginResp
+from model.request import (
+    HealthReq, UserRegReq, UserLoginReq, UserInfoReq, FriendRequestReq, FriendsListReq,
+    CreatePostsReq, SendMessageReq, GetPostsReq, ReportMessageReq
+)
+
+from model.response import (
+    UserRegResp, UserLoginResp, UserInfoResp, FriendRequestResp, FriendsListResp,
+    CreatePostResp, SendMessageResp, GetPostsResp, ReportMessageResp
+)
 
 from validator import UserRegValidator, UserLoginValidator
 
@@ -39,7 +46,7 @@ async def userRegister(data: UserRegReq) -> UserRegResp:
 
     # logic
     controller = UserRegController()
-    resp = controller.forward(data)
+    resp = await controller.forward(data)
 
     return resp
 
@@ -52,7 +59,94 @@ async def userLogin(data: UserLoginReq) -> UserLoginResp:
 
     # logic
     controller = UserLoginController()
-    resp = controller.forward(data)
+    resp = await controller.forward(data)
+
+    return resp
+
+
+@app.post('/getUserInfo')
+async def getUserInfo(data: UserInfoReq) -> UserInfoResp:
+    # data validation
+    validator = UserInfoValidator()
+    validator.validate(data)
+
+    # logic
+    controller = UserInfoController()
+    resp = await controller.forward(data)
+
+    return resp
+
+@app.post('/getPosts')
+async def getPosts(data: GetPostsReq) -> GetPostsResp:
+    # data validation
+    validator = GetPostsValidator()
+    validator.validate(data)
+
+    # logic
+    controller = GetPostsController()
+    resp = await controller.forward(data)
+
+    return resp
+
+@app.post('/createPost')
+async def createPost(data: CreatePostReq) -> CreatePostResp:
+    # data validation
+    validator = CreatePostValidator()
+    validator.validate(data)
+
+    # logic
+    controller = CreatePostController()
+    resp = await controller.forward(data)
+
+    return resp
+
+@app.post('/sendMessage')
+async def sendMessage(data: SendMessageReq) -> SendMessageResp:
+    # data validation
+    validator = SendMessageValidator()
+    validator.validate(data)
+
+    # logic
+    controller = SendMessageController()
+    resp = await controller.forward(data)
+
+    return resp
+
+@app.post('/getFriendsList')
+async def getFriendsList(data: FriendsListReq) -> FriendsListResp:
+    # data validation
+    validator = FriendsListValidator()
+    validator.validate(data)
+
+    # logic
+    controller = FriendsListController()
+    resp = await controller.forward(data)
+
+    return resp
+
+
+
+@app.post('/sendFriendRequest')
+async def sendFriendRequest(data: FriendRequestReq) -> FriendRequestResp:
+    # data validation
+    validator = FriendRequestValidator()
+    validator.validate(data)
+
+    # logic
+    controller = FriendRequestController()
+    resp = await controller.forward(data)
+
+    return resp
+
+@app.post('/reportTheMessage')
+async def reportTheMessage(data: ReportMessageReq) -> ReportMessageResp:
+    # data validation
+    validator = ReportMessageValidator()
+    validator.validate(data)
+
+    # logic
+    controller = ReportMessageController()
+    resp = await controller.forward(data)
 
     return resp
 
