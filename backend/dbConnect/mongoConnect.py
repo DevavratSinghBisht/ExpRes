@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 from datetime import datetime
 
-from model.request import UserRegReq, UserLoginReq
+from backend.model.request import UserRegReq, UserLoginReq
 
 class MongoConnect:
     
