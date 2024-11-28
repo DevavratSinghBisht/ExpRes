@@ -1,17 +1,3 @@
-from .baseValidator import BaseValidator
-from model.request import UserRegReq
-
-class UserRegValidator(BaseValidator):
-    
-    def __init__(self):
-        pass
-
-    async def validate(self, data:UserRegReq):
-        super().validate()
-
-        data.password == data.password2
-
-
 from model.request import UserRegReq
 from .baseValidator import BaseValidator
 from pydantic import EmailStr, validator
