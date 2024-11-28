@@ -10,9 +10,12 @@ class ReportMessageValidator(BaseValidator):
         Validates that reporter_id, message_id, and reason are present.
         """
         super().validate(data)
+
         if not data.reporter_username:
-            raise ValueError("Reporter ID is required.")
+            raise ValueError("Repoter username cannot be empty")
+        
         if not data.message:
-            raise ValueError("Message ID is required.")
+            raise ValueError("Message to be reportedcannot be empty")
+        
         if not data.reason:
-            raise ValueError("Reason for reporting is required.")
+            raise ValueError("Reason for reporting cannot be empty")

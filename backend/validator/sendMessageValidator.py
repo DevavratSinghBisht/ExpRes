@@ -10,9 +10,12 @@ class SendMessageValidator(BaseValidator):
         Validates that sender_id, receiver_id, and message are present.
         """
         super().validate(data)
-        if not data.sender_username:
-            raise ValueError("Sender ID is required.")
-        if not data.receiver_username:
-            raise ValueError("Receiver ID is required.")
-        if not data.message:
-            raise ValueError("Message content is required.")
+
+        if not data.sender_username :
+            raise ValueError("Sender username cannot be empty")
+        
+        if not data.receiver_username :
+            raise ValueError("Receiver username cannot be empty")
+        
+        if not data.message :
+            raise ValueError("Message content cannot be empty")

@@ -10,7 +10,9 @@ class FriendRequestValidator(BaseValidator):
         Validates that sender_id and receiver_id are present.
         """
         super().validate(data)
-        if not data.sender_username:
-            raise ValueError("Sender ID is required.")
-        if not data.receiver_id:
-            raise ValueError("Receiver ID is required.")
+
+        if not data.sender_username :
+            raise ValueError("Sender name cannot be empty")
+        
+        if not data.receiver_id :
+            raise ValueError("Receiver name cannot be empty")

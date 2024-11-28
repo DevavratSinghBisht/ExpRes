@@ -10,5 +10,6 @@ class FriendsListValidator(BaseValidator):
         Validates that user_id is present.
         """
         super().validate(data)
-        if not data.user_name:
-            raise ValueError("User ID is required.")
+
+        if not data.user_name :
+            raise ValueError("Username cannot be empty")

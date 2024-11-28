@@ -10,5 +10,9 @@ class GetPostsValidator(BaseValidator):
         Validates that user_id is present.
         """
         super().validate(data)
-        if not data.username:
-            raise ValueError("User ID is required.")
+
+        if not data.username :
+            raise ValueError("Username cannot be empty")
+        
+        if len(data.limit) > 5 : # Optional to keep this
+            self.handle_error("Only 5 posts can be fetched at a time")
