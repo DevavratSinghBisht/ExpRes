@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from model.request import (
     HealthReq, UserRegReq, UserLoginReq, UserInfoReq, FriendRequestReq, FriendsListReq,
-    CreatePostsReq, SendMessageReq, GetPostsReq, ReportMessageReq
+    CreatePostReq, SendMessageReq, GetPostsReq, ReportMessageReq
 )
 
 from model.response import (
@@ -12,7 +12,11 @@ from model.response import (
     CreatePostResp, SendMessageResp, GetPostsResp, ReportMessageResp
 )
 
-from validator import UserRegValidator, UserLoginValidator
+from validator import (
+    UserRegValidator, UserLoginValidator, UserInfoValidator, FriendRequestValidator,
+    FriendsListValidator, CreatePostValidator, SendMessageValidator, GetPostsValidator,
+    ReportMessageValidator
+)
 
 from controller import UserRegController, UserLoginController
 

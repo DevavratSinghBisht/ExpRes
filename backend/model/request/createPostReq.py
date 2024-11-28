@@ -1,5 +1,5 @@
 from pydantic import BaseModel
 
-class CreatePostsReq(BaseModel):
+class CreatePostReq(BaseModel):
     username: str
     content: str

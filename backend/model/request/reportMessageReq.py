@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 
 class ReportMessageReq(BaseModel):
-    reporter_id: str
-    message_id: str
+    reporter_username: str
+    message: str
     reason: str
+    reporter_key: str
