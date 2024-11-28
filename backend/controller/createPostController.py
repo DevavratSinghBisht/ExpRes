@@ -1,7 +1,7 @@
 from .baseController import BaseController
-from backend.model.request import CreatePostReq
-from backend.model.response import CreatePostResp
-from backend.dbConnect.mongoConnect import MongoConnect
+from model.request import CreatePostReq
+from model.response import CreatePostResp
+from dbConnect.mongoConnect import MongoConnect
 
 class CreatePostController(BaseController):
 

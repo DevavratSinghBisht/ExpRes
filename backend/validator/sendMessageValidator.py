@@ -1,5 +1,5 @@
 from .baseValidator import BaseValidator
-from backend.model.request import SendMessageReq
+from model.request import SendMessageReq
 
 class SendMessageValidator(BaseValidator):
     def __init__(self):

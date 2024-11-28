@@ -1,5 +1,5 @@
 from .baseValidator import BaseValidator
-from backend.model.request import UserInfoReq
+from model.request import UserInfoReq
 
 class UserInfoValidator(BaseValidator):
     def __init__(self):

@@ -1,7 +1,7 @@
 from .baseController import BaseController
-from backend.model.request import FriendRequestReq
-from backend.model.response import FriendRequestResp
-from backend.dbConnect.mongoConnect import MongoConnect
+from model.request import FriendRequestReq
+from model.response import FriendRequestResp
+from dbConnect.mongoConnect import MongoConnect
 
 class FriendRequestController(BaseController):
 

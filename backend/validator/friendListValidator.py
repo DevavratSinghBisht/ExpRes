@@ -1,11 +1,11 @@
 from .baseValidator import BaseValidator
-from backend.model.request import FriendsListReq
+from model.request.friendListReq import FriendListReq
 
 class FriendsListValidator(BaseValidator):
     def __init__(self):
         pass
 
-    async def validate(self, data: FriendsListReq):
+    async def validate(self, data: FriendListReq):
         """
         Validates that user_id is present.
         """

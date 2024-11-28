@@ -1,8 +1,8 @@
 from .baseController import BaseController
 
-from backend.model.request import UserLoginReq
-from backend.model.response import UserLoginResp
-from backend.dbConnect.mongoConnect import MongoConnect
+from model.request import UserLoginReq
+from model.response import UserLoginResp
+from dbConnect.mongoConnect import MongoConnect
 
 class UserLoginController(BaseController):
 

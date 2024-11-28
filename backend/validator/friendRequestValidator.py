@@ -1,5 +1,5 @@
 from .baseValidator import BaseValidator
-from backend.model.request import FriendRequestReq
+from model.request import FriendRequestReq
 
 class FriendRequestValidator(BaseValidator):
     def __init__(self):

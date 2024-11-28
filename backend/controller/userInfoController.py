@@ -1,7 +1,7 @@
 from .baseController import BaseController
-from backend.model.request import UserInfoReq
-from backend.model.response import UserInfoResp
-from backend.dbConnect.mongoConnect import MongoConnect
+from model.request import UserInfoReq
+from model.response import UserInfoResp
+from dbConnect.mongoConnect import MongoConnect
 
 
 class UserInfoController(BaseController):

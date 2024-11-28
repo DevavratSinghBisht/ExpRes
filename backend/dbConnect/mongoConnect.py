@@ -3,7 +3,7 @@ from datetime import datetime
 
 from sympy.codegen.fnodes import use_rename
 
-from backend.model.request import UserRegReq, UserLoginReq, UserInfoReq
+from model.request import UserRegReq, UserLoginReq, UserInfoReq
 
 
 class MongoConnect:

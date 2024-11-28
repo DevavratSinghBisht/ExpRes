@@ -1,13 +1,13 @@
 from .baseController import BaseController
-from backend.model.request import SendMessageReq
-from backend.model.response import SendMessageResp
-from backend.dbConnect.mongoConnect import MongoConnect
+from model.request import SendMessageReq
+from model.response import SendMessageResp
+from utils.connectionManager import ChatConnectionManager
 
 class SendMessageController(BaseController):
 
     def __init__(self):
         super().__init__()
-        self.mongoConnect = MongoConnect()
+        self.chat_manager = ChatConnectionManager()
 
     async def forward(self, data: SendMessageReq) -> SendMessageResp:
         super().forward(data)

@@ -27,8 +27,8 @@ from controller import (
 
 from config import ALLOW_ORIGINS, ALLOW_CREDENTIALS, ALLOW_METHODS, ALLOW_HEADERS
 
-from backend.utils import ChatConnectionManager
-from backend.utils import chatHTML
+from utils import ChatConnectionManager
+from utils import chatHTML
 
 app = FastAPI()
 chatConnectionManager = ChatConnectionManager()

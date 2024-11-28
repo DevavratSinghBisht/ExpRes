@@ -1,9 +1,9 @@
 from .baseController import BaseController
-from backend.model.request import UserRegReq
-from backend.model.response import UserRegResp
+from model.request import UserRegReq
+from model.response import UserRegResp
 
-from backend.utils import getEncoding
-from backend.dbConnect.mongoConnect import MongoConnect
+from utils import getEncoding
+from dbConnect.mongoConnect import MongoConnect
 
 
 class UserRegController(BaseController):

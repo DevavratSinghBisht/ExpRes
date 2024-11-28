@@ -1,5 +1,5 @@
 from .baseValidator import BaseValidator
-from backend.model.request import GetPostsReq
+from model.request import GetPostsReq
 
 class GetPostsValidator(BaseValidator):
     def __init__(self):

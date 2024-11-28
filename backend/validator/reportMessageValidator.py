@@ -1,5 +1,5 @@
 from .baseValidator import BaseValidator
-from backend.model.request import ReportMessageReq
+from model.request import ReportMessageReq
 
 class ReportMessageValidator(BaseValidator):
     def __init__(self):

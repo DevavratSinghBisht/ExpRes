@@ -1,7 +1,7 @@
 from .baseController import BaseController
-from backend.model.request import GetPostsReq
-from backend.model.response import GetPostsResp
-from backend.dbConnect.mongoConnect import MongoConnect
+from model.request import GetPostsReq
+from model.response import GetPostsResp
+from dbConnect.mongoConnect import MongoConnect
 
 class GetPostsController(BaseController):
 
