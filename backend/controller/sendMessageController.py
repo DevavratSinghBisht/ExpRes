@@ -1,16 +1,15 @@
 from .baseController import BaseController
-from model.request import SendMessageReq
-from model.response import SendMessageResp
+from backend.model.request import SendMessageReq
+from backend.model.response import SendMessageResp
+from backend.dbConnect.mongoConnect import MongoConnect
 
 class SendMessageController(BaseController):
 
     def __init__(self):
         super().__init__()
+        self.mongoConnect = MongoConnect()
 
     async def forward(self, data: SendMessageReq) -> SendMessageResp:
-        """
-        Handle sending a message.
-        """
         super().forward(data)
 
         resp = SendMessageResp(status=True, message_id="mock_message_id")

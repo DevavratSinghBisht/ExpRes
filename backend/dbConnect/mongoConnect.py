@@ -156,3 +156,25 @@ class MongoConnect:
         for follower in user_followers:
             print(f"- username: {follower['username']}")
         return user_followers
+
+    def makeUserFollower(self, receiver_username, sender_username):
+        sender = self.users.find_one({"username": sender_username})
+        if not sender:
+            print(f"User {sender} not found.")
+            return
+        receiver = self.users.find_one({"username": receiver_username})
+        if not receiver :
+            print(f"User {receiver_username} not found.")
+            return
+        self.users.update_one(
+            {"username": sender_username},  # Find the sender by username
+            {"$addToSet": {"followers": receiver_username}}  # Add to followers list if not already present
+        )
+        print(f"{receiver_username} added as a follower to {sender_username}.")
+
+        self.users.update_one(
+            {"username": receiver_username},  # Find the reciever by username
+            {"$addToSet": {"following": sender_username}}
+        )
+
+        print(f"{sender_username} started following {receiver_username}.")

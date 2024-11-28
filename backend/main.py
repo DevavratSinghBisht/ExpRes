@@ -3,7 +3,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 from model.request import (
-    HealthReq, UserRegReq, UserLoginReq, UserInfoReq, FriendRequestReq, FriendsListReq,
+    HealthReq, UserRegReq, UserLoginReq, UserInfoReq, FriendRequestReq, FriendListReq,
     CreatePostReq, SendMessageReq, GetPostsReq, ReportMessageReq
 )
 
@@ -122,7 +122,7 @@ async def sendMessage(data: SendMessageReq) -> SendMessageResp:
     return resp
 
 @app.post('/getFriendsList')
-async def getFriendsList(data: FriendsListReq) -> FriendListResp:
+async def getFriendsList(data: FriendListReq) -> FriendListResp:
     # data validation
     validator = FriendsListValidator()
     validator.validate(data)
