@@ -1,5 +1,5 @@
 from pydantic import BaseModel
 from typing import List
 
-class friendListResp(BaseModel):
-    post_status : List[str]
+class FriendListResp(BaseModel):
+    friend_list : List[str]
