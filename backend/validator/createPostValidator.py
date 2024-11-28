@@ -10,7 +10,9 @@ class CreatePostValidator(BaseValidator):
         Validates that user_id and content are present.
         """
         super().validate(data)
-        if not data.username:
-            raise ValueError("User ID is required.")
-        if not data.content:
-            raise ValueError("Post content is required.")
+
+        if not data.username: 
+            raise ValueError("Username cannot be empty")
+        
+        if not data.content :
+            raise ValueError("Post content cannot be empty")

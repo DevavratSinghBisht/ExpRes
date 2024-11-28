@@ -10,5 +10,6 @@ class UserInfoValidator(BaseValidator):
         Validates that user_id is present.
         """
         super().validate(data)
+
         if not data.username:
-            raise ValueError("User ID is required.")
+            raise ValueError("Username cannot be empty")
