@@ -2,7 +2,7 @@ from .userRegController import UserRegController
 from .userLoginController import UserLoginController
 from .userInfoController import UserInfoController
 from .friendRequestController import FriendRequestController
-from .friendsListController import FriendsListController
+from .friendListController import FriendsListController
 from .createPostController import CreatePostController
 from .sendMessageController import SendMessageController
 from .getPostsController import GetPostsController

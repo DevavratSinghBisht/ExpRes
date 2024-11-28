@@ -2,7 +2,7 @@ from .userRegValidator import UserRegValidator
 from .userLoginValidator import UserLoginValidator
 from .userInfoValidator import UserInfoValidator
 from .friendRequestValidator import FriendRequestValidator
-from .friendsListValidator import FriendsListValidator
+from .friendListValidator import FriendsListValidator
 from .createPostValidator import CreatePostValidator
 from .sendMessageValidator import SendMessageValidator
 from .getPostsValidator import GetPostsValidator
