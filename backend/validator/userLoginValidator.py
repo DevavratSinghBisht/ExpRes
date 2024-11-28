@@ -1,4 +1,4 @@
-from model.request import UserLoginReq
+from backend.model.request import UserLoginReq
 from .baseValidator import BaseValidator
 
 class UserLoginValidator(BaseValidator):

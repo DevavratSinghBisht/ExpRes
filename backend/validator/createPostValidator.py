@@ -1,5 +1,5 @@
 from .baseValidator import BaseValidator
-from model.request import CreatePostReq
+from backend.model.request import CreatePostReq
 
 class CreatePostValidator(BaseValidator):
     def __init__(self):
