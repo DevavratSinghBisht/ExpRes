@@ -2,9 +2,8 @@ from .userRegResp import UserRegResp
 from .userLoginResp import UserLoginResp
 from .userInfoResp import UserInfoResp
 from .friendRequestResp import FriendRequestResp
-from .friendsListResp import FriendsListResp
+from .friendListResp import FriendListResp
 from .createPostResp import CreatePostResp
 from .sendMessageResp import SendMessageResp
 from .getPostsResp import GetPostsResp
 from .reportMessageResp import ReportMessageResp
-from .manageFriendRequestResp import ManageFriendRequestResp

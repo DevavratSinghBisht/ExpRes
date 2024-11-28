@@ -1,11 +1,14 @@
 from .baseController import BaseController
-from model.request import UserInfoReq
-from model.response import UserInfoResp
+from backend.model.request import UserInfoReq
+from backend.model.response import UserInfoResp
+from backend.dbConnect.mongoConnect import MongoConnect
+
 
 class UserInfoController(BaseController):
 
     def __init__(self):
         super().__init__()
+        self.mongoConnect = MongoConnect()
 
     async def forward(self, data: UserInfoReq) -> UserInfoResp:
         """
@@ -13,6 +16,6 @@ class UserInfoController(BaseController):
         """
         super().forward(data)
 
-        # Simulated user data retrieval
-        resp = UserInfoResp(user_id=data.user_id, username="mock_user", email="user@example.com")
+        # User data retrieval
+        resp = self.mongoConnect.getUserInfo(UserInfoReq)
         return resp

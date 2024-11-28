@@ -1,11 +1,13 @@
 from .baseController import BaseController
-from model.request import GetPostsReq
-from model.response import GetPostsResp
+from backend.model.request import GetPostsReq
+from backend.model.response import GetPostsResp
+from backend.dbConnect.mongoConnect import MongoConnect
 
 class GetPostsController(BaseController):
 
     def __init__(self):
         super().__init__()
+        self.mongoConnect = MongoConnect()
 
     async def forward(self, data: GetPostsReq) -> GetPostsResp:
         """

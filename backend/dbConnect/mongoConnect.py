@@ -1,7 +1,8 @@
 from pymongo import MongoClient
 from datetime import datetime
 
-from backend.model.request import UserRegReq, UserLoginReq
+from backend.model.request import UserRegReq, UserLoginReq, UserInfoReq
+
 
 class MongoConnect:
     
@@ -126,3 +127,8 @@ class MongoConnect:
         print(f"Posts by {username}:")
         for post in user_posts:
             print(f"- ID: {post['_id']} | Content: {post['content']} | Likes: {post['likes']}")
+
+    def getUserInfo(self, req: UserInfoReq):
+        user = self.users.find_one({"username": req.username})
+        print(user)
+        return user

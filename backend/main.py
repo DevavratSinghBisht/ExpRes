@@ -8,7 +8,7 @@ from model.request import (
 )
 
 from model.response import (
-    UserRegResp, UserLoginResp, UserInfoResp, FriendRequestResp, FriendsListResp,
+    UserRegResp, UserLoginResp, UserInfoResp, FriendRequestResp, FriendListResp,
     CreatePostResp, SendMessageResp, GetPostsResp, ReportMessageResp
 )
 
@@ -27,8 +27,8 @@ from controller import (
 
 from config import ALLOW_ORIGINS, ALLOW_CREDENTIALS, ALLOW_METHODS, ALLOW_HEADERS
 
-from utils import ChatConnectionManager
-from utils import chatHTML
+from backend.utils import ChatConnectionManager
+from backend.utils import chatHTML
 
 app = FastAPI()
 chatConnectionManager = ChatConnectionManager()
@@ -122,7 +122,7 @@ async def sendMessage(data: SendMessageReq) -> SendMessageResp:
     return resp
 
 @app.post('/getFriendsList')
-async def getFriendsList(data: FriendsListReq) -> FriendsListResp:
+async def getFriendsList(data: FriendsListReq) -> FriendListResp:
     # data validation
     validator = FriendsListValidator()
     validator.validate(data)
