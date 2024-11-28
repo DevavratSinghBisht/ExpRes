@@ -19,4 +19,5 @@ class UserLoginController(BaseController):
             resp = UserLoginResp(username=data.username, login_status="Login successful")
         else :
             resp = UserLoginResp(username=data.username, login_status="Login failed")
+
         return resp
