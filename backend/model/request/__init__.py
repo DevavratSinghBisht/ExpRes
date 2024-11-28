@@ -8,3 +8,4 @@ from .createPostReq import CreatePostReq
 from .sendMessageReq import SendMessageReq
 from .getPostsReq import GetPostsReq
 from .reportMessageReq import ReportMessageReq
+from .responseToFriendRequestReq import ResponseToFriendRequestReq

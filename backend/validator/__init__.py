@@ -7,3 +7,4 @@ from .createPostValidator import CreatePostValidator
 from .sendMessageValidator import SendMessageValidator
 from .getPostsValidator import GetPostsValidator
 from .reportMessageValidator import ReportMessageValidator
+from .responseToFriendRequestValidator import ResponseToFriendRequestValidator
