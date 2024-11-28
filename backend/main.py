@@ -18,7 +18,12 @@ from validator import (
     ReportMessageValidator
 )
 
-from controller import UserRegController, UserLoginController
+from controller import (
+    UserRegController, UserLoginController, UserInfoController, FriendRequestController,
+    FriendsListController, CreatePostController, SendMessageController, GetPostsController,
+    ReportMessageController
+)
+
 
 from config import ALLOW_ORIGINS, ALLOW_CREDENTIALS, ALLOW_METHODS, ALLOW_HEADERS
 
