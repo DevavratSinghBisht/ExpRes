@@ -1,5 +1,5 @@
 from .baseValidator import BaseValidator
-from model.request import SendMessageReq
+from backend.model.request import SendMessageReq
 
 class SendMessageValidator(BaseValidator):
     def __init__(self):
@@ -12,7 +12,7 @@ class SendMessageValidator(BaseValidator):
         super().validate(data)
         if not data.sender_username:
             raise ValueError("Sender ID is required.")
-        if not data.receiver_id:
+        if not data.receiver_username:
             raise ValueError("Receiver ID is required.")
         if not data.message:
             raise ValueError("Message content is required.")

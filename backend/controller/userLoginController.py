@@ -1,7 +1,7 @@
 from .baseController import BaseController
 
-from model.request import UserLoginReq
-from model.response import UserLoginResp
+from backend.model.request import UserLoginReq
+from backend.model.response import UserLoginResp
 
 class UserLoginController(BaseController):
 
@@ -11,5 +11,5 @@ class UserLoginController(BaseController):
     async def forward(self, data: UserLoginReq) -> UserLoginResp:
         super().forward()
         
-        resp = UserLoginResp(status=True)
+        resp = UserLoginResp(status=True, message="Login successful")
         return resp

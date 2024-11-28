@@ -1,8 +1,8 @@
 from .baseController import BaseController
-from model.request import UserRegReq
-from model.response import UserRegResp
+from backend.model.request import UserRegReq
+from backend.model.response import UserRegResp
 
-from utils import getEncoding
+from backend.utils import getEncoding
 
 class UserRegController(BaseController):
 
@@ -15,7 +15,8 @@ class UserRegController(BaseController):
         data.password = getEncoding(data.password)
 
         print("encoded password", data.password)
-        
+
+
         resp = UserRegResp(status=True)
 
         return resp
