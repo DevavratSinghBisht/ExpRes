@@ -1,4 +1,4 @@
-from model.request import UserRegReq
+from backend.model.request import UserRegReq
 from .baseValidator import BaseValidator
 from pydantic import EmailStr, validator
 import re
