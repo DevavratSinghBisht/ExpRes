@@ -7,3 +7,4 @@ from .createPostResp import CreatePostResp
 from .sendMessageResp import SendMessageResp
 from .getPostsResp import GetPostsResp
 from .reportMessageResp import ReportMessageResp
+from .post import Post

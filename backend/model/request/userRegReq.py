@@ -5,7 +5,7 @@ class UserRegReq(BaseModel):
     firstName   : str
     lastName    : str
     username    : str
-    dateOfBirth : str # TODO check if it need to be datetime
+    dateOfBirth : str
     contactNo   : int
     email       : str
     password    : str

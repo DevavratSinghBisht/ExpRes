@@ -1,17 +1,20 @@
 from .baseController import BaseController
-from model.request import FriendsListReq
-from model.response import FriendsListResp
+from backend.model.request.friendListReq import FriendListReq
+from backend.model.response.friendListResp import FriendListResp
+from backend.dbConnect.mongoConnect import MongoConnect
+
 
 class FriendsListController(BaseController):
 
     def __init__(self):
         super().__init__()
+        self.mongoConnect = MongoConnect()
 
-    async def forward(self, data: FriendsListReq) -> FriendsListResp:
+    async def forward(self, data: FriendListReq) -> FriendListResp:
         """
         Retrieve a list of friends.
         """
         super().forward(data)
 
-        resp = FriendsListResp(user_id=data.user_id, friends=["friend1", "friend2", "friend3"])
+        resp = self.mongoConnect.getUserFollowers(data.username)
         return resp

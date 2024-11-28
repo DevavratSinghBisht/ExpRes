@@ -15,5 +15,5 @@ class GetPostsController(BaseController):
         """
         super().forward(data)
 
-        resp = GetPostsResp(posts=[{"post_id": "1", "content": "Hello World"}, {"post_id": "2", "content": "Another Post"}])
+        resp = self.mongoConnect.getUserPosts(data.username)
         return resp

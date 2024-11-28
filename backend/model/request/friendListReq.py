@@ -1,4 +1,4 @@
 from pydantic import BaseModel
 
-class FriendsListReq(BaseModel):
+class FriendListReq(BaseModel):
     username: str

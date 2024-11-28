@@ -1,6 +1,8 @@
 from pymongo import MongoClient
 from datetime import datetime
 
+from sympy.codegen.fnodes import use_rename
+
 from backend.model.request import UserRegReq, UserLoginReq, UserInfoReq
 
 
@@ -21,6 +23,16 @@ class MongoConnect:
             del user['password2']
         except:
             pass
+        user["username"] = UserRegReq.username
+        user["email"] = UserRegReq.email
+        user["firstName"] = UserRegReq.firstName
+        user["lastName"] = UserRegReq.lastName
+        user["dateOfBirth"] = UserRegReq.dateOfBirth
+        user["contactNo"] = UserRegReq.contactNo
+        user["email"] = UserRegReq.email
+        user["password"] = UserRegReq.password
+        user["password2"] = UserRegReq.password2
+        user["profilePicture"] = UserRegReq.profilePicture
         user["created_at"] = datetime.now(datetime.timezone.utc)
         user["last_login_at"] = datetime.now(datetime.timezone.utc)
         user["visibility"] = False
@@ -50,7 +62,7 @@ class MongoConnect:
             print(f"User {username} not found.")
             return
         post = {
-            "user_id": user["_id"],
+            "username": user["username"],
             "content": content,
             "likes": 0,
             "comments": [],
@@ -127,8 +139,20 @@ class MongoConnect:
         print(f"Posts by {username}:")
         for post in user_posts:
             print(f"- ID: {post['_id']} | Content: {post['content']} | Likes: {post['likes']}")
+        return user_posts
 
     def getUserInfo(self, req: UserInfoReq):
         user = self.users.find_one({"username": req.username})
         print(user)
         return user
+
+    def getUserFollowers(self, username):
+        user = self.users.find_one({"username": username})
+        if not user:
+            print(f"User {username} not found.")
+            return
+        user_followers = user["followers"]
+        print(f"Followers by {username}:")
+        for follower in user_followers:
+            print(f"- username: {follower['username']}")
+        return user_followers
