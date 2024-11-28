@@ -4,24 +4,24 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from model.request import (
     HealthReq, UserRegReq, UserLoginReq, UserInfoReq, FriendRequestReq, FriendsListReq,
-    CreatePostReq, SendMessageReq, GetPostsReq, ReportMessageReq
+    CreatePostReq, SendMessageReq, GetPostsReq, ReportMessageReq, ResponseToFriendRequestReq
 )
 
 from model.response import (
     UserRegResp, UserLoginResp, UserInfoResp, FriendRequestResp, FriendListResp,
-    CreatePostResp, SendMessageResp, GetPostsResp, ReportMessageResp
+    CreatePostResp, SendMessageResp, GetPostsResp, ReportMessageResp, ResponseToFriendRequestResp
 )
 
 from validator import (
     UserRegValidator, UserLoginValidator, UserInfoValidator, FriendRequestValidator,
     FriendsListValidator, CreatePostValidator, SendMessageValidator, GetPostsValidator,
-    ReportMessageValidator
+    ReportMessageValidator, ResponseToFriendRequestValidator
 )
 
 from controller import (
     UserRegController, UserLoginController, UserInfoController, FriendRequestController,
     FriendsListController, CreatePostController, SendMessageController, GetPostsController,
-    ReportMessageController
+    ReportMessageController, ResponseToFriendRequestController
 )
 
 
@@ -155,6 +155,18 @@ async def reportTheMessage(data: ReportMessageReq) -> ReportMessageResp:
 
     # logic
     controller = ReportMessageController()
+    resp = await controller.forward(data)
+
+    return resp
+
+@app.post('/responseToFriendRequest')
+async def reportTheMessage(data: ResponseToFriendRequestReq) -> ResponseToFriendRequestResp:
+    # data validation
+    validator = ResponseToFriendRequestValidator()
+    validator.validate(data)
+
+    # logic
+    controller = ResponseToFriendRequestController()
     resp = await controller.forward(data)
 
     return resp
