@@ -14,27 +14,104 @@
   text-align: center;
 }
 
-.create-post-container {
-  margin: 20px auto;
-  max-width: 600px;
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+.main-page {
+  position: relative;
+  width: 1526px;
+  height: 588px;
+  overflow: hidden;
 }
 
-.post-textarea {
+video {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  z-index: -1;
+}
+
+/* .create-post-container {
+  margin: 80px auto;
+  max-width: 400px;
+  background-color: white;
+  padding: 0px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  color: white;
+} */
+
+/* .post-textarea {
   width: 100%;
-  padding: 10px;
+  padding: 50px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
+} */
+
+/* Style for the container */
+.create-post-container {
+  width: 100%;
+  max-width: 600px; /* Max width for better responsiveness */
+  margin: 50px auto; /* Center the container */
+  padding: 20px;
+  background-color: #CBDCEB;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for the textarea */
+.post-textarea {
+  width: 100%;
+  min-height: 100px;  /* Set a minimum height */
+  max-height: 200px;  /* Max height to avoid over-expansion */
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  background-color: #ffffff;
+  border-radius: 8px;
+  resize: vertical; /* Allow the user to resize vertically */
+  margin-bottom: 15px; /* Space between textarea and button */
+  box-sizing: border-box; /* Ensure padding is included in the width calculation */
+  outline: none; /* Remove outline */
+  transition: border-color 0.2s ease;
+}
+
+.post-textarea:focus {
+  border-color: #007bff; /* Focus border color */
+}
+
+/* Style for the button */
+.post-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s ease;
+}
+
+.post-button:hover {
+  background-color: #0056b3;
+}
+
+/* Optional: Ensure proper responsiveness */
+@media (max-width: 768px) {
+  .create-post-container {
+    width: 90%;
+    padding: 15px;
+  }
 }
 
 .submit-post-button {
   background-color: #007bff;
   color: white;
-  padding: 10px 20px;
+  padding: 50px 50px;
   border: none;
   border-radius: 5px;
   margin-top: 10px;
@@ -46,8 +123,10 @@
 }
 
 .posts-container {
-  margin: 20px auto;
+  padding-top: -30px;
+  padding-left: 440px;
   max-width: 800px;
+  color: white;
 }
 
 .post-card {
