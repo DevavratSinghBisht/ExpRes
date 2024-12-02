@@ -450,5 +450,20 @@ body {
   margin: 0 10px;
 }
 
+.about-link {
+  margin-top: 200px;
+  text-align: center;
+  height: 450px;
+}
 
+.about-link-text {
+  font-size: 18px;
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.about-link-text:hover {
+  color: #ffd700; /* Change color on hover */
+}
 

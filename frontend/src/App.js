@@ -4,6 +4,7 @@ import axios from 'axios';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import NavBar from './navbar';
 import './App.css';
+import './about.css';
 import About from './about';
 import sample from './universe.mp4';
 import PostPage from './PostPage';
@@ -64,13 +65,42 @@ const HomePage = () => {
             <span className="blinking-cursor"></span>
           </h1>
           <p>Express your thoughts with privacy and security!</p>
-          <Link to="/posts" className="scroll-icon">
-            &#8595; {/* Downward arrow symbol */}
-          </Link>
+          <p style={{fontSize:'15.5px'}}>Head over to the Post section to post content</p>
+          {/* <Link to="/posts" className="scroll-icon">
+            &#8595; 
+          </Link> */}
+          <a href="#about-page" className="scroll-icon">&#8595;</a>
         </div>
       </div>
 
 
+      <div className="about-page" id="about-page">
+        <h1>About Us</h1>
+        <p>
+          Welcome to our website! We are a team dedicated to providing the best experience for our users. Our goal is to create a social media application using cutting-edge technologies and providing enhanced security and privacy to the users.
+        </p>
+        <h2 style={{ paddingLeft: "310px" }}>Our Mission</h2>
+        <p>
+          Focus on the core value of privacy and how your social media platform is committed to ensuring data protection.
+        </p>
+
+        <h2 style={{ paddingLeft: "310px" }}>Our Team</h2>
+        <p>
+          Our team is composed of passionate professionals with expertise in various fields, including software development, design, and user experience. We work together to build something great!
+          <ul>
+            <li>Devavrat Singh Bisht</li>
+            <li>Kunjal Agrawal</li>
+            <li>Priyadarshini Ganeshkumar</li>
+            <li>Purva Khadke</li>
+            <li>Vrushali Harane</li>
+          </ul>
+        </p>
+        {/* <h2 style={{ paddingLeft: "310px" }}>Contact</h2> */}
+        <p>
+          If you have any questions or would like to get in touch, please don't hesitate to reach out to us at devavratsinghbisht@gmail.com.
+        </p>
+        <br></br><br></br><br></br>
+      </div>
 
       <div className="footer">
         <p style={{ marginLeft: '40px' }}>Contact us for more information!</p>
@@ -87,7 +117,7 @@ const HomePage = () => {
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_logo_2022.svg/1024px-Instagram_logo_2022.svg.png" alt="Instagram" />
           </a>
         </div> */}
-        <p style={{ marginLeft: '40px' }}>&copy; 2024 ExpRes. All rights reserved.</p>
+        <p style={{ marginLeft: '40px' }}>&copy; 2024 ExpRes. All rights reserved.</p><br></br>
       </div>
     </div>
 
