@@ -48,7 +48,7 @@ body {
   
   /* Hover Effects */
   .navbar-links li a:hover {
-    color: #1da1f2; /* Bright Yellow */
+    color: #ffd700; /* Bright Yellow */
     font-size: 22px;
   }
   
