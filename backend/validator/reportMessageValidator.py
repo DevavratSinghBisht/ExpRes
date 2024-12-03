@@ -3,13 +3,13 @@ from model.request import ReportMessageReq
 
 class ReportMessageValidator(BaseValidator):
     def __init__(self):
-        pass
+        super().__init__()
 
     async def validate(self, data: ReportMessageReq):
         """
         Validates that reporter_id, message_id, and reason are present.
         """
-        super().validate(data)
+        self.common_validation()
 
         if not data.reporter_username:
             raise ValueError("Repoter username cannot be empty")

@@ -3,13 +3,13 @@ from model.request import FriendRequestReq
 
 class FriendRequestValidator(BaseValidator):
     def __init__(self):
-        pass
+        super().__init__()
 
     async def validate(self, data: FriendRequestReq):
         """
         Validates that sender_id and receiver_id are present.
         """
-        super().validate(data)
+        self.common_validation()
 
         if not data.sender_username :
             raise ValueError("Sender name cannot be empty")

@@ -3,13 +3,13 @@ from model.request import ResponseToFriendRequestReq
 
 class ResponseToFriendRequestValidator(BaseValidator):
     def __init__(self):
-        pass
+        super().__init__()
 
     async def validate(self, data: ResponseToFriendRequestReq):
         """
         Validates that reporter_id, message_id, and reason are present.
         """
-        super().validate(data)
+        self.common_validation()
 
         if not data.sender_username :
             raise ValueError("Username cannot be empty")

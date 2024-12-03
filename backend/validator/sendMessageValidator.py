@@ -3,13 +3,13 @@ from model.request import SendMessageReq
 
 class SendMessageValidator(BaseValidator):
     def __init__(self):
-        pass
+        super().__init__()
 
     async def validate(self, data: SendMessageReq):
         """
         Validates that sender_id, receiver_id, and message are present.
         """
-        super().validate(data)
+        self.common_validation()
 
         if not data.sender_username :
             raise ValueError("Sender username cannot be empty")
