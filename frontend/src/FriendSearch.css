@@ -1,0 +1,131 @@
+/* Reset some styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* General layout for the list item */
+  .user-item {
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 10px 0;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Avatar styling */
+  .user-avatar {
+    margin-right: 20px;
+  }
+  .followers-class {
+    display: flex;
+  }
+  .followers-inner {
+    padding-right: 4px;
+  }
+  
+  .user-avatar img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .username {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .email {
+    font-size: 1em;
+    color: #666;
+    margin: 5px 0;
+  }
+  
+  .status {
+    font-size: 1.1em;
+    margin: 5px 0;
+  }
+  
+  .status .active {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .followers-count, .following-count {
+    padding-top: 0.5rem;
+    font-size: 1em;
+    margin: 5px 0;
+  }
+  
+  .created-at, .last-login {
+    font-size: 0.9em;
+    color: #999;
+    margin: 5px 0;
+  }
+  
+  /* User action buttons */
+  .user-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  
+  .visibility-toggle {
+    padding: 8px 16px;
+    font-size: 0.9em;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .visibility-toggle:hover {
+    background-color: #45a049;
+  }
+  /* Basic button styling */
+  .add-friend-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #1F4287; /* Facebook's blue color */
+    color: white;
+    border: 1px solid #42a0d0; /* Slightly darker blue border */
+    border-radius: 8px; /* Rounded corners */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+  
+  /* Icon styling (using Font Awesome or any icon library) */
+  .add-friend-button i {
+    margin-right: 8px; /* Space between icon and text */
+  }
+  
+  /* Hover effect */
+  .add-friend-button:hover {
+    background-color: #3b9cdb; /* Darker blue on hover */
+    border-color: #3585a1; /* Darker border */
+  }
+  
+  /* Focused effect (when clicked or tabbed) */
+  .add-friend-button:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 0 3px rgba(66, 183, 245, 0.5); /* Blue glow */
+  }
+  
+  .add-friend-button.requested {
+    background-color: #f0b800; /* Yellow color for 'Requested' state */
+    border-color: #e59d00; /* Darker yellow border */
+    cursor: not-allowed; /* Disable further clicking */
+  }
+  
+  .add-friend-button.requested:hover {
+    background-color: #e59d00; /* Darker yellow on hover */
+  }
