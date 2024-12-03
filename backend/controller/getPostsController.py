@@ -10,9 +10,6 @@ class GetPostsController(BaseController):
         self.mongoConnect = MongoConnect()
 
     async def forward(self, data: GetPostsReq) -> GetPostsResp:
-        """
-        Retrieve a list of posts.
-        """
         super().forward(data)
 
         resp = self.mongoConnect.getUserPosts(data.username)

@@ -1,2 +1,3 @@
 from .mongoConnect import MongoConnect
-from .transactionQuery import TransactionQuery
+from .resDBConnect import ResDBConnect
+from .resDBQueries import ResDBQueries

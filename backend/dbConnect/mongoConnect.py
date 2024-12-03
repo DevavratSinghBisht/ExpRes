@@ -38,6 +38,7 @@ class MongoConnect:
         user["visibility"] = False
         user["followers"] = []
         user["following"] = []
+        user["blocked"] = False
         result = self.users.insert_one(user)
         print(f"User created with ID: {result.inserted_id}")
    
@@ -56,7 +57,7 @@ class MongoConnect:
             return False
 
     # Create a Post
-    def createPost(self, username, content):
+    def createPost(self, username, content, transactionId):
         user = self.users.find_one({"username": username})
         if not user:
             print(f"User {username} not found.")
@@ -66,7 +67,8 @@ class MongoConnect:
             "content": content,
             "likes": 0,
             "comments": [],
-            "created_at": datetime.now(datetime.timezone.utc)
+            "created_at": datetime.now(datetime.timezone.utc),
+            "id": transactionId
         }
         result = self.posts.insert_one(post)
         print(f"Post created with ID: {result.inserted_id}")
@@ -178,3 +180,27 @@ class MongoConnect:
         )
 
         print(f"{sender_username} started following {receiver_username}.")
+
+    def getPostFromMongo(self, message):
+        post = self.posts.find_one({"content": message})
+        if not post:
+            print(f"Post with content {message} not found.")
+        else:
+            print(f"Post with content {message} found.")
+            return post
+
+    def getPostFromMongoThroughId(self, transaction_id):
+        post = self.posts.find_one({"id": transaction_id})
+        if not post:
+            print(f"Post with transactionId {transaction_id} not found.")
+        else:
+            print(f"Post with transactionId {transaction_id} found.")
+            return post
+
+    def blockUsers(self, usernames):
+        for username in usernames:
+            user = self.users.find_one({"username": username})
+            if not username:
+                print(f"User {username} not found.")
+            self.users.update_one(
+                {"username": username}, {"$set": {"blocked": True}})
