@@ -16,7 +16,7 @@ const Login = () => {
 
 
         // Replace this URL with your backend's login endpoint
-        const apiUrl = "http://localhost:8000/userLogin";
+        const apiUrl = "https://example.com/api/login";
 
         try {
             const response = await fetch(apiUrl, {
@@ -25,7 +25,7 @@ const Login = () => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    username: email,
+                    email: email,
                     password: password,
                 }),
             });

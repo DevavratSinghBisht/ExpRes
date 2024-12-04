@@ -20,6 +20,9 @@ const NavBar = () => {
           </li>
           <li><a href="/posts">Post</a></li>
           <li>
+            <Link to="/ChatApp">ExpRes Chat</Link>
+          </li>
+          <li>
             <Link to="/about">About</Link>
           </li>
           <li>

@@ -467,3 +467,80 @@ body {
   color: #ffd700; /* Change color on hover */
 }
 
+.chat-app {
+  display: flex;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #f4f4f4;
+  padding: 10px;
+}
+
+.friend-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.friend-item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.friend-item img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.friend-item .reported-tag {
+  background-color: red;
+  color: white;
+  padding: 3px 6px;
+  margin-left: 10px;
+  font-size: 12px;
+}
+
+.chat-box {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.input-section {
+  display: flex;
+  margin-top: 10px;
+}
+
+.input-section input {
+  flex-grow: 1;
+  padding: 10px;
+}
+
+.input-section button {
+  padding: 10px;
+}
+
+.chat-box-messages {
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
+.message {
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.message.sent {
+  background-color: #e0f7fa;
+  text-align: right;
+}
+
+.message.received {
+  background-color: #f1f1f1;
+  text-align: left;
+}
