@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-from datetime import datetime
+import datetime
 from model.request import UserRegReq, UserLoginReq, UserInfoReq
 
 
@@ -20,18 +20,18 @@ class MongoConnect:
             del user['password2']
         except:
             pass
-        user["username"] = UserRegReq.username
-        user["email"] = UserRegReq.email
-        user["firstName"] = UserRegReq.firstName
-        user["lastName"] = UserRegReq.lastName
-        user["dateOfBirth"] = UserRegReq.dateOfBirth
-        user["contactNo"] = UserRegReq.contactNo
-        user["email"] = UserRegReq.email
-        user["password"] = UserRegReq.password
-        user["password2"] = UserRegReq.password2
-        user["profilePicture"] = UserRegReq.profilePicture
-        user["created_at"] = datetime.now(datetime.timezone.utc)
-        user["last_login_at"] = datetime.now(datetime.timezone.utc)
+        # user["username"] = UserRegReq.username
+        # user["email"] = UserRegReq.email
+        # user["firstName"] = UserRegReq.firstName
+        # user["lastName"] = UserRegReq.lastName
+        # user["dateOfBirth"] = UserRegReq.dateOfBirth
+        # user["contactNo"] = UserRegReq.contactNo
+        # user["email"] = UserRegReq.email
+        # user["password"] = UserRegReq.password
+        # user["password2"] = UserRegReq.password2
+        # user["profilePicture"] = UserRegReq.profilePicture
+        user["created_at"] = datetime.datetime.now(datetime.timezone.utc)
+        user["last_login_at"] = datetime.datetime.now(datetime.timezone.utc)
         user["visibility"] = False
         user["followers"] = []
         user["following"] = []

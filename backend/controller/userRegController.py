@@ -18,9 +18,9 @@ class UserRegController(BaseController):
         data.password = get_encoding(data.password)
         print("encoded password", data.password)
 
-        self.mongoConnect.registerUser(UserRegReq)
+        self.mongoConnect.registerUser(data)
 
-        resp = UserRegResp(message="Registration successful")
+        resp = UserRegResp(username=data.username, email=data.email, message="Registration successful")
 
         return resp
 
