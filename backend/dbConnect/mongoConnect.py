@@ -204,3 +204,22 @@ class MongoConnect:
                 print(f"User {username} not found.")
             self.users.update_one(
                 {"username": username}, {"$set": {"blocked": True}})
+
+    def saveMessage(self, sender: str, receiver: str, transactionId: str):
+        # Check if a message between sender and receiver exists
+        message = self.messages.find_one({"sender": sender, "receiver": receiver})
+
+        if message is None:
+            # Insert new message document if none exists
+            message = {
+                "sender": sender,
+                "receiver": receiver,
+                "transactionIds": [transactionId]
+            }
+            self.messages.insert_one(message)
+        else:
+            # Append the transactionId to the existing document's transactionIds array
+            self.messages.update_one(
+                {"sender": sender, "receiver": receiver},
+                {"$push": {"transactionIds": transactionId}}
+            )

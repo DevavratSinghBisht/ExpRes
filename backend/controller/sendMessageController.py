@@ -15,7 +15,6 @@ class SendMessageController(BaseController):
 
     async def forward(self, data: SendMessageReq) -> SendMessageResp:
         try:
-           self.chat_manager.connect()
            print(f"Received message from {data.sender_username} "
                  f"to {data.receiver_username}: {data.message}")
 
@@ -25,11 +24,12 @@ class SendMessageController(BaseController):
                                                              data.receiver_username,
                                                              data.transactionId)
 
-           self.mongoConnect.createPost(data.sender_username, data.message,
-                                        resDB_resp.transactionId, data.reciever_username)
+           transaction_id = resDB_resp['postTransaction']['id']
+
+           self.mongoConnect.saveMessage(data.sender_username, data.reciever_username, transaction_id)
 
            response = SendMessageResp(message_status='Message successfully sent.',
-                                      transactionId=resDB_resp.transactionId)
+                                      transactionId=transaction_id)
            return response
 
         except Exception as e:

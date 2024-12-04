@@ -5,5 +5,4 @@ class SendMessageReq(BaseModel):
     receiver_username: str
     message: str
     isForwarded: bool
-    websocket: object
     transactionId : str
