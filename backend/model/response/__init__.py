@@ -10,3 +10,4 @@ from .reportMessageResp import ReportMessageResp
 from .post import Post
 from .responseToFriendRequestResp import ResponseToFriendRequestResp
 from .chatHistoryResp import ChatHistoryResp
+from .reportPostResp import ReportPostResp

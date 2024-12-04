@@ -10,3 +10,4 @@ from .getPostsReq import GetPostsReq
 from .reportMessageReq import ReportMessageReq
 from .responseToFriendRequestReq import ResponseToFriendRequestReq
 from .chatHistoryReq import ChatHistoryReq
+from .reportPostReq import ReportPostReq

@@ -4,24 +4,24 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from model.request import (
     HealthReq, UserRegReq, UserLoginReq, UserInfoReq, FriendListReq,ResponseToFriendRequestReq,
-    CreatePostReq, SendMessageReq, GetPostsReq, ReportMessageReq, ChatHistoryReq
+    CreatePostReq, SendMessageReq, GetPostsReq, ReportMessageReq, ChatHistoryReq, ReportPostReq
 )
 
 from model.response import (
     UserRegResp, UserLoginResp, UserInfoResp, FriendListResp, ResponseToFriendRequestResp,
-    CreatePostResp, SendMessageResp, GetPostsResp, ReportMessageResp,ChatHistoryResp
+    CreatePostResp, SendMessageResp, GetPostsResp, ReportMessageResp,ChatHistoryResp, ReportPostResp
 )
 
 from validator import (
     UserRegValidator, UserLoginValidator, UserInfoValidator,
     FriendsListValidator, CreatePostValidator, SendMessageValidator, GetPostsValidator,
-    ReportMessageValidator, ResponseToFriendRequestValidator, ChatHistoryValidator
+    ReportMessageValidator, ResponseToFriendRequestValidator, ChatHistoryValidator, ReportPostValidator
 )
 
 from controller import (
     UserRegController, UserLoginController, UserInfoController, FriendRequestController,
     FriendsListController, CreatePostController, SendMessageController, GetPostsController,
-    ReportMessageController, ResponseToFriendRequestController, ChatHistoryController
+    ReportMessageController, ResponseToFriendRequestController, ChatHistoryController, ReportPostController
 )
 
 
@@ -169,6 +169,20 @@ async def getChatHistory(data: ChatHistoryReq) -> ChatHistoryResp:
     resp = await controller.forward(data)
 
     return resp
+
+@app.post('/reportPost')
+async def reportPost(data: ReportPostReq) -> ReportPostResp:
+    # data validation
+    validator = ReportPostValidator()
+    validator.validate(data)
+
+    # logic
+    controller = ReportPostController()
+    resp = await controller.forward(data)
+
+    return resp
+
+
 @app.get("/")
 async def get() -> HTMLResponse:
     return HTMLResponse(chatHTML)
