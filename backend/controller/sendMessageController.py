@@ -15,26 +15,17 @@ class SendMessageController(BaseController):
 
     async def forward(self, data: SendMessageReq) -> SendMessageResp:
         try:
-            target_connection = next(
-                    (conn for conn in self.chat_manager.active_connections
-                     if conn.client == data.receiver_username),
-                    None
-            )
+           self.chat_manager.connect()
+           print(f"Received message from {data.sender_username} "
+                 f"to {data.receiver_username}: {data.message}")
+           response = SendMessageResp(message_status='Message successfully sent.')
 
-            if target_connection:
-                await self.chat_manager.send_personal_message(
-                        f"{data.sender_username}: {data.message}", target_connection
-                )
-            else:
-                raise ValueError(f"Receiver {data.receiver_username} is not connected.")
-
-            print(f"Received message from {data.sender_username} to {data.receiver_username}: {data.message}")
-            response = SendMessageResp(message_status='Message successfully sent.')
-
-            resDB_resp = self.resDBQueries.saveMessageinResDB(data.message)
-            self.mongoConnect.createPost(data.sender_username, data.message,
+           resDB_resp = self.resDBQueries.saveMessageinResDB(data.message,
+                                                             data.sender_username,
+                                                             data.receiver_username)
+           self.mongoConnect.createPost(data.sender_username, data.message,
                                          resDB_resp.transactionId)
-            return response
+           return response
 
         except Exception as e:
             print(f"Error in SendMessageController.forward: {e}")

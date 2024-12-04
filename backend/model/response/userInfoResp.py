@@ -12,3 +12,4 @@ class UserInfoResp(BaseModel):
     visibility      : bool = False  # Default to False
     followers       : list   # Default to an empty list
     following       : list # Default to an empty list
+    is_banned       : bool

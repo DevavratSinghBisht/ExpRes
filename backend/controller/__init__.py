@@ -8,3 +8,4 @@ from .sendMessageController import SendMessageController
 from .getPostsController import GetPostsController
 from .reportMessageController import ReportMessageController
 from .responseToFriendRequestController import ResponseToFriendRequestController
+from .chatHistoryController import ChatHistoryController

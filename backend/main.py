@@ -4,24 +4,24 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from model.request import (
     HealthReq, UserRegReq, UserLoginReq, UserInfoReq, FriendListReq,ResponseToFriendRequestReq,
-    CreatePostReq, SendMessageReq, GetPostsReq, ReportMessageReq
+    CreatePostReq, SendMessageReq, GetPostsReq, ReportMessageReq, ChatHistoryReq
 )
 
 from model.response import (
     UserRegResp, UserLoginResp, UserInfoResp, FriendListResp, ResponseToFriendRequestResp,
-    CreatePostResp, SendMessageResp, GetPostsResp, ReportMessageResp,
+    CreatePostResp, SendMessageResp, GetPostsResp, ReportMessageResp,ChatHistoryResp
 )
 
 from validator import (
     UserRegValidator, UserLoginValidator, UserInfoValidator,
     FriendsListValidator, CreatePostValidator, SendMessageValidator, GetPostsValidator,
-    ReportMessageValidator, ResponseToFriendRequestValidator
+    ReportMessageValidator, ResponseToFriendRequestValidator, ChatHistoryValidator
 )
 
 from controller import (
     UserRegController, UserLoginController, UserInfoController, FriendRequestController,
     FriendsListController, CreatePostController, SendMessageController, GetPostsController,
-    ReportMessageController, ResponseToFriendRequestController
+    ReportMessageController, ResponseToFriendRequestController, ChatHistoryController
 )
 
 
@@ -157,6 +157,18 @@ async def responseToFriendRequest(data: ResponseToFriendRequestReq) -> ResponseT
     resp = await controller.forward(data)
 
     return resp
+
+@app.post('/getChatHistory')
+async def getChatHistory(data: ChatHistoryReq) -> ChatHistoryResp:
+    # data validation
+    validator = ChatHistoryValidator()
+    validator.validate(data)
+
+    # logic
+    controller = ChatHistoryController()
+    resp = await controller.forward(data)
+
+    return resp
 @app.get("/")
 async def get() -> HTMLResponse:
     return HTMLResponse(chatHTML)
@@ -168,7 +180,7 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int) -> None:
         while True:
             data = await websocket.receive_text()
             await chatConnectionManager.send_personal_message(f"You wrote: {data}", websocket)
-            await chatConnectionManager.broadcast(f"Client #{client_id} says: {data}")
+            #await chatConnectionManager.broadcast(f"Client #{client_id} says: {data}")
     except WebSocketDisconnect:
         chatConnectionManager.disconnect(websocket)
         await chatConnectionManager.broadcast(f"Client #{client_id} left the chat")

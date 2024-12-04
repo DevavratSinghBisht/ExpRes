@@ -8,3 +8,4 @@ from .sendMessageValidator import SendMessageValidator
 from .getPostsValidator import GetPostsValidator
 from .reportMessageValidator import ReportMessageValidator
 from .responseToFriendRequestValidator import ResponseToFriendRequestValidator
+from .chatHistoryValidator import  ChatHistoryValidator
