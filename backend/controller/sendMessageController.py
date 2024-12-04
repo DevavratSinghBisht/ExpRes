@@ -18,13 +18,18 @@ class SendMessageController(BaseController):
            self.chat_manager.connect()
            print(f"Received message from {data.sender_username} "
                  f"to {data.receiver_username}: {data.message}")
-           response = SendMessageResp(message_status='Message successfully sent.')
+
 
            resDB_resp = self.resDBQueries.saveMessageinResDB(data.message,
                                                              data.sender_username,
-                                                             data.receiver_username)
+                                                             data.receiver_username,
+                                                             data.transactionId)
+
            self.mongoConnect.createPost(data.sender_username, data.message,
-                                         resDB_resp.transactionId)
+                                        resDB_resp.transactionId, data.reciever_username)
+
+           response = SendMessageResp(message_status='Message successfully sent.',
+                                      transactionId=resDB_resp.transactionId)
            return response
 
         except Exception as e:

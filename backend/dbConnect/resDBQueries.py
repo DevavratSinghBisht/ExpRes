@@ -10,12 +10,14 @@ class ResDBQueries:
         self.resDBConnect = ResDBConnect()
         self.mongoConnect = MongoConnect()
 
-    def saveMessageinResDB(self, message : str):
+    def saveMessageinResDB(self, message : str, sender_username: str, recipient_username: str,
+                           transactionId: str):
+
         signer_private_key, signer_public_key = generate_keys()
         recipient_public_key = get_encoding(signer_public_key)
+        asset_data = AssetData()
 
         if message.isForwarded:
-           asset_data = AssetData()
            AssetData.transaction_id = self.mongoConnect.getPostFromMongo(message)
 
 
