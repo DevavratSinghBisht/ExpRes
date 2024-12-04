@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Heart, X, Flag, Send, Check, XIcon } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
 
 const autoProfileData = {
   "username": "johndoe92",
@@ -186,20 +186,20 @@ const ProfilePage = () => {
   const handlePostSubmit = async (e) => {
     e.preventDefault();
 
-    await axios.post('http://localhost:8000/createPost', {
-      username: username,
-      content: newPost
-    })
-      .then((res) => {
-        if (res.data) {
-          setPosts([res.data, ...posts]);
-          setNewPost('');
-        }
-        // setProfileData(res.data) //TODO: Uncomment this code
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    // await axios.post('http://localhost:8000/createPost', {
+    //   username: username,
+    //   content: newPost
+    // })
+    //   .then((res) => {
+    //     if (res.data) {
+    //       setPosts([res.data, ...posts]);
+    //       setNewPost('');
+    //     }
+    //     // setProfileData(res.data) //TODO: Uncomment this code
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
   };
 
   const handleLike = (postId) => {
@@ -212,18 +212,18 @@ const ProfilePage = () => {
 
   const handleReport = async (postContent, postId) => {
     const parentUsername = localStorage.getItem("parentUsername")
-    await axios.post('http://localhost:8000/reportTheMessage', {
-      reporter_username: parentUsername,
-      message: postContent,
-      reason: null,
-      reporter_key: null
-    })
-      .then((res) => {
-        // setReportedPosts(prev => [...prev, postId]); //TODO: Uncomment this code
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    // await axios.post('http://localhost:8000/reportTheMessage', {
+    //   reporter_username: parentUsername,
+    //   message: postContent,
+    //   reason: null,
+    //   reporter_key: null
+    // })
+    //   .then((res) => {
+    //     // setReportedPosts(prev => [...prev, postId]); //TODO: Uncomment this code
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
   };
 
   const handleMessageUser = (username) => {
@@ -421,29 +421,29 @@ const ProfilePage = () => {
   );
 
   const getUserData = async () => {
-    await axios.post('http://localhost:8000/getUserInfo', {
-      username: username,
-      isReported: false
-    })
-      .then((res) => {
-        // setProfileData(res.data) //TODO: Uncomment this code
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    // await axios.post('http://localhost:8000/getUserInfo', {
+    //   username: username,
+    //   isReported: false
+    // })
+    //   .then((res) => {
+    //     // setProfileData(res.data) //TODO: Uncomment this code
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
   }
 
   const getUserPosts = async () => {
-    await axios.post('http://localhost:8000/getUserInfo', {
-      username: username,
-      isReported: false
-    })
-      .then((res) => {
-        // setPosts(res.data.posts) //TODO: Uncomment this code
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    // await axios.post('http://localhost:8000/getUserInfo', {
+    //   username: username,
+    //   isReported: false
+    // })
+    //   .then((res) => {
+    //     // setPosts(res.data.posts) //TODO: Uncomment this code
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+      // })
   }
 
   useEffect(() => {
