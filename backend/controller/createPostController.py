@@ -12,9 +12,10 @@ class CreatePostController(BaseController):
         self.resDBQueries = ResDBQueries()
 
     async def forward(self, data: CreatePostReq) -> CreatePostResp:
-        super().forward(data)
+        super().forward()
 
-        resDB_response = self.resDBQueries.saveMessageinResDB(data.content)
+        resDB_response = self.resDBQueries.savePostinResDB(data.content,
+                                                              data.username)
 
         self.mongoConnect.createPost(data.username, data.content,
                                      resDB_response.transaction_id)

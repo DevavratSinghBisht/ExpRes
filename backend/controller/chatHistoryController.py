@@ -12,7 +12,7 @@ class ChatHistoryController(BaseController):
         self.resDBQueries = ResDBQueries()
 
     async def forward(self, data: CreatePostReq) -> CreatePostResp:
-        super().forward(data)
+        super().forward()
 
         self.mongoConnect.createPost(data.username, data.content,
                                      resDB_response.transaction_id)

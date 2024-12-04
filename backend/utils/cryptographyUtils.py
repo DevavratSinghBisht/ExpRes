@@ -1,8 +1,6 @@
 import hashlib
-
-from cryptography.hazmat.primitives.asymmetric import rsa
-from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.backends import default_backend
+import nacl.signing
+import nacl.public
 
 
 
@@ -20,23 +18,21 @@ def get_encoding(data: str, hash_alg: str = "sha256") -> str:
 
 
 def generate_keys(key_size: int = 2048):
-        # Generate private key
-        private_key = rsa.generate_private_key(
-            public_exponent=65537,
-            key_size=key_size,
-            backend=default_backend()
-        )
-        private_pem = private_key.private_bytes(
-            encoding=serialization.Encoding.PEM,
-            format=serialization.PrivateFormat.PKCS8,
-            encryption_algorithm=serialization.NoEncryption()
-        ).decode("utf-8")
+       signer_private_key = nacl.signing.SigningKey.generate()
+       signer_public_key = signer_private_key.verify_key
 
-        # Generate public key
-        public_key = private_key.public_key()
-        public_pem = public_key.public_bytes(
-            encoding=serialization.Encoding.PEM,
-            format=serialization.PublicFormat.SubjectPublicKeyInfo
-        ).decode("utf-8")
+       # Generate another 32-byte private key (recipient)
+       recipient_private_key = nacl.public.PrivateKey.generate()
+       recipient_public_key = recipient_private_key.public_key
 
-        return private_pem, public_pem
+        # Convert the keys to bytes (32 bytes each)
+       signer_private_key_bytes = signer_private_key.encode()
+       signer_public_key_bytes = signer_public_key.encode()
+       recipient_public_key_bytes = recipient_public_key.encode()
+
+        # Print the keys in hexadecimal format
+       print("Signer Private Key (32 bytes):", signer_private_key_bytes.hex())
+       print("Signer Public Key (32 bytes):", signer_public_key_bytes.hex())
+       print("Recipient Public Key (32 bytes):", recipient_public_key_bytes.hex())
+
+       return signer_private_key_bytes, signer_public_key_bytes, recipient_public_key_bytes

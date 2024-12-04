@@ -29,6 +29,9 @@ class ResDBConnect:
 
     def build_post_query_payload(self, operation, amount, signer_public_key,
                                  signer_private_key, recipient_public_key, asset_data):
+        # Convert to a serializable dictionary
+        serialized_data = asset_data.model_dump()
+
         return f"""
         mutation {{
           postTransaction(data: {{
@@ -37,7 +40,7 @@ class ResDBConnect:
             signerPublicKey: "{signer_public_key}",
             signerPrivateKey: "{signer_private_key}",
             recipientPublicKey: "{recipient_public_key}",
-            asset: "{json.dumps(asset_data)}"
+            asset: "{json.dumps(serialized_data)}"
           }}) {{
             id
           }}

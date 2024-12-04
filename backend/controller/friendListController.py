@@ -11,7 +11,9 @@ class FriendsListController(BaseController):
         self.mongoConnect = MongoConnect()
 
     async def forward(self, data: FriendListReq) -> FriendListResp:
-        super().forward(data)
+        super().forward()
 
-        resp = self.mongoConnect.getUserFollowers(data.username)
+        followers = self.mongoConnect.getUserFollowers(data.username)
+
+        resp = FriendListResp(friend_list = followers)
         return resp

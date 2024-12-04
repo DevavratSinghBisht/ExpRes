@@ -3,6 +3,7 @@ from .baseController import BaseController
 from model.request import UserLoginReq
 from model.response import UserLoginResp
 from dbConnect.mongoConnect import MongoConnect
+from utils import get_encoding
 
 class UserLoginController(BaseController):
 
@@ -12,8 +13,8 @@ class UserLoginController(BaseController):
 
     async def forward(self, data: UserLoginReq) -> UserLoginResp:
         super().forward()
-
-        status = self.mongoConnect.loginUser(UserLoginReq)
+        data.password = get_encoding(data.password)
+        status = self.mongoConnect.loginUser(data)
 
         if status :
             resp = UserLoginResp(username=data.username, login_status="Login successful")

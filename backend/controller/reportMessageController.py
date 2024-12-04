@@ -14,7 +14,7 @@ class ReportMessageController(BaseController):
         self.resDBQueries = ResDBQueries()
 
     async def forward(self, data: ReportMessageReq) -> ReportMessageResp:
-        super().forward(data)
+        super().forward()
 
         post = self.mongoConnect.getPostFromMongo(data.message)
         transaction_id = post.transaction_id

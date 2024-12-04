@@ -11,6 +11,7 @@ class MongoConnect:
         self.db = self.client[db_name]
         self.users = self.db["users"]
         self.posts = self.db["posts"]
+        self.messages = self.db["messages"]
 
     # Create a User Profile
     def registerUser(self, req: UserRegReq):
@@ -35,7 +36,7 @@ class MongoConnect:
         user["visibility"] = False
         user["followers"] = []
         user["following"] = []
-        user["blocked"] = False
+        user["isBanned"] = False
         result = self.users.insert_one(user)
         print(f"User created with ID: {result.inserted_id}")
    
@@ -156,27 +157,27 @@ class MongoConnect:
             print(f"- username: {follower['username']}")
         return user_followers
 
-    def makeUserFollower(self, receiver_username, sender_username):
+    def makeUserFollower(self, curr_username, sender_username):
+        user = self.users.find_one({"username": curr_username})
+        if not user:
+            print(f"User {user} not found.")
+            return
         sender = self.users.find_one({"username": sender_username})
-        if not sender:
+        if not sender :
             print(f"User {sender} not found.")
             return
-        receiver = self.users.find_one({"username": receiver_username})
-        if not receiver :
-            print(f"User {receiver_username} not found.")
-            return
         self.users.update_one(
-            {"username": sender_username},  # Find the sender by username
-            {"$addToSet": {"followers": receiver_username}}  # Add to followers list if not already present
+            {"username": curr_username},  # Find the sender by username
+            {"$addToSet": {"followers": sender_username}}  # Add to followers list if not already present
         )
-        print(f"{receiver_username} added as a follower to {sender_username}.")
+        print(f"{sender_username} added as a follower to {curr_username}.")
 
         self.users.update_one(
-            {"username": receiver_username},  # Find the reciever by username
-            {"$addToSet": {"following": sender_username}}
+            {"username": sender_username},  # Find the reciever by username
+            {"$addToSet": {"following": curr_username}}
         )
 
-        print(f"{sender_username} started following {receiver_username}.")
+        print(f"{sender_username} started following {curr_username}.")
 
     def getPostFromMongo(self, message):
         post = self.posts.find_one({"content": message})

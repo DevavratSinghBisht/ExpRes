@@ -1,6 +1,6 @@
 from .baseController import BaseController
-from model.request import FriendRequestReq
-from model.response import FriendRequestResp
+from model.request.responseToFriendRequestReq import ResponseToFriendRequestReq
+from model.response.responseToFriendRequestResp import ResponseToFriendRequestResp
 from dbConnect.mongoConnect import MongoConnect
 
 class ResponseToFriendRequestController(BaseController):
@@ -9,16 +9,12 @@ class ResponseToFriendRequestController(BaseController):
         super().__init__()
         self.mongoConnect = MongoConnect()
 
-    async def forward(self, data: FriendRequestReq) -> FriendRequestResp:
-        """
-        Handle sending a friend request.
-        """
-        super().forward(data)
+    async def forward(self, data: ResponseToFriendRequestReq) -> ResponseToFriendRequestResp:
+        super().forward()
 
-        if data.status:
-           self.mongoConnect.makeUserFollower(data.receiver_username, data.sender_username)
-           resp = FriendRequestResp(receiver_username=data.receiver_username,
-                                    message="Reciever has become follower of sender")
+        if data.response_to_request:
+           self.mongoConnect.makeUserFollower(data.curr_username, data.sender_username)
+           resp = ResponseToFriendRequestResp(response_status = "Sucessfully added")
         else:
-           resp = FriendRequestResp(message="Reciever has not become follower")
+           resp = ResponseToFriendRequestResp(response_status="Successfully rejected")
         return resp

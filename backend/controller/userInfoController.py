@@ -11,11 +11,14 @@ class UserInfoController(BaseController):
         self.mongoConnect = MongoConnect()
 
     async def forward(self, data: UserInfoReq) -> UserInfoResp:
-        """
-        Retrieve user information.
-        """
-        super().forward(data)
+        super().forward()
 
         # User data retrieval
-        resp = self.mongoConnect.getUserInfo(UserInfoReq)
-        return resp
+        resp = self.mongoConnect.getUserInfo(data)
+
+        response = UserInfoResp(username = resp["username"],email = resp["email"],
+                                profile_picture = resp["profilePicture"],
+                                is_banned = False, created_at = resp["created_at"],
+                                followers = resp["followers"], following = resp["following"],
+                                is_active = True, last_login_at = resp["last_login_at"])
+        return response

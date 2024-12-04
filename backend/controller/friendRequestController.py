@@ -13,7 +13,7 @@ class FriendRequestController(BaseController):
         """
         Handle sending a friend request.
         """
-        super().forward(data)
+        super().forward()
 
         if data.status:
            self.mongoConnect.makeUserFollower(data.receiver_username, data.sender_username)
