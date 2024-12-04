@@ -1,80 +1,142 @@
 import React, { useState } from 'react';
-import './login.css';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Login = () => {
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const parentUsername = localStorage.getItem("parentUsername");
+    const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        console.log("Email:", email);
+        console.log("Username:", username);
         console.log("Password:", password);
-        // Add authentication logic here
 
-
-
-
-
-        // Replace this URL with your backend's login endpoint
-        const apiUrl = "https://example.com/api/login";
-
+        const apiUrl = "http://127.0.0.1:8000/userLogin";
+        console.log('calling ? ',apiUrl);
         try {
-            const response = await fetch(apiUrl, {
-                method: "POST",
+            const response = await axios.post(apiUrl, {
+                username: username,
+                password: password,
+            }, {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({
-                    email: email,
-                    password: password,
-                }),
             });
-
-            if (!response.ok) {
+            console.log('data ',response);
+            if (response.data.token) {
+                console.log("Login successful:", response.data);
+                localStorage.setItem("authToken", response.data.token);
+                if (!parentUsername) {
+                    localStorage.setItem("parentUsername", username);
+                }
+                alert("Login successful!");
+                navigate("/PostPage");
+            } else {
                 throw new Error("Login failed. Please check your credentials.");
             }
-
-            const data = await response.json();
-            console.log("Login successful:", data);
-
-            // Example: Save token to localStorage or state
-            localStorage.setItem("authToken", data.token);
-            alert("Login successful!");
-
-            // Redirect user after successful login (optional)
-            // navigate("/dashboard"); // Requires React Router
         } catch (error) {
             console.error("Error during login:", error.message);
             alert("Error: " + error.message);
         }
     };
 
-
-
     return (
-        <div className="login-container">
-            <h2>Login</h2>
-            <form onSubmit={handleLogin}>
-                <label>Email:</label>
-                <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
+        <div style={styles.loginContainer}>
+            <div style={styles.loginBox}>
+                <h2 style={styles.title}>Login</h2>
+                <form onSubmit={handleLogin}>
+                    <div style={styles.inputGroup}>
+                        <label htmlFor="username" style={styles.label}>Username:</label>
+                        <input
+                            type="text"
+                            id="username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                            placeholder="Enter your username"
+                            style={styles.input}
+                        />
+                    </div>
 
-                <label>Password:</label>
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
+                    <div style={styles.inputGroup}>
+                        <label htmlFor="password" style={styles.label}>Password:</label>
+                        <input
+                            type="password"
+                            id="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                            placeholder="Enter your password"
+                            style={styles.input}
+                        />
+                    </div>
 
-                <button type="submit">Login</button>
-            </form>
+                    <button type="submit" style={styles.loginBtn}>Login</button>
+                </form>
+            </div>
         </div>
     );
+};
+
+// Inline styles
+const styles = {
+    loginContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        backgroundColor: '#f4f4f9',
+    },
+    loginBox: {
+        backgroundColor: '#071E3D',
+        padding: '30px',
+        borderRadius: '8px',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+        width: '100%',
+        maxWidth: '400px',
+    },
+    title: {
+        textAlign: 'center',
+        marginBottom: '20px',
+        color: '#fff',
+    },
+    inputGroup: {
+        marginBottom: '25px',
+    },
+    label: {
+        display: 'block',
+        fontWeight: 'bold',
+        marginBottom: '8px',
+        color: '#33bbf5',
+    },
+    input: {
+        width: '92%',
+        padding: '10px',
+        border: '1px solid #ccc',
+        borderRadius: '5px',
+        fontSize: '16px',
+        outline: 'none',
+    },
+    inputFocus: {
+        borderColor: '#0056b3',
+        boxShadow: '0 0 5px rgba(0, 86, 179, 0.3)',
+    },
+    loginBtn: {
+        width: '98%',
+        padding: '10px',
+        backgroundColor: '#0056b3',
+        color: 'white',
+        fontSize: '16px',
+        border: 'none',
+        borderRadius: '5px',
+        cursor: 'pointer',
+        transition: 'background-color 0.3s ease',
+    },
+    loginBtnHover: {
+        backgroundColor: '#003f7d',
+    },
 };
 
 export default Login;

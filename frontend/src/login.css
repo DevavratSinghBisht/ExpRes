@@ -11,7 +11,7 @@ h2 {
   color: #333;
 }
 
-form {
+/* form {
   display: flex;
   flex-direction: column;
   width: 300px;
@@ -47,4 +47,4 @@ button {
 
 button:hover {
   background-color: #0056b3;
-}
+} */
