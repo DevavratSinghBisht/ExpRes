@@ -1,9 +1,9 @@
 from .baseController import BaseController
-from backend.model.request import ReportMessageReq
-from backend.model.response import ReportMessageResp
-from backend.dbConnect.resDBConnect import ResDBConnect
-from backend.dbConnect.mongoConnect import MongoConnect
-from backend.dbConnect.resDBQueries import ResDBQueries
+from model.request import ReportMessageReq
+from model.response import ReportMessageResp
+from dbConnect.resDBConnect import ResDBConnect
+from dbConnect.mongoConnect import MongoConnect
+from dbConnect.resDBQueries import ResDBQueries
 
 class ReportMessageController(BaseController):
 

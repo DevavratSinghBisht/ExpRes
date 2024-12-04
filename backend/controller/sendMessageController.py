@@ -1,9 +1,9 @@
 from .baseController import BaseController
-from backend.model.request import SendMessageReq
-from backend.model.response import SendMessageResp
-from backend.utils.connectionManager import ChatConnectionManager
-from backend.dbConnect.mongoConnect import MongoConnect
-from backend.dbConnect.resDBQueries import ResDBQueries
+from model.request import SendMessageReq
+from model.response import SendMessageResp
+from utils.connectionManager import ChatConnectionManager
+from dbConnect.mongoConnect import MongoConnect
+from dbConnect.resDBQueries import ResDBQueries
 
 class SendMessageController(BaseController):
 

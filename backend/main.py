@@ -147,7 +147,19 @@ async def reportTheMessage(data: ReportMessageReq) -> ReportMessageResp:
     return resp
 
 @app.post('/responseToFriendRequest')
-async def reportTheMessage(data: ResponseToFriendRequestReq) -> ResponseToFriendRequestResp:
+async def responseToFriendRequest(data: ResponseToFriendRequestReq) -> ResponseToFriendRequestResp:
+    # data validation
+    validator = ResponseToFriendRequestValidator()
+    validator.validate(data)
+
+    # logic
+    controller = ResponseToFriendRequestController()
+    resp = await controller.forward(data)
+
+    return resp
+
+@app.post('/sendFriendRequest')
+async def sendFriendRequest(data: SendFriendReq) -> SendFriendResp:
     # data validation
     validator = ResponseToFriendRequestValidator()
     validator.validate(data)

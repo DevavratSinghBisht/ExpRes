@@ -1,10 +1,9 @@
-from backend.utils.cryptographyUtils import get_encoding
-from backend.utils.cryptographyUtils import generate_keys
-from backend.model.resDBReq.assetData import AssetData
+from utils.cryptographyUtils import get_encoding
+from utils.cryptographyUtils import generate_keys
+from model.resDBReq.assetData import AssetData
 
-from backend.model.request import SendMessageReq
-from resDBConnect import ResDBConnect
-from backend.dbConnect.mongoConnect import MongoConnect
+from dbConnect.resDBConnect import ResDBConnect
+from dbConnect.mongoConnect import MongoConnect
 
 class ResDBQueries:
     def __init__(self):

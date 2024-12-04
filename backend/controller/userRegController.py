@@ -2,7 +2,7 @@ from .baseController import BaseController
 from model.request import UserRegReq
 from model.response import UserRegResp
 
-from utils import getEncoding
+from utils import get_encoding
 from dbConnect.mongoConnect import MongoConnect
 
 
@@ -15,7 +15,7 @@ class UserRegController(BaseController):
     async def forward(self, data: UserRegReq) -> UserRegResp:
         
         super().forward()
-        data.password = getEncoding(data.password)
+        data.password = get_encoding(data.password)
         print("encoded password", data.password)
 
         self.mongoConnect.registerUser(UserRegReq)
