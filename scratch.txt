@@ -1,5 +1,0 @@
-docker run -d --name mongo -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=root -p 27017:27017 mongo
-
-docker run -d --name mongo -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=root -p 27017:27017 -v mongodemo:/data/db mongo
-
-https://www.youtube.com/watch?v=gFjpv-nZO0U&ab_channel=ScriptBytes
