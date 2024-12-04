@@ -1,8 +1,5 @@
 from pymongo import MongoClient
 from datetime import datetime
-
-from sympy.codegen.fnodes import use_rename
-
 from model.request import UserRegReq, UserLoginReq, UserInfoReq
 
 
@@ -17,7 +14,7 @@ class MongoConnect:
 
     # Create a User Profile
     def registerUser(self, req: UserRegReq):
-        
+        print("Req:", req)
         user = req.model_dump()
         try:
             del user['password2']

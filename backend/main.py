@@ -157,19 +157,6 @@ async def responseToFriendRequest(data: ResponseToFriendRequestReq) -> ResponseT
     resp = await controller.forward(data)
 
     return resp
-
-@app.post('/sendFriendRequest')
-async def sendFriendRequest(data: SendFriendReq) -> SendFriendResp:
-    # data validation
-    validator = ResponseToFriendRequestValidator()
-    validator.validate(data)
-
-    # logic
-    controller = ResponseToFriendRequestController()
-    resp = await controller.forward(data)
-
-    return resp
-
 @app.get("/")
 async def get() -> HTMLResponse:
     return HTMLResponse(chatHTML)
