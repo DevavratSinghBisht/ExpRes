@@ -3,11 +3,13 @@ from .baseValidator import BaseValidator
 from pydantic import EmailStr, validator
 import re
 from datetime import datetime
+from dbConnect.mongoConnect import MongoConnect
 
 class UserRegValidator(BaseValidator):
     
     def __init__(self):
         super().__init__()
+        self.mongo = MongoConnect()
 
     async def validate(self, data: UserRegReq):
         '''
@@ -40,6 +42,11 @@ class UserRegValidator(BaseValidator):
         except ValueError:
             self.handle_error("Invalid email format")
 
+        if self.mongo.users.find_one({"username": data.username}):
+            self.handle_error("Username already exists. Please choose a different one.")
+
+        if self.mongo.users.find_one({"email": data.email}):
+            self.handle_error("An account with this email already exists.")
 
         if not data.password or len(data.password) < 8:
             self.handle_error("Password should be at least 8 characters long")
@@ -49,7 +56,7 @@ class UserRegValidator(BaseValidator):
 
         if not self.is_valid_profile_picture(data.profilePicture):
             self.handle_error("Invalid profile picture URL or path")
-        
+
         return True  # If all validations pass
 
 
