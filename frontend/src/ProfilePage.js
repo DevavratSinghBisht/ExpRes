@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Heart, MessageCircle, Share2, X, Flag, Send } from 'lucide-react';
+import { Heart, X, Flag, Send, Check, XIcon } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
@@ -32,6 +32,11 @@ const autoProfileData = {
     "bob_brown",
     "bob_brown",
     "bob_brown",
+  ],
+  "pendingRequests": [
+    "charlie_davis",
+    "emma_wilson",
+    "george_miller"
   ]
 };
 
@@ -132,43 +137,43 @@ const humanizeTimeDifference = (givenDate) => {
   const years = Math.floor(days / 365); // Approximate
 
   if (seconds < 60) {
-      return seconds === 1 ? "Just now" : `${seconds} seconds ago`;
+    return seconds === 1 ? "Just now" : `${seconds} seconds ago`;
   } else if (minutes < 60) {
-      return minutes === 1 ? "1 minute ago" : `${minutes} minutes ago`;
+    return minutes === 1 ? "1 minute ago" : `${minutes} minutes ago`;
   } else if (hours < 24) {
-      return hours === 1 ? "1 hour ago" : `${hours} hours ago`;
+    return hours === 1 ? "1 hour ago" : `${hours} hours ago`;
   } else if (days < 30) {
-      return days === 1 ? "1 day ago" : `${days} days ago`;
+    return days === 1 ? "1 day ago" : `${days} days ago`;
   } else if (months < 12) {
-      return months === 1 ? "1 month ago" : `${months} months ago`;
+    return months === 1 ? "1 month ago" : `${months} months ago`;
   } else {
-      return years === 1 ? "1 year ago" : `${years} years ago`;
+    return years === 1 ? "1 year ago" : `${years} years ago`;
   }
 }
 
-const UserList = ({ users }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-    {users.map((user, index) => (
-      <div key={index} style={{
-        display: 'flex',
-        alignItems: 'center',
-        padding: '12px',
-        borderRadius: '12px',
-        backgroundColor: 'rgba(255, 255, 255, 0.05)',
-        transition: 'background-color 0.2s'
-      }}>
-        <div style={{
-          width: '40px',
-          height: '40px',
-          borderRadius: '50%',
-          background: 'linear-gradient(45deg, #3b82f6, #2563eb)',
-          marginRight: '1rem'
-        }} />
-        <span style={{ color: '#ffffff', fontWeight: '500' }}>{user}</span>
-      </div>
-    ))}
-  </div>
-);
+// const UserList = ({ users }) => (
+//   <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+//     {users.map((user, index) => (
+//       <div key={index} style={{
+//         display: 'flex',
+//         alignItems: 'center',
+//         padding: '12px',
+//         borderRadius: '12px',
+//         backgroundColor: 'rgba(255, 255, 255, 0.05)',
+//         transition: 'background-color 0.2s'
+//       }}>
+//         <div style={{
+//           width: '40px',
+//           height: '40px',
+//           borderRadius: '50%',
+//           background: 'linear-gradient(45deg, #3b82f6, #2563eb)',
+//           marginRight: '1rem'
+//         }} />
+//         <span style={{ color: '#ffffff', fontWeight: '500' }}>{user}</span>
+//       </div>
+//     ))}
+//   </div>
+// );
 
 const ProfilePage = () => {
   const [posts, setPosts] = useState(autoPosts);
@@ -181,20 +186,20 @@ const ProfilePage = () => {
   const handlePostSubmit = async (e) => {
     e.preventDefault();
 
-    await axios.post('http://localhost:8000/createPost', { 
+    await axios.post('http://localhost:8000/createPost', {
       username: username,
       content: newPost
     })
-    .then((res) => {
-      if(res.data){
+      .then((res) => {
+        if (res.data) {
           setPosts([res.data, ...posts]);
           setNewPost('');
-      }
-      // setProfileData(res.data) //TODO: Uncomment this code
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+        }
+        // setProfileData(res.data) //TODO: Uncomment this code
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   };
 
   const handleLike = (postId) => {
@@ -207,7 +212,7 @@ const ProfilePage = () => {
 
   const handleReport = async (postContent, postId) => {
     const parentUsername = localStorage.getItem("parentUsername")
-    await axios.post('http://localhost:8000/reportTheMessage', { 
+    await axios.post('http://localhost:8000/reportTheMessage', {
       reporter_username: parentUsername,
       message: postContent,
       reason: null,
@@ -226,9 +231,61 @@ const ProfilePage = () => {
     alert(`Opening chat with ${username}`);
   };
 
+  const handleAcceptRequest = (requestingUser) => {
+    //TODO: Remove 236 to 246
+    const updatedPendingRequests = profileData.pendingRequests.filter(user => user !== requestingUser);
+    const updatedFollowers = [...profileData.followers, requestingUser];
+    const updatedFollowing = [...profileData.following, requestingUser];
+
+    // Update profile data
+    setProfileData(prevData => ({
+      ...prevData,
+      followers: updatedFollowers,
+      following: updatedFollowing,
+      pendingRequests: updatedPendingRequests
+    }));
+
+    const parentUsername = localStorage.getItem("parentUsername")
+    // TODO: Uncomment and implement actual API call
+    // await axios.post('http://localhost:8000/responseToFriendRequest', { 
+    //   sender_username: parentUsername,
+    //   response_to_request: true
+    // })
+    // .then((res) => {
+    //   // getUserData(); //TODO: Uncomment this
+    //   // Handle successful request acceptance
+    // })
+    // .catch((err) => {
+    //   console.log(err)
+    // })
+  };
+
+  const handleRejectRequest = (requestingUser) => {
+    //TODO: Remove 265 to 269
+    const updatedPendingRequests = profileData.pendingRequests.filter(user => user !== requestingUser);
+    setProfileData(prevData => ({
+      ...prevData,
+      pendingRequests: updatedPendingRequests
+    }));
+
+    const parentUsername = localStorage.getItem("parentUsername")
+    // TODO: Uncomment and implement actual API call
+    // await axios.post('http://localhost:8000/responseToFriendRequest', { 
+    //   sender_username: parentUsername,
+    //   response_to_request: false
+    // })
+    // .then((res) => {
+    //   // getUserData() //TODO: Uncomment this
+    //   // Handle successful request rejection
+    // })
+    // .catch((err) => {
+    //   console.log(err)
+    // })
+  };
+
   const Modal = ({ isOpen, onClose, title, children }) => {
     if (!isOpen) return null;
-  
+
     return (
       <div style={{
         position: 'fixed',
@@ -278,53 +335,93 @@ const ProfilePage = () => {
     );
   };
 
-  const UserList = ({ users, onMessageUser }) => (
+  const UserList = ({ users, onMessageUser, onAcceptUser, onRejectUser, isPendingRequest = false }) => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
       {users.map((user, index) => (
-        <div key={index} style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '12px',
-          borderRadius: '12px',
-          backgroundColor: 'rgba(255, 255, 255, 0.05)',
-          transition: 'background-color 0.2s'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <div style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '50%',
-              background: 'linear-gradient(45deg, #3b82f6, #2563eb)',
-              marginRight: '1rem'
-            }} />
-            <span style={{ color: '#ffffff', fontWeight: '500' }}>{user}</span>
+        <div key={index}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '12px',
+            borderRadius: '12px',
+            backgroundColor: 'rgba(255, 255, 255, 0.05)',
+            transition: 'background-color 0.2s'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <div style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                background: 'linear-gradient(45deg, #3b82f6, #2563eb)',
+                marginRight: '1rem'
+              }} />
+              <span style={{ color: '#ffffff', fontWeight: '500' }}>{user}</span>
+            </div>
+            {onMessageUser && (
+              <button
+                onClick={() => onMessageUser(user)}
+                style={{
+                  backgroundColor: '#3b82f6',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: '8px',
+                  padding: '8px 16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  cursor: 'pointer',
+                  transition: 'background-color 0.2s'
+                }}
+              >
+                <Send size={16} />
+                Message
+              </button>
+            )}
+            {isPendingRequest ? (
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <button
+                  onClick={() => onAcceptUser(user)}
+                  style={{
+                    backgroundColor: '#10b981',
+                    color: '#ffffff',
+                    border: 'none',
+                    borderRadius: '8px',
+                    padding: '8px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.2s'
+                  }}
+                >
+                  <Check size={16} />
+                </button>
+                <button
+                  onClick={() => onRejectUser(user)}
+                  style={{
+                    backgroundColor: '#ef4444',
+                    color: '#ffffff',
+                    border: 'none',
+                    borderRadius: '8px',
+                    padding: '8px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.2s'
+                  }}
+                >
+                  <XIcon size={16} />
+                </button>
+              </div>
+            ) : null}
           </div>
-          <button
-            onClick={() => onMessageUser(user)}
-            style={{
-              backgroundColor: '#3b82f6',
-              color: '#ffffff',
-              border: 'none',
-              borderRadius: '8px',
-              padding: '8px 16px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              cursor: 'pointer',
-              transition: 'background-color 0.2s'
-            }}
-          >
-            <Send size={16} />
-            Message
-          </button>
         </div>
       ))}
     </div>
   );
 
   const getUserData = async () => {
-    await axios.post('http://localhost:8000/getUserInfo', { 
+    await axios.post('http://localhost:8000/getUserInfo', {
       username: username,
       isReported: false
     })
@@ -337,7 +434,7 @@ const ProfilePage = () => {
   }
 
   const getUserPosts = async () => {
-    await axios.post('http://localhost:8000/getUserInfo', { 
+    await axios.post('http://localhost:8000/getUserInfo', {
       username: username,
       isReported: false
     })
@@ -392,57 +489,72 @@ const ProfilePage = () => {
               }}>@{profileData.username}</h2>
               <div style={{ display: 'flex', gap: '2rem' }}>
                 <></>
+                <div style={{ display: 'flex', gap: '2rem', flex: 1 }}>
+                  <div
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      textAlign: 'center'
+                    }}
+                  >
+                    <div style={{ fontSize: '1', fontWeight: '700', color: '#3b82f6' }}>
+                      {posts.length}
+                    </div>
+                    <div style={{ color: '#94a3b8' }}>Posts</div>
+                  </div>
+                  <div
+                    onClick={() => setShowModal({ type: 'followers', data: profileData.followers })}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      textAlign: 'center'
+                    }}
+                  >
+                    <div style={{ fontSize: '1', fontWeight: '700', color: '#3b82f6' }}>
+                      {profileData.followers.length}
+                    </div>
+                    <div style={{ color: '#94a3b8' }}>Followers</div>
+                  </div>
+                  <div
+                    onClick={() => setShowModal({ type: 'following', data: profileData.following })}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      textAlign: 'center'
+                    }}
+                  >
+                    <div style={{ fontSize: '1', fontWeight: '700', color: '#3b82f6' }}>
+                      {profileData.following.length}
+                    </div>
+                    <div style={{ color: '#94a3b8' }}>Following</div>
+                  </div>
+                </div>
                 <div
+                  onClick={() => setShowModal({ type: 'pendingRequests', data: profileData.pendingRequests })}
                   style={{
                     background: 'none',
                     border: 'none',
                     cursor: 'pointer',
-                    textAlign: 'center'
+                    textAlign: 'center',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    marginTop: '-8px',
+                    backgroundColor: profileData.pendingRequests.length > 0 ? 'rgba(59, 130, 246, 0.1)' : 'transparent',
+                    padding: '0.5rem',
+                    borderRadius: '8px'
                   }}
                 >
-                  <div style={{ fontSize: '1', fontWeight: '700', color: '#3b82f6' }}>
-                    {posts.length}
+                  <div style={{
+                    fontSize: '1',
+                    fontWeight: '700',
+                    color: profileData.pendingRequests.length > 0 ? '#3b82f6' : '#94a3b8'
+                  }}>
+                    {profileData.pendingRequests.length}
                   </div>
-                  <div style={{ color: '#94a3b8' }}>Posts</div>
-                </div>
-                <div
-                  onClick={() => setShowModal({ type: 'followers', data: profileData.followers })}
-                  style={{
-                    background: 'none',
-                    border: 'none',
-                    cursor: 'pointer',
-                    textAlign: 'center'
-                  }}
-                >
-                  <div style={{ fontSize: '1', fontWeight: '700', color: '#3b82f6' }}>
-                    {profileData.followers.length}
-                  </div>
-                  <div style={{ color: '#94a3b8' }}>Followers</div>
-                </div>
-                <div
-                  onClick={() => setShowModal({ type: 'following', data: profileData.following })}
-                  style={{
-                    background: 'none',
-                    border: 'none',
-                    cursor: 'pointer',
-                    textAlign: 'center'
-                  }}
-                >
-                  <div style={{ fontSize: '1', fontWeight: '700', color: '#3b82f6' }}>
-                    {profileData.following.length}
-                  </div>
-                  <div style={{ color: '#94a3b8' }}>Following</div>
-                </div>
-                <div 
-                  key={profileData.username} 
-                  style={{
-                    backgroundColor: '#1e293b',
-                    padding: '1.5rem',
-                    borderRadius: '16px',
-                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                    opacity: reportedPosts.includes(profileData.username) ? 0.5 : 1
-                  }}
-                >
+                  <div style={{ color: '#94a3b8' }}>Pending Requests</div>
                 </div>
               </div>
             </div>
@@ -526,7 +638,7 @@ const ProfilePage = () => {
                   </p>
                   <div style={{ display: 'flex', gap: '1rem' }}>
                     <button
-                      onClick={() =>{ handleLike(post.id)}}
+                      onClick={() => { handleLike(post.id) }}
                       style={{
                         background: 'none',
                         border: 'none',
@@ -561,9 +673,9 @@ const ProfilePage = () => {
                       }}
                       disabled={reportedPosts.includes(post.id)}
                     >
-                    <Flag size={20} />
-                    <span>{reportedPosts.includes(post.id) ? 'Reported' : 'Report'}</span>
-                  </button>
+                      <Flag size={20} />
+                      <span>{reportedPosts.includes(post.id) ? 'Reported' : 'Report'}</span>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -577,7 +689,7 @@ const ProfilePage = () => {
           onClose={() => setShowModal({ type: null, data: null })}
           title="Followers"
         >
-          <UserList users={profileData.followers} 
+          <UserList users={profileData.followers}
             onMessageUser={handleMessageUser}
           />
         </Modal>
@@ -587,9 +699,22 @@ const ProfilePage = () => {
           onClose={() => setShowModal({ type: null, data: null })}
           title="Following"
         >
-          <UserList users={profileData.following} 
+          <UserList users={profileData.following}
             onMessageUser={handleMessageUser}
-            />
+          />
+        </Modal>
+        <Modal
+          isOpen={showModal.type === 'pendingRequests'}
+          onClose={() => setShowModal({ type: null, data: null })}
+          title="Pending Requests"
+        >
+          <UserList
+            users={profileData.pendingRequests}
+            // onMessageUser={() => {}} 
+            onAcceptUser={handleAcceptRequest}
+            onRejectUser={handleRejectRequest}
+            isPendingRequest={true}
+          />
         </Modal>
       </div>
     </div>
