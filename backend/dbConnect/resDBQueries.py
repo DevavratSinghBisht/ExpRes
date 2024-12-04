@@ -43,7 +43,7 @@ class ResDBQueries:
                                receiver_username = "Missing", content = message)
 
         query = self.resDBConnect.build_post_query_payload("CREATE",
-                                                           0, signer_public_key, signer_private_key,
+                                                           1, signer_public_key, signer_private_key,
                                                            recipient_public_key, asset_data)
         print ("Query: ", query)
         data = self.resDBConnect.execute(query)

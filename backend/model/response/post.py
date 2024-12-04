@@ -7,4 +7,3 @@ class Post(BaseModel):
     content: str
     likes: int
     created_at: datetime
-    transactionId: str

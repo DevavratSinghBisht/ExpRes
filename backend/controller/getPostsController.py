@@ -1,7 +1,8 @@
 from .baseController import BaseController
-from model.request import GetPostsReq
-from model.response import GetPostsResp
+from model.request.getPostsReq import GetPostsReq
+from model.response.getPostsResp import GetPostsResp
 from dbConnect.mongoConnect import MongoConnect
+from model.response.post import Post
 
 class GetPostsController(BaseController):
 
@@ -12,5 +13,10 @@ class GetPostsController(BaseController):
     async def forward(self, data: GetPostsReq) -> GetPostsResp:
         super().forward()
 
-        resp = self.mongoConnect.getUserPosts(data.username)
+        posts = self.mongoConnect.getUserPosts(data.username)
+        print("Fetched posts successfully", posts)
+
+        print(f"Number of posts: {len(posts)}")
+        resp = GetPostsResp(posts=posts)
+        print("completed")
         return resp

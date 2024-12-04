@@ -14,10 +14,14 @@ class CreatePostController(BaseController):
     async def forward(self, data: CreatePostReq) -> CreatePostResp:
         super().forward()
 
-        resDB_response = self.resDBQueries.savePostinResDB(data.content,
+        response = self.resDBQueries.savePostinResDB(data.content,
                                                               data.username)
 
-        self.mongoConnect.createPost(data.username, data.content,
-                                     resDB_response.transaction_id)
-        resp = CreatePostResp(post_status=True)
+        # Accessing the id
+        transaction_id = response['postTransaction']['id']
+        post = self.mongoConnect.createPost(data.username, data.content,
+                                     transaction_id)
+
+        resp = CreatePostResp(post_status="Successfully posted", transactionId = transaction_id, content=post["content"],
+                              likes = 0, created_at = post["created_at"])
         return resp

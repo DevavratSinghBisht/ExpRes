@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 import datetime
 from model.request import UserRegReq, UserLoginReq, UserInfoReq
+from model.response.post import Post
 
 
 class MongoConnect:
@@ -21,16 +22,6 @@ class MongoConnect:
             del user['password2']
         except:
             pass
-        # user["username"] = UserRegReq.username
-        # user["email"] = UserRegReq.email
-        # user["firstName"] = UserRegReq.firstName
-        # user["lastName"] = UserRegReq.lastName
-        # user["dateOfBirth"] = UserRegReq.dateOfBirth
-        # user["contactNo"] = UserRegReq.contactNo
-        # user["email"] = UserRegReq.email
-        # user["password"] = UserRegReq.password
-        # user["password2"] = UserRegReq.password2
-        # user["profilePicture"] = UserRegReq.profilePicture
         user["created_at"] = datetime.datetime.now(datetime.timezone.utc)
         user["last_login_at"] = datetime.datetime.now(datetime.timezone.utc)
         user["visibility"] = False
@@ -65,11 +56,12 @@ class MongoConnect:
             "content": content,
             "likes": 0,
             "comments": [],
-            "created_at": datetime.now(datetime.timezone.utc),
+            "created_at": datetime.datetime.now(datetime.timezone.utc),
             "id": transactionId
         }
         result = self.posts.insert_one(post)
         print(f"Post created with ID: {result.inserted_id}")
+        return post
 
     # Like a Post
     def likePost(self, post_id):
@@ -135,11 +127,19 @@ class MongoConnect:
             print(f"User {username} not found.")
             return
         
-        user_posts = self.posts.find({"user_id": user["_id"]})
+        user_posts = self.posts.find({"username": user["username"]})
         print(f"Posts by {username}:")
+        posts = []
         for post in user_posts:
-            print(f"- ID: {post['_id']} | Content: {post['content']} | Likes: {post['likes']}")
-        return user_posts
+            print(f"- ID: {post['id']} | Content: {post['content']} | Likes: {post['likes']}")
+            resp_post = Post(
+                id=post['id'],
+                content=post['content'],
+                likes=post['likes'],
+                created_at=post['created_at']
+            )
+            posts.append(resp_post)
+        return posts
 
     def getUserInfo(self, req: UserInfoReq):
         user = self.users.find_one({"username": req.username})
@@ -153,8 +153,10 @@ class MongoConnect:
             return
         user_followers = user["followers"]
         print(f"Followers by {username}:")
+        friends = []
         for follower in user_followers:
-            print(f"- username: {follower['username']}")
+            print(f"- username: {follower}")
+            friends.append(follower)
         return user_followers
 
     def makeUserFollower(self, curr_username, sender_username):

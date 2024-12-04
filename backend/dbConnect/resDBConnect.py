@@ -29,8 +29,13 @@ class ResDBConnect:
 
     def build_post_query_payload(self, operation, amount, signer_public_key,
                                  signer_private_key, recipient_public_key, asset_data):
-        # Convert to a serializable dictionary
-        serialized_data = asset_data.model_dump()
+        # Wrap the asset data in the 'data' key
+        serialized_data = {
+            "data": asset_data.dict()  # .dict() converts the model to a dictionary
+        }
+
+        # Wrap the asset data in triple quotes and escape inner quotes
+        asset_data_with_quotes = f'"""{serialized_data}"""'
 
         return f"""
         mutation {{
@@ -40,8 +45,8 @@ class ResDBConnect:
             signerPublicKey: "{signer_public_key}",
             signerPrivateKey: "{signer_private_key}",
             recipientPublicKey: "{recipient_public_key}",
-            asset: "{json.dumps(serialized_data)}"
-          }}) {{
+            asset: {asset_data_with_quotes}
+            }}) {{
             id
           }}
         }}
