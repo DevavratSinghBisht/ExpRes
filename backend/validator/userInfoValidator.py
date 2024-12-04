@@ -11,7 +11,7 @@ class UserInfoValidator(BaseValidator):
         """
         Validates that user_id is present.
         """
-        super().validate(data)
+        self.common_validation()
 
         if not data.username:
             raise ValueError("Username cannot be empty")

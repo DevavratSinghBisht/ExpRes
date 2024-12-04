@@ -11,7 +11,7 @@ class SendMessageValidator(BaseValidator):
         """
         Validates that sender_id, receiver_id, and message are present.
         """
-        super().validate(data)
+        self.common_validation()
 
         if not data.sender_username :
             raise ValueError("Sender username cannot be empty")
