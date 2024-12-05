@@ -7,3 +7,4 @@ class Post(BaseModel):
     content: str
     likes: int
     created_at: datetime
+    is_reported: bool = False
