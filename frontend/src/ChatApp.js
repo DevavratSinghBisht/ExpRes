@@ -35,14 +35,30 @@ function ChatApp() {
 
   const fetchMessages = async (receiver) => {
     setIsLoading(true);
+  
     try {
-      const mockMessages = [
-        { sender_username: "Alice", message: "Hi there!", isForwarded: false },
-        { sender_username: "currentUsername", message: "Hello!", isForwarded: false },
-      ];
-      setMessages(mockMessages);
+      const response = await fetch("http://localhost:8000/getChatHistory", {
+        method: "GET", // Use POST if the backend requires it
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          sender_username: "currentUsername", // Replace with the actual sender's username
+          receiver_username: receiver,
+        }),
+      });
+  
+      if (!response.ok) {
+        console.error("Failed to fetch chat history:", response.statusText);
+        return;
+      }
+  
+      const chatHistory = await response.json();
+  
+      // Update the chat messages state for this conversation
+      setMessages(chatHistory);
     } catch (error) {
-      console.error("Error fetching messages:", error);
+      console.error("Error fetching chat history:", error);
     } finally {
       setIsLoading(false);
     }
@@ -69,11 +85,6 @@ function ChatApp() {
         body: JSON.stringify(messageData),
       });
 
-      // if (!response.ok) {
-      //   console.error("HTTP error", response.status);
-      //   return;
-      // }
-
       const result = await response.json();
       console.log("Response", result);
 
@@ -89,8 +100,55 @@ function ChatApp() {
     }
   };
 
+  const handleReportMessage = async (message, reason) => {
+    // Ensure all required fields are present
+    if (!reason) {
+      alert("Please provide a reason for reporting the message.");
+      return;
+    }
+  
+    if (!message || !message.message || !message.transactionId) {
+      alert("Invalid message data. Cannot report.");
+      return;
+    }
+  
+    const reportData = {
+      reporter_username: "currentUsername", // Replace with actual reporter's username
+      reported_username: activeFriend.username,
+      message: message.message,
+      reason: reason,
+      transactionId: message.transactionId || "N/A", // Ensure transactionId is present
+    };
+  
+    try {
+      const response = await fetch("http://localhost:8000/reportTheMessage", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(reportData),
+      });
+  
+      if (!response.ok) {
+        const errorDetails = await response.json();
+        console.error("Error reporting message:", errorDetails);
+        alert(`Failed to report message: ${errorDetails.message || response.statusText}`);
+        return;
+      }
+  
+      const result = await response.json();
+      console.log("Report response:", result);
+  
+      // Notify the user about the successful report
+      alert("Message reported successfully.");
+    } catch (error) {
+      console.error("Error reporting message:", error);
+      alert("An error occurred while reporting the message.");
+    }
+  };
+
   return (
-    <div className="chat-app" style={{ color: "black" }}>
+    <div className="chat-app" style={{ color: "black", height:"500px" }}>
       <div className="sidebar">
         <FriendList friends={friends} onFriendClick={handleFriendClick} />
       </div>
@@ -113,6 +171,23 @@ function ChatApp() {
               <button onClick={handleSendMessage} disabled={!m.trim()}>
                 Send
               </button>
+            </div>
+
+            {/* Add report button for each message */}
+            <div className="message-list">
+              {messages.map((msg, index) => (
+                <div key={index} className="message">
+                  <p>{msg.message}</p>
+                  <button onClick={() => {
+                    const reason = prompt("Enter a reason for reporting:");
+                    if (reason) {
+                      handleReportMessage(msg, reason);
+                    }
+                  }}>
+                    Report
+                  </button>
+                </div>
+              ))}
             </div>
           </>
         ) : (

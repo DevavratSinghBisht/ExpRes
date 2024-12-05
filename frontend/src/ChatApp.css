@@ -1,45 +1,245 @@
+/* General Styles */
 .chat-app {
     display: flex;
-    height: 100vh;
+    width: 80%;
+    max-width: 1200px;
+    height: 50vh;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-left: 150px;
+    margin-top: 20px;
 }
 
-.sidebar {
-    width: 25%;
-    background-color: #f4f4f4;
-    padding: 1rem;
-    overflow-y: auto;
-}
-
-.chat-box {
-    flex: 1;
+/* Friend List Styles */
+.friend-list {
+    width: 30%;
+    background-color: #f7f7f7;
+    padding: 20px;
+    border-right: 1px solid #ddd;
     display: flex;
     flex-direction: column;
-    padding: 1rem;
-    background-color: #ffffff;
 }
 
-.input-section {
+.friend-list h3 {
+    margin-top: 0;
+    text-align: center;
+    color: #333;
+}
+
+.friend-list ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.friend-list li {
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
     display: flex;
-    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.input-section input {
-    flex: 1;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.friend-list li:hover {
+    background-color: #ebebeb;
 }
 
-.input-section button {
-    padding: 0.5rem 1rem;
-    background-color: #007bff;
+.friend-list li.reported {
+    color: red;
+    font-weight: bold;
+}
+
+/* Chat Window Styles */
+.chat-window {
+    width: 70%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #fff;
+}
+
+.chat-window h3 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.message {
+    background-color: #f1f1f1;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 8px;
+    max-width: 70%;
+    word-wrap: break-word;
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+.message.sent {
+    background-color: #a1c4fd;
+    margin-left: auto;
+}
+
+.message.received {
+    background-color: #f7f7f7;
+}
+
+.message:hover {
+    background-color: #e1e1e1;
+}
+
+button {
+    background-color: #3498db;
     color: white;
     border: none;
-    border-radius: 4px;
+    padding: 10px 15px;
+    border-radius: 8px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.input-section button:disabled {
-    background-color: #ccc;
+button:hover {
+    background-color: #2980b9;
+}
+
+button:disabled {
+    background-color: #bdc3c7;
     cursor: not-allowed;
+}
+
+/* Report and Forward Buttons */
+.message button {
+    margin-top: 5px;
+    font-size: 12px;
+    padding: 6px 10px;
+    background-color: #f39c12;
+    border-radius: 5px;
+}
+
+.message button:hover {
+    background-color: #e67e22;
+}
+
+/* Forward Message Styles */
+.forward-message {
+    background-color: #f7f7f7;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.forward-message h4 {
+    margin-top: 0;
+}
+
+.forward-message select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-right: 15px;
+}
+
+.forward-message button {
+    margin-top: 10px;
+    background-color: #27ae60;
+}
+
+.forward-message button:hover {
+    background-color: #2ecc71;
+}
+
+/* Message Input Styles */
+.message-input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.message-input input {
+    width: 85%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+.message-input button {
+    width: 12%;
+    padding: 12px;
+    background-color: #3498db;
+    color: white;
+    font-size: 14px;
+    border-radius: 8px;
+}
+
+/* Loader Styling */
+.messages p {
+    text-align: center;
+    font-size: 18px;
+    color: #3498db;
+}
+
+/* Scrollbar Styles */
+.messages::-webkit-scrollbar {
+    width: 10px;
+}
+
+.messages::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 10px;
+}
+
+.messages::-webkit-scrollbar-thumb:hover {
+    background-color: #888;
+}
+
+.messages::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+    .chat-app {
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .friend-list {
+        width: 100%;
+        border-right: none;
+        border-bottom: 2px solid #ccc;
+    }
+
+    .chat-window {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .message-input {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .message-input button {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .forward-message select {
+        margin-bottom: 15px;
+    }
 }

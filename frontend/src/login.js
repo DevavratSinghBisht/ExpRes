@@ -5,14 +5,13 @@ import axios from 'axios';
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const parentUsername = localStorage.getItem("parentUsername");
+    const parentUsername = localStorage.getItem("username");
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
         console.log("Username:", username);
         console.log("Password:", password);
-        console.log("Parent username : ", parentUsername);
         const apiUrl = "http://127.0.0.1:8000/userLogin";
         console.log('calling ? ',apiUrl);
         try {
@@ -24,14 +23,13 @@ const Login = () => {
                     "Content-Type": "application/json",
                 },
             });
-            console.log('Response:', response.data); // Log the full response data to check
+            console.log('Response:', response.data);
         
             if (response.data.login_status === "Login successful") {
                 console.log("Login successful:", response.data);
-                localStorage.setItem("authToken", "someToken");  // Store token or relevant data if needed
-                if (!parentUsername) {
-                    localStorage.setItem("parentUsername", username);
-                }
+                localStorage.setItem("authToken", "someToken");
+                localStorage.setItem("parentUsername", username);
+                console.log('parentUserName ',parentUsername);
                 alert("Login successful!");
                 navigate("/");
             } else {

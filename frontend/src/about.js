@@ -19,11 +19,11 @@ const About = () => {
             <p>
                 Our team is composed of passionate professionals with expertise in various fields, including software development, design, and user experience. We work together to build something great!
                 <ul>
-                    <li>Devavrat Singh Bisht</li>
-                    <li>Kunjal Agrawal</li>
-                    <li>Priyadarshini Ganeshkumar</li>
-                    <li>Purva Khadke</li>
                     <li>Vrushali Harane</li>
+                    <li>Kunjal Agrawal</li>
+                    <li>Purva Khadke</li>
+                    <li>Devavrat Singh Bisht</li>
+                    <li>Priyadarshini Ganeshkumar</li>
                 </ul>
             </p>
             {/* <h2 style={{ paddingLeft: "310px" }}>Contact</h2> */}
