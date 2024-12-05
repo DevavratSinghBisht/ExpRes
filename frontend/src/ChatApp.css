@@ -1,31 +1,35 @@
 /* General Styles */
 .chat-app {
     display: flex;
-    width: 80%;
+    width: 85%;
     max-width: 1200px;
-    height: 50vh;
+    height: 70vh; 
     background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     margin-left: 150px;
     margin-top: 20px;
+    position: relative;
+    font-family: 'Arial', sans-serif;
 }
 
 /* Friend List Styles */
 .friend-list {
     width: 30%;
-    background-color: #f7f7f7;
-    padding: 20px;
+    background-color: #f8f9fa;
+    padding: 25px;
     border-right: 1px solid #ddd;
     display: flex;
     flex-direction: column;
+    transition: transform 0.3s ease;
 }
 
 .friend-list h3 {
     margin-top: 0;
     text-align: center;
     color: #333;
+    font-size: 22px;
 }
 
 .friend-list ul {
@@ -38,24 +42,25 @@
     padding: 12px;
     cursor: pointer;
     border-radius: 8px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     transition: background-color 0.3s ease, color 0.3s ease;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-size: 16px;
 }
 
 .friend-list li:hover {
-    background-color: #ebebeb;
+    background-color: #e9ecef;
 }
 
 .friend-list li.reported {
-    color: red;
+    color: #e74c3c;
     font-weight: bold;
 }
 
 /* Chat Window Styles */
-.chat-window {
+.chat-box {
     width: 70%;
     padding: 20px;
     display: flex;
@@ -64,10 +69,11 @@
     background-color: #fff;
 }
 
-.chat-window h3 {
+.chat-box h2 {
     text-align: center;
     color: #333;
-    margin-bottom: 10px;
+    font-size: 24px;
+    margin-bottom: 15px;
 }
 
 .messages {
@@ -84,20 +90,23 @@
     max-width: 70%;
     word-wrap: break-word;
     position: relative;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .message.sent {
     background-color: #a1c4fd;
     margin-left: auto;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .message.received {
     background-color: #f7f7f7;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .message:hover {
     background-color: #e1e1e1;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 button {
@@ -107,11 +116,12 @@ button {
     padding: 10px 15px;
     border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.2s ease-in-out;
 }
 
 button:hover {
     background-color: #2980b9;
+    transform: translateY(-2px);
 }
 
 button:disabled {
@@ -135,30 +145,36 @@ button:disabled {
 /* Forward Message Styles */
 .forward-message {
     background-color: #f7f7f7;
-    padding: 15px;
+    padding: 20px;
     border-radius: 8px;
     margin-top: 20px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
 }
 
 .forward-message h4 {
     margin-top: 0;
+    font-size: 18px;
+    color: #333;
 }
 
 .forward-message select {
-    padding: 10px;
-    border-radius: 5px;
+    padding: 12px;
+    border-radius: 6px;
     border: 1px solid #ccc;
     margin-right: 15px;
+    font-size: 14px;
 }
 
 .forward-message button {
     margin-top: 10px;
     background-color: #27ae60;
+    font-size: 14px;
 }
 
 .forward-message button:hover {
     background-color: #2ecc71;
+    transform: translateY(-2px);
 }
 
 /* Message Input Styles */
@@ -166,6 +182,7 @@ button:disabled {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 10px;
 }
 
 .message-input input {
@@ -175,6 +192,7 @@ button:disabled {
     border: 1px solid #ccc;
     margin-right: 10px;
     font-size: 14px;
+    box-sizing: border-box;
 }
 
 .message-input button {
@@ -222,9 +240,10 @@ button:disabled {
         width: 100%;
         border-right: none;
         border-bottom: 2px solid #ccc;
+        padding: 15px;
     }
 
-    .chat-window {
+    .chat-box {
         width: 100%;
         padding: 15px;
     }

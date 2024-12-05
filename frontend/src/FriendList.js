@@ -1,4 +1,5 @@
 import React from 'react';
+import './FriendList.css';
 
 function FriendList({ friends, onFriendClick }) {
   return (
@@ -9,7 +10,7 @@ function FriendList({ friends, onFriendClick }) {
             onClick={() => onFriendClick(friend)}
             disabled={friend.isReported}
           >
-            {friend.username}
+            {friend.username} {friend.isReported && <span style={{color: 'red', fontWeight: 'bold'}}>(Reported)</span>}
           </button>
         </li>
       ))}

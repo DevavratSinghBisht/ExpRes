@@ -1,0 +1,27 @@
+/* Styling the Friend List */
+ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    margin: 10px 0;
+  }
+  
+  button {
+    padding: 8px 12px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  button:disabled {
+    background-color: #dcdcdc; /* Gray background for disabled (reported) users */
+    cursor: not-allowed;
+    color: #888;
+  }
+  
+  button:not(:disabled):hover {
+    background-color: #8dc9f8;
+  }
+  

@@ -12,6 +12,8 @@ function ChatApp() {
   const [m, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { sendMessage, ws } = useWebSocket();
+  const [forwardedMessage, setForwardedMessage] = useState(null);
+
 
   // Fetch friend list from API
   useEffect(() => {
@@ -38,12 +40,12 @@ function ChatApp() {
   
     try {
       const response = await fetch("http://localhost:8000/getChatHistory", {
-        method: "GET", // Use POST if the backend requires it
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          sender_username: "currentUsername", // Replace with the actual sender's username
+          sender_username: "currentUsername", // Replace with actual sender's username
           receiver_username: receiver,
         }),
       });
@@ -55,14 +57,19 @@ function ChatApp() {
   
       const chatHistory = await response.json();
   
-      // Update the chat messages state for this conversation
-      setMessages(chatHistory);
+      // Since the API returns a list of messages directly, we set the state with that list
+      if (Array.isArray(chatHistory)) {
+        setMessages(chatHistory); // Set messages directly if the response is an array
+      } else {
+        console.error("Chat history is not an array:", chatHistory);
+      }
     } catch (error) {
       console.error("Error fetching chat history:", error);
     } finally {
       setIsLoading(false);
     }
   };
+  
 
   const handleSendMessage = async () => {
     if (!m.trim()) return;
@@ -76,7 +83,6 @@ function ChatApp() {
     };
 
     try {
-      // Send message to backend
       const response = await fetch("http://localhost:8000/sendMessage", {
         method: "POST",
         headers: {
@@ -88,38 +94,28 @@ function ChatApp() {
       const result = await response.json();
       console.log("Response", result);
 
-      // Send message via WebSocket
-      if (ws && ws.readyState === WebSocket.OPEN) {
-        ws.send(JSON.stringify(messageData));
-      }
-
       setMessages((prevMessages) => [...prevMessages, messageData]);
-      setMessage("");
+      setMessage(""); // Reset message input
     } catch (error) {
       console.error("Error sending message:", error);
     }
   };
 
-  const handleReportMessage = async (message, reason) => {
-    // Ensure all required fields are present
-    if (!reason) {
-      alert("Please provide a reason for reporting the message.");
+  const handleReportMessage = async (messageId, reason = "Inappropriate content") => {
+    const message = messages.find((msg) => msg.transactionId === messageId);
+    if (!message) {
+      alert("Message not found. Cannot report.");
       return;
     }
-  
-    if (!message || !message.message || !message.transactionId) {
-      alert("Invalid message data. Cannot report.");
-      return;
-    }
-  
+
     const reportData = {
-      reporter_username: "currentUsername", // Replace with actual reporter's username
+      reporter_username: "currentUsername",
       reported_username: activeFriend.username,
       message: message.message,
       reason: reason,
-      transactionId: message.transactionId || "N/A", // Ensure transactionId is present
+      transactionId: message.transactionId || "N/A",
     };
-  
+
     try {
       const response = await fetch("http://localhost:8000/reportTheMessage", {
         method: "POST",
@@ -128,18 +124,16 @@ function ChatApp() {
         },
         body: JSON.stringify(reportData),
       });
-  
+
       if (!response.ok) {
         const errorDetails = await response.json();
         console.error("Error reporting message:", errorDetails);
         alert(`Failed to report message: ${errorDetails.message || response.statusText}`);
         return;
       }
-  
+
       const result = await response.json();
       console.log("Report response:", result);
-  
-      // Notify the user about the successful report
       alert("Message reported successfully.");
     } catch (error) {
       console.error("Error reporting message:", error);
@@ -147,8 +141,45 @@ function ChatApp() {
     }
   };
 
+  const handleForwardMessage = (messageId) => {
+    const messageToForward = messages.find(msg => msg.transactionId === messageId);
+  
+    if (!messageToForward) {
+      alert("Message not found.");
+      return;
+    }
+  
+    // Prompt the user to select a recipient (exclude reported users, current user, and active friend)
+    const selectedReceiver = prompt(
+      "Enter the username of the person you'd like to forward the message to:\n" +
+      friends.filter(friend => friend.username !== "currentUsername" && friend.username !== activeFriend.username && !friend.isReported) // Excluding reported users
+        .map(friend => friend.username).join("\n")
+    );
+  
+    const receiver = friends.find(friend => friend.username === selectedReceiver);
+  
+    if (receiver) {
+      forwardMessageToReceiver(messageToForward, receiver);
+    } else {
+      alert("Invalid or non-existent receiver.");
+    }
+  };
+
+  const forwardMessageToReceiver = (message, receiver) => {
+    const forwardedMessage = {
+      ...message,
+      receiver_username: receiver.username,
+      isForwarded: true,
+      transactionId: "forwarded-" + Date.now(), // New transaction ID
+    };
+
+    // Add the forwarded message to the messages list
+    setMessages(prevMessages => [...prevMessages, forwardedMessage]);
+    alert(`Message forwarded to ${receiver.username}`);
+  };
+
   return (
-    <div className="chat-app" style={{ color: "black", height:"500px" }}>
+    <div className="chat-app" style={{ color: "black", height: "500px" }}>
       <div className="sidebar">
         <FriendList friends={friends} onFriendClick={handleFriendClick} />
       </div>
@@ -159,7 +190,12 @@ function ChatApp() {
             {isLoading ? (
               <p>Loading messages...</p>
             ) : (
-              <ChatBox messages={messages} />
+              <ChatBox
+                messages={messages}
+                onForwardMessage={handleForwardMessage}  // Forward function passed here
+                onReportMessage={handleReportMessage}  // Your report handler (if implemented)
+                isLoading={isLoading}
+              />
             )}
             <div className="input-section">
               <input
@@ -168,26 +204,9 @@ function ChatApp() {
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Type a message"
               />
-              <button onClick={handleSendMessage} disabled={!m.trim()}>
+              <button onClick={handleSendMessage} disabled={!m.trim()} style={{width:"88px"}}>
                 Send
               </button>
-            </div>
-
-            {/* Add report button for each message */}
-            <div className="message-list">
-              {messages.map((msg, index) => (
-                <div key={index} className="message">
-                  <p>{msg.message}</p>
-                  <button onClick={() => {
-                    const reason = prompt("Enter a reason for reporting:");
-                    if (reason) {
-                      handleReportMessage(msg, reason);
-                    }
-                  }}>
-                    Report
-                  </button>
-                </div>
-              ))}
             </div>
           </>
         ) : (
