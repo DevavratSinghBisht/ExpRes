@@ -285,12 +285,12 @@ html {
 
 
 /* General Styles */
-body {
+/* body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
   color: #fff;
   background-color: #001F3F;
-}
+} */
 
 /* Video Background */
 .video-overlay {
