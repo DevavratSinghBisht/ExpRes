@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import ChatApp from './ChatApp';
 import RegistrationForm from './RegistrationForm';
 import ProfilePage from './ProfilePage';
+import FriendSearch from './FriendSearch';
 // import { Link } from 'react-router-dom';
 
 
@@ -142,6 +143,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/RegistrationForm" element={<RegistrationForm />} />
         <Route path="/ProfilePage" element={<ProfilePage />} />
+        <Route path="/friendSearch" element={<FriendSearch />} />
       </Routes>
     </Router>
   );

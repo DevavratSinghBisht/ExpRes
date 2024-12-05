@@ -81,8 +81,8 @@ const RegistrationForm = () => {
 
     try {
       const result = await userRegistration(formData);
-      localStorage.setItem("username", formData.username);
-      const parentUsername = localStorage.getItem("username");
+      localStorage.setItem("parentUsername", formData.username);
+      const parentUsername = localStorage.getItem("parentUsername");
       console.log('Updated parentUsername: ', parentUsername);
       setSuccessMessage('Registration successful!');
       setErrorMessage('');

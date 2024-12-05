@@ -5,7 +5,6 @@ import axios from 'axios';
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const parentUsername = localStorage.getItem("username");
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
@@ -26,12 +25,10 @@ const Login = () => {
             console.log('Response:', response.data);
         
             if (response.data.login_status === "Login successful") {
-                console.log("Login successful:", response.data);
                 localStorage.setItem("authToken", "someToken");
-                localStorage.setItem("parentUsername", username);
-                console.log('parentUserName ',parentUsername);
+                localStorage.setItem("parentUsername", response.data.username);
                 alert("Login successful!");
-                navigate("/");
+                navigate("/PostPage");
             } else {
                 throw new Error("Login failed. Please check your credentials.");
             }

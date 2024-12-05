@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Search, UserPlus, Check } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-// import axios from 'axios';
+import axios from 'axios';
 
 const initialFriends = [
   {
@@ -91,20 +91,21 @@ const initialFriends = [
 
 const FriendSearch = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [friends, setFriends] = useState(initialFriends);
+  const [friends, setFriends] = useState([]);
   const [requestedUsers, setRequestedUsers] = useState(new Set());
   const navigate = useNavigate();
+  const parentUsername = localStorage.getItem("parentUsername")
 
   const getFriendsData = async () => {
-    // await axios.post('http://localhost:8000/getFriendsList', { username: searchTerm })
-    //   .then((res) => {
-    //     setFriends(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err)
-    //   })
+    await axios.post('http://localhost:8000/getAllUsers', { username: parentUsername })
+      .then((res) => {
+        setFriends(res.data.users); //TODO: Uncomment this code
+      })
+      .catch((err) => {
+        console.log(err)
+      })
       
-      setFriends(initialFriends); // comment this when uncommenting above
+      // setFriends(initialFriends); // comment this when uncommenting above
   }
 
   useEffect(() => {
@@ -280,33 +281,33 @@ const FriendSearch = () => {
               <h2 
                 style={usernameTitleStyle}
                 onClick={() => {
-                  navigate('/profile', { state: { username: friend.username } });
+                  navigate('/ProfilePage', { state: { username: friend.username } });
                 }}>
                   {friend.username}
               </h2>
               <p style={emailStyle}>{friend.email}</p>
 
               <div style={statsContainerStyle}>
-                <p style={statsTitleStyle}>Followers: {friend.followers.length}</p>
+                <p style={statsTitleStyle}>Followers: {friend.followers?.length}</p>
                 <div style={followerListStyle}>
-                  {friend.followers.slice(0, 3).map((follower, index) => (
+                  {friend.followers?.slice(0, 3).map((follower, index) => (
                     <span key={index}>
-                      {follower}{index !== Math.min(2, friend.followers.length - 1) ? ',' : ''} 
+                      {follower}{index !== Math.min(2, friend.followers?.length - 1) ? ',' : ''} 
                     </span>
                   ))}
-                  {friend.followers.length > 3 && <span>...</span>}
+                  {friend.followers?.length > 3 && <span>...</span>}
                 </div>
               </div>
 
               <div style={statsContainerStyle}>
-                <p style={statsTitleStyle}>Following: {friend.following.length}</p>
+                <p style={statsTitleStyle}>Following: {friend.following?.length}</p>
                 <div style={followerListStyle}>
-                  {friend.following.slice(0, 3).map((following, index) => (
+                  {friend.following?.slice(0, 3).map((following, index) => (
                     <span key={index}>
-                      {following}{index !== Math.min(2, friend.following.length - 1) ? ',' : ''} 
+                      {following}{index !== Math.min(2, friend.following?.length - 1) ? ',' : ''} 
                     </span>
                   ))}
-                  {friend.following.length > 3 && <span>...</span>}
+                  {friend.following?.length > 3 && <span>...</span>}
                 </div>
               </div>
 

@@ -34,6 +34,9 @@ const NavBar = () => {
           <li>
             <Link to="/ProfilePage"> Profile</Link>
           </li>
+          <li>
+            <Link to="/FriendSearch"> Search Friend</Link>
+          </li>
         </ul>
       </div>
     </nav>
