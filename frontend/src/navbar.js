@@ -29,7 +29,10 @@ const NavBar = () => {
             <Link to="/login">Login</Link>
           </li>
           <li>
-            <Link to="/signup">Sign Up</Link>
+            <Link to="/RegistrationForm">Register</Link>
+          </li>
+          <li>
+            <Link to="/ProfilePage"> Profile</Link>
           </li>
         </ul>
       </div>

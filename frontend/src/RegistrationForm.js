@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
-    fullName: '',
+    firstName: '',
+    lastName: '',
+    username: '',
+    dateOfBirth: '',
+    contactNo: '',
     email: '',
     password: '',
-    confirmPassword: '',
-    dateOfBirth: '',
+    password2: '',
+    profilePicture: ''
   });
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
@@ -22,7 +27,8 @@ const RegistrationForm = () => {
 
   const validatePassword = (password) => {
     const minLength = 8;
-    const specialCharRegex = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/;   
+    const specialCharRegex = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/;
+    console.log('Inside validate Password');
     return password.length >= minLength && specialCharRegex.test(password);
   };
 
@@ -46,13 +52,26 @@ const RegistrationForm = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const userRegistration = async (userData) => {
+    try {
+      console.log('userdata');
+      const response = await axios.post('http://127.0.0.1:8000/userRegister', userData);
+      console.log('response data');
+      return response.data;
+    } catch (error) {
+      console.log('error ', error);
+      throw error;
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validatePassword(formData.password)) {
       setErrorMessage("Password must be at least 8 characters long and contain at least 1 special character.");
       return;
     }
-    if (formData.password !== formData.confirmPassword) {
+    if (formData.password !== formData.password2) {
+      console.log('this is the error from frontend');
       setErrorMessage('Passwords do not match.');
       return;
     }
@@ -60,13 +79,18 @@ const RegistrationForm = () => {
       setErrorMessage("Please enter a valid date of birth.");
       return;
     }
-    
-    setSuccessMessage('Registration successful!');
-    setErrorMessage('');
-    
-    setTimeout(() => {
-      navigate('/posts');
-    }, 1000);
+
+    try {
+      const result = userRegistration(formData);
+      setSuccessMessage('Registration successful!');
+      setErrorMessage('');
+
+      setTimeout(() => {
+        navigate('/posts');
+      }, 1000);
+    } catch (error) {
+      setErrorMessage('Registration failed. Please try again.');
+    }
   };
 
   const inputStyle = {
@@ -91,8 +115,8 @@ const RegistrationForm = () => {
       backgroundColor: '#F8F4FF',
       backgroundImage: 'linear-gradient(rgba(199, 21, 133, 0.03), rgba(147, 112, 219, 0.03))'
     }}>
-      <h2 style={{ 
-        textAlign: 'center', 
+      <h2 style={{
+        textAlign: 'center',
         background: 'linear-gradient(to right, #C71585, #9370DB)',
         WebkitBackgroundClip: 'text',
         WebkitTextFillColor: 'transparent',
@@ -100,7 +124,7 @@ const RegistrationForm = () => {
         fontSize: '28px',
         fontWeight: '600'
       }}>Registration</h2>
-      
+
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
         <input
           type="text"
@@ -119,7 +143,7 @@ const RegistrationForm = () => {
             e.target.style.boxShadow = 'none';
           }}
         />
-        
+
         <input
           type="email"
           name="email"
@@ -137,7 +161,7 @@ const RegistrationForm = () => {
             e.target.style.boxShadow = 'none';
           }}
         />
-        
+
         <input
           type="date"
           name="dateOfBirth"
@@ -156,7 +180,7 @@ const RegistrationForm = () => {
             e.target.style.boxShadow = 'none';
           }}
         />
-        
+
         <input
           type="password"
           name="password"
@@ -174,11 +198,11 @@ const RegistrationForm = () => {
             e.target.style.boxShadow = 'none';
           }}
         />
-        
+
         <input
           type="password"
-          name="confirmPassword"
-          value={formData.confirmPassword}
+          name="password2"
+          value={formData.password2}
           onChange={handleChange}
           placeholder="Confirm Password"
           required
@@ -194,16 +218,16 @@ const RegistrationForm = () => {
         />
 
         {errorMessage && (
-          <p style={{ 
-            color: '#C71585', 
+          <p style={{
+            color: '#C71585',
             textAlign: 'center',
             margin: '5px 0',
             fontSize: '14px'
           }}>{errorMessage}</p>
         )}
         {successMessage && (
-          <p style={{ 
-            color: '#9370DB', 
+          <p style={{
+            color: '#9370DB',
             textAlign: 'center',
             margin: '5px 0',
             fontSize: '14px'

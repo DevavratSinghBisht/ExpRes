@@ -10,6 +10,9 @@ import sample from './universe.mp4';
 import PostPage from './PostPage';
 import { Link } from 'react-router-dom';
 import ChatApp from './ChatApp';
+import RegistrationForm from './RegistrationForm';
+import ProfilePage from './ProfilePage';
+// import { Link } from 'react-router-dom';
 
 
 const HomePage = () => {
@@ -137,7 +140,8 @@ const App = () => {
         <Route path="/ChatApp" element={<ChatApp/>} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
-        
+        <Route path="/RegistrationForm" element={<RegistrationForm />} />
+        <Route path="/ProfilePage" element={<ProfilePage />} />
       </Routes>
     </Router>
   );
