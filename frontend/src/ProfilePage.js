@@ -235,7 +235,11 @@ const ProfilePage = () => {
       "username": parentUsername
     })
       .then((res) => {
-        getUserPosts();
+        setPosts(prevPosts => prevPosts.map(post => 
+          post.id === postId ? { ...post, is_reported: true } : post
+        ));
+        localStorage.setItem(`post_${postId}_reported`, 'true');
+        // getUserPosts();
       })
       .catch((err) => {
         console.log(err)
@@ -455,8 +459,14 @@ const ProfilePage = () => {
       limit: 0
     })
       .then((res) => {
-        setPosts(res.data.posts) //TODO: Uncomment this code
-      })
+      //   setPosts(res.data.posts) //TODO: Uncomment this code
+      // })
+      const updatedPosts = res.data.posts.map(post => ({
+        ...post,
+        is_reported: localStorage.getItem(`post_${post.id}_reported`) === 'true'
+      }));
+      setPosts(updatedPosts);
+    })
       .catch((err) => {
         console.log(err)
       })
@@ -468,6 +478,8 @@ const ProfilePage = () => {
   }, [])
 
   return (
+    <div style={containerStyle}>
+      <div style={cardContainerStyle}>
     <div style={{
       backgroundColor: '#0f172a',
       minHeight: '100vh',
@@ -693,15 +705,15 @@ const ProfilePage = () => {
                         display: 'flex',
                         alignItems: 'center',
                         gap: '0.5rem',
-                        color: post.isReported ? '#718096' : '#ef4444',
+                        color: post.is_reported ? '#718096' : '#ef4444',
                         padding: '0.5rem',
                         borderRadius: '8px',
                         transition: 'background-color 0.2s'
                       }}
-                      disabled={post.isReported}
+                      disabled={post.is_reported}
                     >
                       <Flag size={20} />
-                      <span>{post.isReported ? 'Reported' : 'Report'}</span>
+                      <span>{post.is_reported ? 'Reported' : 'Report'}</span>
                     </button>
                   </div>
                 </div>
@@ -709,7 +721,8 @@ const ProfilePage = () => {
             </div>
           ))}
         </div>
-
+        </div>
+    </div>
         {/* Modals */}
         <Modal
           isOpen={showModal.type === 'followers'}
@@ -752,4 +765,17 @@ const ProfilePage = () => {
   );
 };
 
+const containerStyle = {
+  minHeight: '100vh',
+  padding: '24px',
+};
+
+const cardContainerStyle = {
+  maxWidth: '1000px',
+  margin: '0 auto',
+  backgroundColor: '#0f172a',
+  borderRadius: '15px',
+  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+  padding: '32px'
+};
 export default ProfilePage;
