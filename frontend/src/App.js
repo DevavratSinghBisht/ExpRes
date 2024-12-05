@@ -8,12 +8,14 @@ import './about.css';
 import About from './about';
 import sample from './universe.mp4';
 import PostPage from './PostPage';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import ChatApp from './ChatApp';
 
 
 const HomePage = () => {
   const [posts, setPosts] = useState([]);
   const [newPost, setNewPost] = useState('');
+  const [newComment, setNewComment] = useState('');
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
@@ -30,27 +32,27 @@ const HomePage = () => {
       .catch((error) => console.error('Error fetching posts:', error));
   }, []);
 
-  // const handlePostSubmit = () => {
-  //   if (!newPost.trim()) {
-  //     alert('Please enter some content for the post.');
-  //     return;
-  //   }
+  const handlePostSubmit = () => {
+    if (!newPost.trim()) {
+      alert('Please enter some content for the post.');
+      return;
+    }
 
-  //   const postData = {
-  //     content: newPost,
-  //     userId: currentUser ? currentUser.id : null,
-  //     username: currentUser ? currentUser.username : 'Anonymous',
-  //     profilePicture: currentUser ? currentUser.profilePicture : null,
-  //   };
+    const postData = {
+      content: newPost,
+      userId: currentUser ? currentUser.id : null,
+      username: currentUser ? currentUser.username : 'Anonymous',
+      profilePicture: currentUser ? currentUser.profilePicture : null,
+    };
 
-  //   axios
-  //     .post('http://localhost:8000/posts', postData)
-  //     .then((response) => {
-  //       setPosts([response.data, ...posts]);
-  //       setNewPost('');
-  //     })
-  //     .catch((error) => console.error('Error posting!', error));
-  // };
+    axios
+      .post('http://localhost:8000/posts', postData)
+      .then((response) => {
+        setPosts([response.data, ...posts]);
+        setNewPost('');
+      })
+      .catch((error) => console.error('Error posting!', error));
+  };
 
   return (
     <div className="homepage-container">
@@ -132,80 +134,13 @@ const App = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/posts" element={<PostPage />} />
+        <Route path="/ChatApp" element={<ChatApp/>} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
+        
       </Routes>
     </Router>
   );
 };
 
 export default App;
-
-// import React from 'react';
-// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// import RegistrationForm from './RegistrationForm';
-// // import ContactList from './ContactList';
-// // import ChatPage from './ChatPage';
-// import Login from './login';
-// import ProfilePage from './ProfilePage.js';
-// import FriendSearch from './FriendSearch.js';
-
-// function App() {
-//   return (
-//     <Router>
-//       <AppContent />
-//     </Router>
-//   );
-// }
-
-// function AppContent() {
-//   const cardStyle = {
-//     flex: 1,
-//     padding: '30px',
-//     borderRadius: '10px',
-//     boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
-//     backgroundColor: '#fff',
-//     maxWidth: '400px',
-//     textAlign: 'center',
-//   };
-
-//   return (
-//     <div style={{ 
-//       minHeight: '100vh', 
-//       alignItems: 'center', 
-//       backgroundColor: '#e5f3f3',
-//       padding: '20px'
-//     }}>
-//       <Routes>
-//         <Route
-//           path="/"
-//           element={
-//             <div style={{
-//               display: 'flex',
-//               gap: '20px',
-//               justifyContent: 'center',
-//               width: '100%',
-//               maxWidth: '900px'
-//             }}>
-//               <div style={cardStyle}>
-//                 <h1 style={{ marginBottom: '20px', color: '#333' }}>Login</h1>
-//                 <Login />
-//               </div>
-
-//               <div style={cardStyle}>
-//                 <h1 style={{ marginBottom: '20px', color: '#333' }}>Register</h1>
-//                 <RegistrationForm />
-//               </div>
-//             </div>
-//           }
-//         />
-//         {/* <Route path="/contacts" element={<ContactList />} />
-//         <Route path="/chat/:contactId" element={<ChatPage />} /> */}
-//         <Route path="/profile" element={<ProfilePage />} />
-//         <Route path="/friendsearch" element={<FriendSearch />} />
-//       </Routes>
-//     </div>
-//   );
-// }
-
-// export default App;

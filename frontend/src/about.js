@@ -21,9 +21,9 @@ const About = () => {
                 <ul>
                     <li>Devavrat Singh Bisht</li>
                     <li>Kunjal Agrawal</li>
+                    <li>Priyadarshini Ganeshkumar</li>
                     <li>Purva Khadke</li>
                     <li>Vrushali Harane</li>
-                    <li>Priyadarshini Ganeshkumar</li>
                 </ul>
             </p>
             {/* <h2 style={{ paddingLeft: "310px" }}>Contact</h2> */}

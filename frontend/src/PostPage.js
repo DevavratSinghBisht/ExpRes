@@ -22,7 +22,7 @@ const PostPage = () => {
     // Fetch all posts
     useEffect(() => {
         axios
-            .get('http://localhost:8000/posts')
+            .get('http://localhost:8000/getPosts')
             .then((response) => setPosts(response.data))
             .catch((error) => console.error('Error fetching posts:', error));
     }, []);
@@ -36,13 +36,13 @@ const PostPage = () => {
 
         const postData = {
             content: newPost,
-            userId: currentUser ? currentUser.id : null,
+            // userId: currentUser ? currentUser.id : null,
             username: currentUser ? currentUser.username : 'Anonymous',
-            profilePicture: currentUser ? currentUser.profilePicture : null,
+            // profilePicture: currentUser ? currentUser.profilePicture : null,
         };
 
         axios
-            .post('http://localhost:8000/posts', postData)
+            .post('http://localhost:8000/createPost', postData)
             .then((response) => {
                 setPosts([response.data, ...posts]);
                 setNewPost('');

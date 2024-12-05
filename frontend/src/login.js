@@ -12,7 +12,7 @@ const Login = () => {
         e.preventDefault();
         console.log("Username:", username);
         console.log("Password:", password);
-
+        console.log("Parent username : ", parentUsername);
         const apiUrl = "http://127.0.0.1:8000/userLogin";
         console.log('calling ? ',apiUrl);
         try {
@@ -24,21 +24,22 @@ const Login = () => {
                     "Content-Type": "application/json",
                 },
             });
-            console.log('data ',response);
-            if (response.data.token) {
+            console.log('Response:', response.data); // Log the full response data to check
+        
+            if (response.data.login_status === "Login successful") {
                 console.log("Login successful:", response.data);
-                localStorage.setItem("authToken", response.data.token);
+                localStorage.setItem("authToken", "someToken");  // Store token or relevant data if needed
                 if (!parentUsername) {
                     localStorage.setItem("parentUsername", username);
                 }
                 alert("Login successful!");
-                navigate("/PostPage");
+                navigate("/");
             } else {
                 throw new Error("Login failed. Please check your credentials.");
             }
         } catch (error) {
-            console.error("Error during login:", error.message);
-            alert("Error: " + error.message);
+            console.error("Error during login:", error);
+            alert("Error: " + (error.response ? error.response.data.message : error.message));
         }
     };
 
