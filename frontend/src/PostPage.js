@@ -14,7 +14,7 @@ const PostPage = () => {
     // Fetch current user data
     useEffect(() => {
         axios
-            .get('http://localhost:8000/user')
+            .get('http://localhost:8000/getUserInfo')
             .then((response) => setCurrentUser(response.data))
             .catch((error) => console.error('Error fetching user data:', error));
     }, []);
@@ -125,7 +125,7 @@ const PostPage = () => {
                   <h2>{post.username || 'Anonymous'}</h2>
                 </div>
                 <p>{post.content}</p>
-                <button onClick={() => handleToggleLike(post._id)}>
+                {/* <button onClick={() => handleToggleLike(post._id)}>
                   {post.likes || 0} Likes
                 </button>
                 <textarea
@@ -134,7 +134,7 @@ const PostPage = () => {
                   placeholder="Add a comment..."
                   style={{ color: 'white' }}
                 />
-                <button onClick={() => handleAddComment(post._id)}>Comment</button>
+                <button onClick={() => handleAddComment(post._id)}>Comment</button> */}
               </div>
             ))
           )}

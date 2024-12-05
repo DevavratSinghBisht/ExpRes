@@ -10,7 +10,7 @@ function FriendList({ friends, onFriendClick }) {
           className={`friend-item ${friend.isReported ? 'reported' : ''}`}
           onClick={() => onFriendClick(friend)}
         >
-          <img src={friend.profile_picture} alt={friend.username} />
+          {/* <img src={friend.profile_picture} alt={friend.username} /> */}
           <span>{friend.username}</span>
           {friend.isReported && <span className="reported-tag">Reported</span>}
         </div>

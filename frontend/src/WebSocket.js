@@ -1,36 +1,50 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from "react";
 
-const useWebSocket = () => {
+const useWebSocket = (url = "ws://localhost:8000") => {
   const [ws, setWs] = useState(null);
 
   useEffect(() => {
-    const socket = new WebSocket('ws://localhost:8000'); // Replace with your WebSocket URL
+    if (ws) {
+      ws.onmessage = (event) => {
+        console.log("Message received:", event.data);
+      };
+    }
+  }, [ws]);
+
+  useEffect(() => {
+    let socket = new WebSocket(url);
+
     socket.onopen = () => {
-      console.log('WebSocket connection established');
+      console.log("WebSocket connection established.");
     };
-    socket.onmessage = (event) => {
-      console.log('Received message:', event.data);
-    };
+
     socket.onerror = (error) => {
-      console.error('WebSocket error:', error);
+      console.error("WebSocket error:", error);
     };
+
     socket.onclose = () => {
-      console.log('WebSocket connection closed');
+      console.log("WebSocket connection closed. Reconnecting...");
+      setTimeout(() => {
+        setWs(new WebSocket(url));
+      }, 3000); // Retry after 3 seconds
     };
+
     setWs(socket);
 
     return () => {
       socket.close();
     };
-  }, []);
+  }, [url]);
 
-  const sendMessage = (messageData) => {
-    if (ws) {
-      ws.send(JSON.stringify(messageData));
+  const sendMessage = (message) => {
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      ws.send(message);
+    } else {
+      console.warn("WebSocket is not open. Message not sent.");
     }
   };
 
-  return { sendMessage, ws };
+  return { ws, sendMessage };
 };
 
 export default useWebSocket;

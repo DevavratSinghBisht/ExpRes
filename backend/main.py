@@ -35,10 +35,10 @@ chatConnectionManager = ChatConnectionManager()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=ALLOW_ORIGINS,
-    allow_credentials=ALLOW_CREDENTIALS,
-    allow_methods=ALLOW_METHODS,
-    allow_headers=ALLOW_HEADERS
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
 )
 
 
