@@ -18,7 +18,7 @@ class UserInfoController(BaseController):
 
         response = UserInfoResp(username = resp["username"],email = resp["email"],
                                 profile_picture = resp["profilePicture"],
-                                is_banned = False, created_at = resp["created_at"],
+                                is_banned = resp["isBanned"], created_at = resp["created_at"],
                                 followers = resp["followers"], following = resp["following"],
                                 is_active = True, last_login_at = resp["last_login_at"])
         return response

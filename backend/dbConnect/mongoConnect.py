@@ -200,10 +200,10 @@ class MongoConnect:
     def blockUsers(self, usernames):
         for username in usernames:
             user = self.users.find_one({"username": username})
-            if not username:
+            if not user:
                 print(f"User {username} not found.")
             self.users.update_one(
-                {"username": username}, {"$set": {"blocked": True}})
+                {"username": username}, {"$set": {"isBanned": True}})
 
     def saveMessage(self, sender: str, receiver: str, transactionId: str):
         # Check if a message between sender and receiver exists
@@ -223,3 +223,12 @@ class MongoConnect:
                 {"sender": sender, "receiver": receiver},
                 {"$push": {"transactionIds": transactionId}}
             )
+
+    def getTransactionIds(self, sender: str, receiver: str):
+        message = self.messages.find_one({"sender": sender, "receiver": receiver})
+        ids = message["transactionIds"]
+        transactionIds = []
+        for id in ids:
+            print("TransactionId: ", id)
+            transactionIds.append(id)
+        return transactionIds[-5:]

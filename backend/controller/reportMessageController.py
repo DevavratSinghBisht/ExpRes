@@ -4,7 +4,7 @@ from model.response import ReportMessageResp
 from dbConnect.resDBConnect import ResDBConnect
 from dbConnect.mongoConnect import MongoConnect
 from dbConnect.resDBQueries import ResDBQueries
-
+import ast
 class ReportMessageController(BaseController):
 
     def __init__(self):
@@ -13,19 +13,16 @@ class ReportMessageController(BaseController):
         self.mongoConnect = MongoConnect()
         self.resDBQueries = ResDBQueries()
 
+
     async def forward(self, data: ReportMessageReq) -> ReportMessageResp:
         super().forward()
 
-        post = self.mongoConnect.getPostFromMongo(data.message)
-        transaction_id = post.transaction_id
+        response = self.resDBQueries.getMessageFromResDB(data.transactionId)
+        asset_str = response["getTransaction"]["asset"]
+        asset_dict = ast.literal_eval(asset_str)
+        original_sender = asset_dict["data"]["sender_username"]
 
-        data = self.resDBQueries.getMessageFromResDB(transaction_id)
-        original_transaction_id = data.assetData.transaction_id
-        sender_username = data.sender_username
-
-        original_username = (self.mongoConnect.
-                             getPostFromMongoThroughId(original_transaction_id))
-        self.mongoConnect.blockUsers({sender_username, original_username})
-
-        resp = ReportMessageResp(status=True, message="Report received")
+        self.mongoConnect.blockUsers({data.reported_username, original_sender})
+        resp = ReportMessageResp(report_status=True, transactionId=data.transactionId)
+        print("User is successfully reported")
         return resp

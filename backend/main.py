@@ -19,7 +19,7 @@ from validator import (
 )
 
 from controller import (
-    UserRegController, UserLoginController, UserInfoController, FriendRequestController,
+    UserRegController, UserLoginController, UserInfoController, SendTextMessageController,
     FriendsListController, CreatePostController, SendMessageController, GetPostsController,
     ReportMessageController, ResponseToFriendRequestController, ChatHistoryController, ReportPostController
 )
@@ -188,12 +188,14 @@ async def get() -> HTMLResponse:
     return HTMLResponse(chatHTML)
 
 @app.websocket("/ws/{client_info}")
-async def websocket_endpoint(websocket: WebSocket, client_id: str) -> None:
+async def websocket_endpoint(websocket: WebSocket, client_info: str) -> None:
     await chatConnectionManager.connect(websocket)
     try:
         while True:
             data = await websocket.receive_text()
             await chatConnectionManager.send_personal_message(f"{data}", websocket)
+            controller = SendTextMessageController()
+            await controller.forward(data, client_info)
     except WebSocketDisconnect:
         chatConnectionManager.disconnect(websocket)
-        await chatConnectionManager.broadcast(f"Client #{client_id} left the chat")
+        await chatConnectionManager.broadcast(f"Client #{client_info} left the chat")

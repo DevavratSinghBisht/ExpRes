@@ -10,3 +10,4 @@ from .reportMessageController import ReportMessageController
 from .responseToFriendRequestController import ResponseToFriendRequestController
 from .chatHistoryController import ChatHistoryController
 from .reportPostController import ReportPostController
+from .sendtextMessageController import SendTextMessageController

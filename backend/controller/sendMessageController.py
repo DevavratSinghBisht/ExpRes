@@ -25,8 +25,10 @@ class SendMessageController(BaseController):
                                                              data.transactionId)
 
            transaction_id = resDB_resp['postTransaction']['id']
+           print("Saved the message into the ResDB :", transaction_id)
 
-           self.mongoConnect.saveMessage(data.sender_username, data.reciever_username, transaction_id)
+           self.mongoConnect.saveMessage(data.sender_username, data.receiver_username, transaction_id)
+           print("Saved the message into the MongoDB :", transaction_id)
 
            response = SendMessageResp(message_status='Message successfully sent.',
                                       transactionId=transaction_id)

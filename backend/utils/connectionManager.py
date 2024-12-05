@@ -24,11 +24,10 @@ class ChatConnectionManager:
         except Exception as e:
             print(f"Error while disconnecting: {e}")
 
-    async def send_personal_message(self, message: str, client_info: str, websocket: WebSocket):
+    async def send_personal_message(self, message: str, websocket: WebSocket):
         try:
             if websocket in self.active_connections:
                 await websocket.send_text(message)
-
         except Exception as e:
             print(f"Error while sending personal message: {e}")
             self.disconnect(websocket)
