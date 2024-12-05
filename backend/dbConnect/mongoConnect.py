@@ -2,6 +2,7 @@ from pymongo import MongoClient
 import datetime
 from model.request import UserRegReq, UserLoginReq, UserInfoReq
 from model.response.post import Post
+from model.response.userInfoResp import UserInfoResp
 
 
 class MongoConnect:
@@ -232,3 +233,15 @@ class MongoConnect:
             print("TransactionId: ", id)
             transactionIds.append(id)
         return transactionIds[-5:]
+
+    def getAllUsers(self):
+        all_users = self.users.find()
+        users = []
+        for user in all_users:
+            print(user)
+            one_user = UserInfoResp(username = user["username"], email = user["email"],
+                                    followers = user["followers"], following = user["following"],
+                                    created_at = user["created_at"],
+                                    last_login_at = user["last_login_at"])
+            users.append(one_user)
+        return users

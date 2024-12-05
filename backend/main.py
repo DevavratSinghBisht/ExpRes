@@ -8,7 +8,7 @@ from model.request import (
 )
 
 from model.response import (
-    UserRegResp, UserLoginResp, UserInfoResp, FriendListResp, ResponseToFriendRequestResp,
+    UserRegResp, UserLoginResp, UserInfoResp, FriendListResp, ResponseToFriendRequestResp, AllUsersResp,
     CreatePostResp, SendMessageResp, GetPostsResp, ReportMessageResp,ChatHistoryResp, ReportPostResp
 )
 
@@ -19,7 +19,7 @@ from validator import (
 )
 
 from controller import (
-    UserRegController, UserLoginController, UserInfoController, SendTextMessageController,
+    UserRegController, UserLoginController, UserInfoController, SendTextMessageController,AllUsersRespController,
     FriendsListController, CreatePostController, SendMessageController, GetPostsController,
     ReportMessageController, ResponseToFriendRequestController, ChatHistoryController, ReportPostController
 )
@@ -82,6 +82,14 @@ async def getUserInfo(data: UserInfoReq) -> UserInfoResp:
     # logic
     controller = UserInfoController()
     resp = await controller.forward(data)
+
+    return resp
+
+@app.post('/getAllUsers')
+async def getAllUsers() -> AllUsersResp:
+    # logic
+    controller = AllUsersRespController()
+    resp = await controller.forward()
 
     return resp
 

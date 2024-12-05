@@ -12,3 +12,4 @@ from .responseToFriendRequestResp import ResponseToFriendRequestResp
 from .chatHistoryResp import ChatHistoryResp
 from .reportPostResp import ReportPostResp
 from .message import Message
+from .allUsersResp import AllUsersResp
