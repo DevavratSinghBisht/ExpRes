@@ -9,7 +9,7 @@ class UserInfoResp(BaseModel):
     is_active       : bool = False
     created_at      : datetime
     last_login_at   : datetime
-    visibility      : bool = False  # Default to False
+    visibility      : bool = False
     followers       : list   # Default to an empty list
     following       : list # Default to an empty list
     is_banned       : bool = False
