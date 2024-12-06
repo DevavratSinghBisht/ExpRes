@@ -39,13 +39,14 @@ function ChatApp() {
     setIsLoading(true);
   
     try {
+      console.log("Current user name is : ", localStorage.getItem("parentUsername"))
       const response = await fetch("http://localhost:8000/getChatHistory", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          sender_username: "currentUsername", // Replace with actual sender's username
+          sender_username: localStorage.getItem("parentUsername"), // Replace with actual sender's username
           receiver_username: receiver,
         }),
       });
@@ -73,15 +74,15 @@ function ChatApp() {
 
   const handleSendMessage = async () => {
     if (!m.trim()) return;
-
+  
     const messageData = {
-      sender_username: "currentUsername",
+      sender_username: localStorage.getItem("parentUsername"),
       receiver_username: activeFriend.username,
       message: m,
       isForwarded: false,
-      transactionId: "Missing",
+      transactionId: "Missing",  // This will be replaced with the transactionId from the response
     };
-
+  
     try {
       const response = await fetch("http://localhost:8000/sendMessage", {
         method: "POST",
@@ -90,16 +91,23 @@ function ChatApp() {
         },
         body: JSON.stringify(messageData),
       });
-
+  
       const result = await response.json();
       console.log("Response", result);
-
-      setMessages((prevMessages) => [...prevMessages, messageData]);
+  
+      if (response.ok && result.transactionId) {
+        messageData.transactionId = result.transactionId;  // Store the transaction ID from the response
+        setMessages((prevMessages) => [...prevMessages, messageData]);
+      } else {
+        console.error("Error sending message:", result);
+      }
+  
       setMessage(""); // Reset message input
     } catch (error) {
       console.error("Error sending message:", error);
     }
   };
+  
 
   const handleReportMessage = async (messageId, reason = "Inappropriate content") => {
     const message = messages.find((msg) => msg.transactionId === messageId);
@@ -107,15 +115,15 @@ function ChatApp() {
       alert("Message not found. Cannot report.");
       return;
     }
-
+  
     const reportData = {
       reporter_username: "currentUsername",
       reported_username: activeFriend.username,
       message: message.message,
       reason: reason,
-      transactionId: message.transactionId || "N/A",
+      transactionId: message.transactionId,  // Use the correct transactionId
     };
-
+  
     try {
       const response = await fetch("http://localhost:8000/reportTheMessage", {
         method: "POST",
@@ -124,14 +132,14 @@ function ChatApp() {
         },
         body: JSON.stringify(reportData),
       });
-
+  
       if (!response.ok) {
         const errorDetails = await response.json();
         console.error("Error reporting message:", errorDetails);
         alert(`Failed to report message: ${errorDetails.message || response.statusText}`);
         return;
       }
-
+  
       const result = await response.json();
       console.log("Report response:", result);
       alert("Message reported successfully.");
@@ -140,6 +148,8 @@ function ChatApp() {
       alert("An error occurred while reporting the message.");
     }
   };
+
+  
 
   const handleForwardMessage = (messageId) => {
     const messageToForward = messages.find(msg => msg.transactionId === messageId);

@@ -3,6 +3,7 @@ import './ChatBox.css';
 
 const ChatBox = ({ messages, onReportMessage, onForwardMessage, isLoading }) => {
   const validMessages = Array.isArray(messages) ? messages : [];
+  const currentUser = localStorage.getItem("parentUsername");  // Get the current user's username
 
   return (
     <div className="chat-box-messages">
@@ -10,7 +11,7 @@ const ChatBox = ({ messages, onReportMessage, onForwardMessage, isLoading }) => 
         <p>Loading...</p>
       ) : (
         validMessages.map((msg, index) => (
-          <div key={index} className="chat-message">
+          <div key={index} className={`chat-message ${msg.sender_username === currentUser ? 'sent' : 'received'}`}>
             <div className="message-content">
               <strong>{msg.sender_username}:</strong> {msg.message}
             </div>
