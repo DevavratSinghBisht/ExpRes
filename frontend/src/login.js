@@ -28,7 +28,7 @@ const Login = () => {
                 localStorage.setItem("authToken", "someToken");
                 localStorage.setItem("parentUsername", response.data.username);
                 alert("Login successful!");
-                navigate("/PostPage");
+                navigate("/posts");
             } else {
                 throw new Error("Login failed. Please check your credentials.");
             }

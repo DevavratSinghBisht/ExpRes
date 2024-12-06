@@ -19,7 +19,7 @@ const PostPage = () => {
   useEffect(() => {
     if (currentUser) {
       axios
-        .post('http://localhost:8000/getPosts', { username: currentUser.username, limit: 0 })
+        .post('http://localhost:8000/getAllPosts')
         .then((response) => {
           setPosts(response.data.posts);
         })

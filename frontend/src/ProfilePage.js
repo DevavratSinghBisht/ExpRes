@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Heart, X, Flag, Send, Check, XIcon } from 'lucide-react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 // const autoProfileData = {
@@ -191,6 +191,7 @@ const ProfilePage = () => {
   const [newPost, setNewPost] = useState('');
   const [showModal, setShowModal] = useState({ type: null, data: null });
   const location = useLocation();
+  const navigate = useNavigate();
   const username = location.state?.username;
   const pendingRequestsUserNames = [
     "tuser",
@@ -247,6 +248,7 @@ const ProfilePage = () => {
   const handleMessageUser = (username) => {
     console.log(`Messaging user: ${username}`);
     alert(`Opening chat with ${username}`);
+    navigate('/ChatApp');
   };
 
   const handleAcceptRequest = async (requestingUser) => {
@@ -374,7 +376,10 @@ const ProfilePage = () => {
                 background: 'linear-gradient(45deg, #3b82f6, #2563eb)',
                 marginRight: '1rem'
               }} />
-              <span style={{ color: '#ffffff', fontWeight: '500' }}>{user}</span>
+              <span style={{ color: '#ffffff', fontWeight: '500', 
+                            paddingRight: '10px', whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis' }}>{user}</span>
             </div>
             {onMessageUser && (
               <button
@@ -389,6 +394,8 @@ const ProfilePage = () => {
                   alignItems: 'center',
                   gap: '8px',
                   cursor: 'pointer',
+                  minWidth: '100px',
+                  maxWidth: '200px', 
                   transition: 'background-color 0.2s'
                 }}
               >
