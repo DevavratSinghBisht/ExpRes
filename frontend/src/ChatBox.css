@@ -1,45 +1,44 @@
-.chat-app {
+.chat-message {
+    margin-bottom: 10px;
     display: flex;
-    height: 100vh;
-}
-
-.sidebar {
-    width: 25%;
-    background-color: #f4f4f4;
-    padding: 1rem;
-    overflow-y: auto;
-}
-
-.chat-box {
-    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .chat-message.sent {
+    justify-content: flex-end;
+    background-color: #e1f5fe; /* Light blue for sent messages */
+  }
+  
+  .chat-message.received {
+    justify-content: flex-start;
+    background-color: #f1f1f1; /* Light grey for received messages */
+  }
+  
+  .message-content {
+    max-width: 60%;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .message-actions {
     display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    background-color: #ffffff;
-}
-
-.input-section {
-    display: flex;
-    gap: 1rem;
-}
-
-.input-section input {
-    flex: 1;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.input-section button {
-    padding: 0.5rem 1rem;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .report-icon, .forward-icon {
     cursor: pointer;
-}
-
-.input-section button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
+    font-size: 18px;
+  }
+  
+  .sent .message-content {
+    background-color: #4CAF50; /* Green background for sent messages */
+    color: white;
+  }
+  
+  .received .message-content {
+    background-color: #f1f1f1;
+    color: black;
+  }
+  
