@@ -6,6 +6,7 @@ import './about.css'; // For any specific styling
 const About = () => {
     return (
         <div className="about-page">
+            <hr></hr>
             <h1>About Us</h1>
             <p>
                 Welcome to our website! We are a team dedicated to providing the best experience for our users. Our goal is to create a social media application using cutting-edge technologies and providing enhanced security and privacy to the users.

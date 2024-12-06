@@ -10,7 +10,7 @@ function FriendList({ friends, onFriendClick }) {
             onClick={() => onFriendClick(friend)}
             disabled={friend.isReported}
           >
-            {friend.username} {friend.isReported && <span style={{color: 'red', fontWeight: 'bold'}}>(Reported)</span>}
+            {friend.username} {friend.isReported && <span style={{color: 'red', fontWeight: 'bold'}}>🚩</span>}
           </button>
         </li>
       ))}

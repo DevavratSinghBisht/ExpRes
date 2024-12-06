@@ -37,7 +37,7 @@ function ChatApp() {
 
   const fetchMessages = async (receiver) => {
     setIsLoading(true);
-  
+
     try {
       console.log("Current user name is : ", localStorage.getItem("parentUsername"))
       const response = await fetch("http://localhost:8000/getChatHistory", {
@@ -50,14 +50,14 @@ function ChatApp() {
           receiver_username: receiver,
         }),
       });
-  
+
       if (!response.ok) {
         console.error("Failed to fetch chat history:", response.statusText);
         return;
       }
-  
+
       const chatHistory = await response.json();
-  
+
       // Since the API returns a list of messages directly, we set the state with that list
       if (Array.isArray(chatHistory)) {
         setMessages(chatHistory); // Set messages directly if the response is an array
@@ -70,19 +70,37 @@ function ChatApp() {
       setIsLoading(false);
     }
   };
-  
+
 
   const handleSendMessage = async () => {
+    const senderUsername = localStorage.getItem("parentUsername");
+    if (!senderUsername) {
+      console.error("User is not logged in or username is not set.");
+      return;
+    }
+
+    // Step 1: Check the user's status before sending a message
+    const userInfoResponse = await fetch(`http://localhost:8000/getUserInfo?username=${senderUsername}&isReported=false`);
+    const userInfo = await userInfoResponse.json();
+    console.log("Current user is : ", senderUsername);
+    console.log("Response is : ", userInfoResponse);
+
+    if (userInfo.is_banned) {
+      alert('You cannot send messages as you are blocked or flagged.');
+      return; // Prevent sending the message if the user is blocked/flagged
+    }
+
+    // Step 2: If the user is not blocked/flagged, proceed with sending the message
     if (!m.trim()) return;
-  
+
     const messageData = {
-      sender_username: localStorage.getItem("parentUsername"),
+      sender_username: senderUsername,
       receiver_username: activeFriend.username,
       message: m,
-      isForwarded: false,
-      transactionId: "Missing",  // This will be replaced with the transactionId from the response
+      isForwarded: false,  // Set to false unless it's a forwarded message
+      transactionId: "Missing",
     };
-  
+
     try {
       const response = await fetch("http://localhost:8000/sendMessage", {
         method: "POST",
@@ -91,23 +109,24 @@ function ChatApp() {
         },
         body: JSON.stringify(messageData),
       });
-  
+
       const result = await response.json();
       console.log("Response", result);
-  
+
       if (response.ok && result.transactionId) {
-        messageData.transactionId = result.transactionId;  // Store the transaction ID from the response
+        messageData.transactionId = result.transactionId;
         setMessages((prevMessages) => [...prevMessages, messageData]);
       } else {
         console.error("Error sending message:", result);
       }
-  
+
       setMessage(""); // Reset message input
     } catch (error) {
       console.error("Error sending message:", error);
     }
   };
-  
+
+
 
   const handleReportMessage = async (messageId, reason = "Inappropriate content") => {
     const message = messages.find((msg) => msg.transactionId === messageId);
@@ -115,7 +134,7 @@ function ChatApp() {
       alert("Message not found. Cannot report.");
       return;
     }
-  
+
     const reportData = {
       reporter_username: "currentUsername",
       reported_username: activeFriend.username,
@@ -123,7 +142,7 @@ function ChatApp() {
       reason: reason,
       transactionId: message.transactionId,  // Use the correct transactionId
     };
-  
+
     try {
       const response = await fetch("http://localhost:8000/reportTheMessage", {
         method: "POST",
@@ -132,14 +151,14 @@ function ChatApp() {
         },
         body: JSON.stringify(reportData),
       });
-  
+
       if (!response.ok) {
         const errorDetails = await response.json();
         console.error("Error reporting message:", errorDetails);
         alert(`Failed to report message: ${errorDetails.message || response.statusText}`);
         return;
       }
-  
+
       const result = await response.json();
       console.log("Report response:", result);
       alert("Message reported successfully.");
@@ -149,25 +168,25 @@ function ChatApp() {
     }
   };
 
-  
+
 
   const handleForwardMessage = (messageId) => {
     const messageToForward = messages.find(msg => msg.transactionId === messageId);
-  
+
     if (!messageToForward) {
       alert("Message not found.");
       return;
     }
-  
+
     // Prompt the user to select a recipient (exclude reported users, current user, and active friend)
     const selectedReceiver = prompt(
       "Enter the username of the person you'd like to forward the message to:\n" +
       friends.filter(friend => friend.username !== "currentUsername" && friend.username !== activeFriend.username && !friend.isReported) // Excluding reported users
         .map(friend => friend.username).join("\n")
     );
-  
+
     const receiver = friends.find(friend => friend.username === selectedReceiver);
-  
+
     if (receiver) {
       forwardMessageToReceiver(messageToForward, receiver);
     } else {
@@ -214,7 +233,7 @@ function ChatApp() {
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Type a message"
               />
-              <button onClick={handleSendMessage} disabled={!m.trim()} style={{width:"88px"}}>
+              <button onClick={handleSendMessage} disabled={!m.trim()} style={{ width: "88px" }}>
                 Send
               </button>
             </div>
