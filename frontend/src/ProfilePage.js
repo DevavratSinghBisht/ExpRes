@@ -226,25 +226,23 @@ const ProfilePage = () => {
     ));
   };
 
-  const [reportedPosts, setReportedPosts] = useState([]);
-
-  const handleReport = async (postContent, postId) => {
-    await axios.post('http://localhost:8000/reportPost', {
-      "content": postContent,
-      "id": postId,
-      "username": parentUsername
-    })
-      .then((res) => {
-        setPosts(prevPosts => prevPosts.map(post => 
-          post.id === postId ? { ...post, is_reported: true } : post
-        ));
-        localStorage.setItem(`post_${postId}_reported`, 'true');
-        // getUserPosts();
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  };
+  // const handleReport = async (postContent, postId) => {
+  //   await axios.post('http://localhost:8000/reportPost', {
+  //     "content": postContent,
+  //     "id": postId,
+  //     "username": parentUsername
+  //   })
+  //     .then((res) => {
+  //       setPosts(prevPosts => prevPosts.map(post => 
+  //         post.id === postId ? { ...post, is_reported: true } : post
+  //       ));
+  //       localStorage.setItem(`post_${postId}_reported`, 'true');
+  //       // getUserPosts();
+  //     })
+  //     .catch((err) => {
+  //       console.log(err)
+  //     })
+  // };
 
   const handleMessageUser = (username) => {
     console.log(`Messaging user: ${username}`);
@@ -459,14 +457,13 @@ const ProfilePage = () => {
       limit: 0
     })
       .then((res) => {
-      //   setPosts(res.data.posts) //TODO: Uncomment this code
-      // })
-      const updatedPosts = res.data.posts.map(post => ({
-        ...post,
-        is_reported: localStorage.getItem(`post_${post.id}_reported`) === 'true'
-      }));
-      setPosts(updatedPosts);
-    })
+        setPosts(res.data.posts) //TODO: Uncomment this code
+      })
+      // const updatedPosts = res.data.posts.map(post => ({
+      //   ...post,
+      //   is_reported: localStorage.getItem(`post_${post.id}_reported`) === 'true'
+      // }));
+      // setPosts(updatedPosts);
       .catch((err) => {
         console.log(err)
       })
@@ -694,7 +691,7 @@ const ProfilePage = () => {
                       <Heart size={20} />
                       <span>{post.likes}</span>
                     </button>
-                    <button
+                    {/* <button
                       onClick={() => {
                         handleReport(post.content, post.id)
                       }}
@@ -714,7 +711,7 @@ const ProfilePage = () => {
                     >
                       <Flag size={20} />
                       <span>{post.is_reported ? 'Reported' : 'Report'}</span>
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </div>
