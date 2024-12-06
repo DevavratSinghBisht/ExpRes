@@ -195,6 +195,7 @@ async def reportPost(data: ReportPostReq) -> ReportPostResp:
 async def get() -> HTMLResponse:
     return HTMLResponse(chatHTML)
 
+
 @app.websocket("/ws/{client_id}")
 async def websocket_endpoint(websocket: WebSocket, client_id: int) -> None:
     await chatConnectionManager.connect(websocket)
