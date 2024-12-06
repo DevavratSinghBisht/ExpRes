@@ -1,6 +1,6 @@
 from .baseController import BaseController
 from dbConnect.mongoConnect import MongoConnect
-from model.response.GetPostsResp import GetPostsResp
+from model.response.getPostsResp import GetPostsResp
 
 class GetAllPostsController(BaseController):
 
