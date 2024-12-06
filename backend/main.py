@@ -195,15 +195,14 @@ async def reportPost(data: ReportPostReq) -> ReportPostResp:
 async def get() -> HTMLResponse:
     return HTMLResponse(chatHTML)
 
-@app.websocket("/ws/{client_info}")
-async def websocket_endpoint(websocket: WebSocket, client_info: str) -> None:
+@app.websocket("/ws/{client_id}")
+async def websocket_endpoint(websocket: WebSocket, client_id: int) -> None:
     await chatConnectionManager.connect(websocket)
     try:
         while True:
             data = await websocket.receive_text()
-            await chatConnectionManager.send_personal_message(f"{data}", websocket)
-            controller = SendTextMessageController()
-            await controller.forward(data, client_info)
+            await chatConnectionManager.send_personal_message(f"You wrote: {data}", websocket)
+            await chatConnectionManager.broadcast(f"Client #{client_id} says: {data}")
     except WebSocketDisconnect:
         chatConnectionManager.disconnect(websocket)
-        await chatConnectionManager.broadcast(f"Client #{client_info} left the chat")
+        await chatConnectionManager.broadcast(f"Client #{client_id} left the chat")
