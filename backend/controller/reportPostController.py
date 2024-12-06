@@ -13,7 +13,7 @@ class ReportPostController(BaseController):
         super().forward()
         self.mongoConnect.blockUsers({data.username})
 
-        self.mongoConnect.deletePost({data.transactionId})
-        resp = ReportPostResp(status = "Sucessfully added")
+        self.mongoConnect.deletePost(data.id)
+        resp = ReportPostResp(status = "Sucessfully reported")
 
         return resp
