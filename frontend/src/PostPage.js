@@ -101,7 +101,7 @@ const PostPage = () => {
               className="post-textarea"
               style={{ width: '100%', height: '100px', marginBottom: '10px' }}
             />
-            <button onClick={handlePostSubmit} className="post-button">Post</button>
+            <button onClick={handlePostSubmit} className="post-button" style={{color:"white"}}>Post</button>
           </div>
           <div className="posts-container" style={{ marginTop: '20px' }}>
             {posts.length === 0 ? (
