@@ -137,7 +137,8 @@ class MongoConnect:
                 id=post['id'],
                 content=post['content'],
                 likes=post['likes'],
-                created_at=post['created_at']
+                created_at=post['created_at'],
+                username=post['username']
             )
             posts.append(resp_post)
         return posts
@@ -245,3 +246,6 @@ class MongoConnect:
                                     last_login_at = user["last_login_at"])
             users.append(one_user)
         return users
+
+    def deletePost(self, transactionId: str):
+        self.posts.delete_one({"id": transactionId})

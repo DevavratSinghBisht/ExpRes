@@ -8,3 +8,4 @@ class Post(BaseModel):
     likes: int
     created_at: datetime
     is_reported: bool = False
+    username: str

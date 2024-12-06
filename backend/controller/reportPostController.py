@@ -11,7 +11,9 @@ class ReportPostController(BaseController):
 
     async def forward(self, data: ReportPostReq) -> ReportPostResp:
         super().forward()
+        self.mongoConnect.blockUsers({data.username})
 
+        self.mongoConnect.deletePost({data.transactionId})
         resp = ReportPostResp(status = "Sucessfully added")
 
         return resp
