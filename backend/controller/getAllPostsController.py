@@ -8,6 +8,7 @@ class GetAllPostsController(BaseController):
         super().__init__()
         self.mongoConnect = MongoConnect()
 
+
     async def forward(self) -> GetPostsResp:
         super().forward()
 
