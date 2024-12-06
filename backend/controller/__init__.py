@@ -12,3 +12,4 @@ from .chatHistoryController import ChatHistoryController
 from .reportPostController import ReportPostController
 from .sendtextMessageController import SendTextMessageController
 from .allUsersRespController import AllUsersRespController
+from .getAllPostsController import GetAllPostsController

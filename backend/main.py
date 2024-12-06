@@ -20,7 +20,7 @@ from validator import (
 
 from controller import (
     UserRegController, UserLoginController, UserInfoController, SendTextMessageController,AllUsersRespController,
-    FriendsListController, CreatePostController, SendMessageController, GetPostsController,
+    FriendsListController, CreatePostController, SendMessageController, GetPostsController,GetAllPostsController,
     ReportMessageController, ResponseToFriendRequestController, ChatHistoryController, ReportPostController
 )
 
@@ -104,6 +104,16 @@ async def getPosts(data: GetPostsReq) -> GetPostsResp:
     resp = await controller.forward(data)
 
     return resp
+
+@app.post('/getAllPosts')
+async def getAllPosts() -> GetPostsResp:
+
+    # logic
+    controller = GetAllPostsController()
+    resp = await controller.forward()
+
+    return resp
+
 
 @app.post('/createPost')
 async def createPost(data: CreatePostReq) -> CreatePostResp:

@@ -249,3 +249,18 @@ class MongoConnect:
 
     def deletePost(self, transactionId: str):
         self.posts.delete_one({"id": transactionId})
+
+    def getAllPosts(self):
+        posts = self.posts.find()
+        resp_posts = []
+        for post in posts:
+            print(f"- ID: {post['id']} | Content: {post['content']} | Likes: {post['likes']}")
+            resp_post = Post(
+                id=post['id'],
+                content=post['content'],
+                likes=post['likes'],
+                created_at=post['created_at'],
+                username=post['username']
+            )
+            resp_posts.append(resp_post)
+        return resp_posts
