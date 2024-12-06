@@ -4,7 +4,7 @@
     width: 85%;
     max-width: 1200px;
     height: 70vh; 
-    background-color: #ffffff;
+    background-color: #000000;
     border-radius: 12px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -17,7 +17,7 @@
 /* Friend List Styles */
 .friend-list {
     width: 30%;
-    background-color: #f8f9fa;
+    background-color: #000000;
     padding: 25px;
     border-right: 1px solid #ddd;
     display: flex;

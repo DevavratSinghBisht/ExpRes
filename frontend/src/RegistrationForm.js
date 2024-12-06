@@ -17,7 +17,7 @@ const RegistrationForm = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
-  // const parentUsername = localStorage.getItem("username");
+  
   const validateContactNumber = (contactNo) => {
     const regex = /^\d{10}$/;
     return regex.test(contactNo);
@@ -97,9 +97,7 @@ const RegistrationForm = () => {
   const inputStyle = {
     padding: '12px 16px',
     borderRadius: '25px',
-    border: '1px solid #9370DB',
-    transition: 'all 0.3s ease',
-    outline: 'none',
+    border: '1px solid #ddd',
     fontSize: '14px',
     width: '100%',
     boxSizing: 'border-box',
@@ -107,147 +105,198 @@ const RegistrationForm = () => {
   };
 
   return (
-    <div style={{
-      maxWidth: '450px',
-      margin: '50px auto',
-      padding: '30px',
-      borderRadius: '15px',
-      boxShadow: '0 4px 20px rgba(147, 112, 219, 0.15)',
-      backgroundColor: '#071E3D',
-    }}>
-      <h2 style={{
-        textAlign: 'center',
-        color: 'white',
-        marginBottom: '25px',
-        fontSize: '28px',
-        fontWeight: '600'
-      }}>Registration</h2>
+    <div style={styles.container}>
+      <div style={styles.registrationContainer}>
+        <div style={styles.registrationBox}>
+          <h2 style={styles.title}>Registration</h2>
+          <form onSubmit={handleSubmit}>
+            <div style={styles.inputGroup}>
+              <label htmlFor="username" style={styles.label}>Username</label>
+              <input
+                type="text"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                placeholder="Username"
+                required
+                style={inputStyle}
+              />
+            </div>
 
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-        <label style={{ color: '#2ebff0', fontSize: '16px' }} htmlFor="username">Username</label>
-        <input
-          type="text"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-          placeholder="Username"
-          required
-          style={inputStyle}
-        />
+            <div style={styles.inputGroup}>
+              <label htmlFor="firstName" style={styles.label}>First Name</label>
+              <input
+                type="text"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                placeholder="First Name"
+                required
+                style={inputStyle}
+              />
+            </div>
 
-        <label style={{ color: '#2ebff0', fontSize: '16px' }} htmlFor="firstName">First Name</label>
-        <input
-          type="text"
-          name="firstName"
-          value={formData.firstName}
-          onChange={handleChange}
-          placeholder="First Name"
-          required
-          style={inputStyle}
-        />
+            <div style={styles.inputGroup}>
+              <label htmlFor="lastName" style={styles.label}>Last Name</label>
+              <input
+                type="text"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                placeholder="Last Name"
+                required
+                style={inputStyle}
+              />
+            </div>
 
-        <label style={{ color: '#2ebff0', fontSize: '16px' }} htmlFor="lastName">Last Name</label>
-        <input
-          type="text"
-          name="lastName"
-          value={formData.lastName}
-          onChange={handleChange}
-          placeholder="Last Name"
-          required
-          style={inputStyle}
-        />
+            <div style={styles.inputGroup}>
+              <label htmlFor="email" style={styles.label}>Email</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Email"
+                required
+                style={inputStyle}
+              />
+            </div>
 
-        <label style={{ color: '#2ebff0', fontSize: '16px' }} htmlFor="email">Email</label>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="Email"
-          required
-          style={inputStyle}
-        />
+            <div style={styles.inputGroup}>
+              <label htmlFor="contactNo" style={styles.label}>Contact Number</label>
+              <input
+                type="text"
+                name="contactNo"
+                value={formData.contactNo}
+                onChange={handleChange}
+                placeholder="Contact Number (10 digits)"
+                required
+                style={inputStyle}
+              />
+            </div>
 
-        <label style={{ color: '#2ebff0', fontSize: '16px' }} htmlFor="contactNo">Contact Number</label>
-        <input
-          type="text"
-          name="contactNo"
-          value={formData.contactNo}
-          onChange={handleChange}
-          placeholder="Contact Number (10 digits)"
-          required
-          style={inputStyle}
-        />
+            <div style={styles.inputGroup}>
+              <label htmlFor="dateOfBirth" style={styles.label}>Date of Birth</label>
+              <input
+                type="date"
+                name="dateOfBirth"
+                value={formData.dateOfBirth}
+                onChange={handleChange}
+                required
+                min={`${new Date().getFullYear() - 120}-01-01`}
+                max={new Date().toISOString().split('T')[0]}
+                style={inputStyle}
+              />
+            </div>
 
-        <label style={{ color: '#2ebff0', fontSize: '16px' }} htmlFor="dateOfBirth">Date of Birth</label>
-        <input
-          type="date"
-          name="dateOfBirth"
-          value={formData.dateOfBirth}
-          onChange={handleChange}
-          required
-          min={`${new Date().getFullYear() - 120}-01-01`}
-          max={new Date().toISOString().split('T')[0]}
-          style={inputStyle}
-        />
+            <div style={styles.inputGroup}>
+              <label htmlFor="password" style={styles.label}>Password</label>
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Password (min 8 chars, 1 special char)"
+                required
+                style={inputStyle}
+              />
+            </div>
 
-        <label style={{ color: '#2ebff0', fontSize: '16px' }} htmlFor="password">Password</label>
-        <input
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          placeholder="Password (min 8 chars, 1 special char)"
-          required
-          style={inputStyle}
-        />
+            <div style={styles.inputGroup}>
+              <label htmlFor="password2" style={styles.label}>Confirm Password</label>
+              <input
+                type="password"
+                name="password2"
+                value={formData.password2}
+                onChange={handleChange}
+                placeholder="Confirm Password"
+                required
+                style={inputStyle}
+              />
+            </div>
 
-        <label style={{ color: '#2ebff0', fontSize: '16px' }} htmlFor="password2">Confirm Password</label>
-        <input
-          type="password"
-          name="password2"
-          value={formData.password2}
-          onChange={handleChange}
-          placeholder="Confirm Password"
-          required
-          style={inputStyle}
-        />
+            {errorMessage && (
+              <p style={styles.error}>{errorMessage}</p>
+            )}
+            {successMessage && (
+              <p style={styles.success}>{successMessage}</p>
+            )}
 
-        {errorMessage && (
-          <p style={{
-            color: '#C71585',
-            textAlign: 'center',
-            margin: '5px 0',
-            fontSize: '14px'
-          }}>{errorMessage}</p>
-        )}
-        {successMessage && (
-          <p style={{
-            color: '#9370DB',
-            textAlign: 'center',
-            margin: '5px 0',
-            fontSize: '14px'
-          }}>{successMessage}</p>
-        )}
-
-        <button
-          type="submit"
-          style={{
-            padding: '14px',
-            borderRadius: '25px',
-            background: '#168af0',
-            color: 'white',
-            border: 'none',
-            cursor: 'pointer',
-            fontSize: '16px',
-            transition: 'background-color 0.3s ease',
-          }}
-        >
-          Register
-        </button>
-      </form>
+            <button type="submit" style={styles.submitBtn}>Register</button>
+          </form>
+        </div>
+      </div>
     </div>
   );
+};
+
+const styles = {
+  container: {
+    height: '150vh',
+    background: 'linear-gradient(to right, #1B1833, #00d2ff)', // Gradient background
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontFamily: 'Arial, sans-serif',
+  },
+  registrationContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '20px',
+    width: '1000px',
+    marginTop: '-30px',
+  },
+  registrationBox: {
+    backgroundColor: '#ffffff',
+    padding: '38px',
+    borderRadius: '10px',
+    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
+    width: '100%',
+    maxWidth: '400px',
+    transform: 'translateY(20px)',
+    animation: 'fadeIn 1s ease-out forwards',
+  },
+  title: {
+    textAlign: 'center',
+    marginBottom: '10px',
+    fontSize: '30px',
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  inputGroup: {
+    marginBottom: '20px',
+  },
+  label: {
+    display: 'block',
+    fontWeight: 'bold',
+    marginBottom: '8px',
+    color: '#333',
+  },
+  submitBtn: {
+    padding: '14px',
+    borderRadius: '25px',
+    background: '#168af0',
+    color: 'white',
+    border: 'none',
+    cursor: 'pointer',
+    fontSize: '16px',
+    width: '100%',
+    transition: 'background-color 0.3s',
+  },
+  submitBtnHover: {
+    background: '#155a9c',
+  },
+  error: {
+    color: 'red',
+    fontSize: '14px',
+    textAlign: 'center',
+  },
+  success: {
+    color: 'green',
+    fontSize: '14px',
+    textAlign: 'center',
+  }
 };
 
 export default RegistrationForm;
