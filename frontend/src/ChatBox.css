@@ -36,9 +36,9 @@
 }
 
 .sent .message-content {
-  background-color: #4CAF50;
+  background-color: #ffffff;
   /* Green background for sent messages */
-  color: white;
+  color: black;
 }
 
 .received .message-content {
