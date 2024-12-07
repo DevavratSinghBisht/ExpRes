@@ -281,6 +281,10 @@ const FriendSearch = () => {
               <h2 
                 style={usernameTitleStyle}
                 onClick={() => {
+                  if(friend.is_banned){
+                    alert("This user is banned");
+                    return;
+                  }
                   navigate('/ProfilePage', { state: { username: friend.username } });
                 }}>
                   {friend.username}

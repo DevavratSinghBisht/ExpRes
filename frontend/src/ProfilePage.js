@@ -197,7 +197,7 @@ const ProfilePage = () => {
     "tuser",
     "john_doe",
     "rudie_john",
-    "pookie_pookie",
+    "jason_smith",
     "trust_france"
   ]
   const parentUsername = localStorage.getItem("parentUsername")
@@ -331,7 +331,7 @@ const ProfilePage = () => {
           boxShadow: '0 4px 24px rgba(0, 0, 0, 0.2)'
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-            <h3 style={{ color: '#ffffff', margin: 0, fontSize: '1.25rem', fontWeight: '600' }}>{title}</h3>
+            <h3 style={{ color: '#ffffff', margin: 0, fontSize: '1.25rem', fontWeight: '600', flex: 1 }}>{title}</h3>
             <button
               onClick={onClose}
               style={{
@@ -343,7 +343,7 @@ const ProfilePage = () => {
                 borderRadius: '50%',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'flex-end'
               }}
             >
               <X size={24} />
@@ -535,7 +535,7 @@ const ProfilePage = () => {
                     <div style={{ fontSize: '2', fontWeight: '700', color: 'white' }}>
                       {posts.length}
                     </div>
-                    <div style={{ color: '#494D52' }}>Posts</div>
+                    <div style={{ color: '#3B82F6' }}>Posts</div>
                   </div>
                   <div
                     onClick={() => setShowModal({ type: 'followers', data: profileData?.followers })}
@@ -549,7 +549,7 @@ const ProfilePage = () => {
                     <div style={{ fontSize: '2', fontWeight: '700', color: 'white' }}>
                       {profileData?.followers?.length}
                     </div>
-                    <div style={{ color: '#494D52' }}>Followers</div>
+                    <div style={{ color: '#3B82F6' }}>Followers</div>
                   </div>
                   <div
                     onClick={() => setShowModal({ type: 'following', data: profileData?.following })}
@@ -563,7 +563,7 @@ const ProfilePage = () => {
                     <div style={{ fontSize: '2', fontWeight: '700', color: 'white' }}>
                       {profileData?.following?.length}
                     </div>
-                    <div style={{ color: '#494D52' }}>Following</div>
+                    <div style={{ color: '#3B82F6' }}>Following</div>
                   </div>
                 </div>
                 {
@@ -587,7 +587,7 @@ const ProfilePage = () => {
                         fontSize: '1',
                         fontWeight: '700',
                         marginBottom: '4px',
-                        color: 'white'
+                        color: '#3B82F6'
                       }}>
                         {
                           pendingRequestsUserNames.filter(function(n) {
@@ -595,7 +595,7 @@ const ProfilePage = () => {
                           })?.length
                         }
                       </div>
-                      <div style={{ color: 'white' }}>Pending Requests</div>
+                      <div style={{ color: 'whitesmoke' }}>Pending Requests</div>
                     </div>
                 }
               </div>
