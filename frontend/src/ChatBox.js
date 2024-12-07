@@ -21,12 +21,14 @@ const ChatBox = ({ messages, onReportMessage, onForwardMessage, isLoading }) => 
                 className="report-icon"
                 title="Report this message"
                 onClick={() => onReportMessage(msg.transactionId)} // Report with default reason
+                style={{color:'red'}}
               />
               {/* Forward Message Icon */}
               <FaReply
                 className="forward-icon"
                 title="Forward this message"
                 onClick={() => onForwardMessage(msg.transactionId)} // Trigger forward function from parent
+                style={{color:'white'}}
               />
             </div>
           </div>

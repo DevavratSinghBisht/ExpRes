@@ -7,7 +7,7 @@
 
 .chat-message.sent {
   justify-content: flex-end;
-  background-color: #e1f5fe;
+  background-color: rgb(30,41,59);
   /* Light blue for sent messages */
 }
 

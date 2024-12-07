@@ -58,7 +58,7 @@ video {
   max-width: 600px; /* Max width for better responsiveness */
   margin: 50px auto; /* Center the container */
   padding: 20px;
-  background-color: #84CAFF;
+  background-color: #001F3F;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

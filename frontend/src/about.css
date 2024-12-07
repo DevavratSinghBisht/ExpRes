@@ -5,7 +5,7 @@
   /* padding-left:60px; */
   font-family: Arial, sans-serif;
   /* padding: 20px; */
-  background: linear-gradient(to right, #1B1833, #00d2ff);
+  background-color: #001F3F;
   color: #ffffff;
 }
 
@@ -25,7 +25,7 @@
   font-size: 1.8em;
   margin-top: 30px;
   padding-left: 40px;
-  color: rgb(184, 226, 99);
+  color: white;
 }
 
 .about-page p {

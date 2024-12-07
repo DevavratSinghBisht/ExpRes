@@ -501,7 +501,7 @@ const ProfilePage = () => {
       }}>
         {/* Profile Header */}
         <div style={{
-          backgroundColor: '#84CAFF',
+          backgroundColor: 'rgb(30, 41, 59)',
           padding: '2rem',
           borderRadius: '16px',
           boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
@@ -519,7 +519,7 @@ const ProfilePage = () => {
                 fontSize: '1.875rem',
                 fontWeight: '700',
                 marginBottom: '1rem',
-                color: 'rgba(30,41,59)'
+                color: 'white'
               }}>{profileData.username}</h2>
               <div style={{ display: 'flex', gap: '2rem' }}>
                 <></>
@@ -595,7 +595,7 @@ const ProfilePage = () => {
                           })?.length
                         }
                       </div>
-                      <div style={{ color: '#494D52' }}>Pending Requests</div>
+                      <div style={{ color: 'white' }}>Pending Requests</div>
                     </div>
                 }
               </div>

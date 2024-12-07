@@ -92,7 +92,7 @@ const PostPage = () => {
       <div style={cardContainerStyle}>
         <div className="content-section" style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
           <div className="create-post-container">
-            <h3 style={{ marginTop: '0px', color: '#001F3F' }}><b>Share your thoughts!</b></h3>
+            <h3 style={{ marginTop: '0px', color: 'white' }}><b>Share your thoughts!</b></h3>
             <textarea
               value={newPost}
               onChange={(e) => setNewPost(e.target.value)}

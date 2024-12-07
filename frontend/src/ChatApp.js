@@ -136,7 +136,7 @@ function ChatApp() {
     }
 
     const reportData = {
-      reporter_username: "currentUsername",
+      reporter_username: "Aayush",
       reported_username: activeFriend.username,
       message: message.message,
       reason: reason,
@@ -181,7 +181,7 @@ function ChatApp() {
     // Prompt the user to select a recipient (exclude reported users, current user, and active friend)
     const selectedReceiver = prompt(
       "Enter the username of the person you'd like to forward the message to:\n" +
-      friends.filter(friend => friend.username !== "currentUsername" && friend.username !== activeFriend.username && !friend.isReported) // Excluding reported users
+      friends.filter(friend => friend.username !== "Aayush" && friend.username !== activeFriend.username && !friend.isReported) // Excluding reported users
         .map(friend => friend.username).join("\n")
     );
 
