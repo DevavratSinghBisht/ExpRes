@@ -117,20 +117,20 @@ const RegistrationForm = () => {
                 name="username"
                 value={formData.username}
                 onChange={handleChange}
-                placeholder="Username"
+                placeholder="Enter your username"
                 required
                 style={inputStyle}
               />
             </div>
 
             <div style={styles.inputGroup}>
-              <label htmlFor="firstName" style={styles.label}>First Name</label>
+              <label htmlFor="firstName" style={styles.label}>First Name:</label>
               <input
                 type="text"
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleChange}
-                placeholder="First Name"
+                placeholder="Enter your first name"
                 required
                 style={inputStyle}
               />
@@ -143,7 +143,7 @@ const RegistrationForm = () => {
                 name="lastName"
                 value={formData.lastName}
                 onChange={handleChange}
-                placeholder="Last Name"
+                placeholder="Enter your last name"
                 required
                 style={inputStyle}
               />
@@ -156,7 +156,7 @@ const RegistrationForm = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                placeholder="Email"
+                placeholder="Enter your email"
                 required
                 style={inputStyle}
               />
@@ -236,8 +236,9 @@ const styles = {
     background: 'linear-gradient(to right, #1B1833, #00d2ff)', // Gradient background
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     fontFamily: 'Arial, sans-serif',
+    paddingTop: '60px',
   },
   registrationContainer: {
     display: 'flex',
@@ -253,9 +254,12 @@ const styles = {
     borderRadius: '10px',
     boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
     width: '100%',
-    maxWidth: '400px',
+    maxWidth: '500px',
     transform: 'translateY(20px)',
     animation: 'fadeIn 1s ease-out forwards',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '15px',
   },
   title: {
     textAlign: 'center',
