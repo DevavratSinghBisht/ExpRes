@@ -96,7 +96,7 @@ const RegistrationForm = () => {
 
   const inputStyle = {
     padding: '12px 16px',
-    borderRadius: '25px',
+    borderRadius: '6px',
     border: '1px solid #ddd',
     fontSize: '14px',
     width: '100%',
@@ -274,15 +274,15 @@ const styles = {
     color: '#333',
   },
   submitBtn: {
-    padding: '14px',
-    borderRadius: '25px',
-    background: '#168af0',
-    color: 'white',
-    border: 'none',
-    cursor: 'pointer',
-    fontSize: '16px',
     width: '100%',
-    transition: 'background-color 0.3s',
+    padding: '12px',
+    backgroundColor: '#001F3F',
+    color: 'white',
+    fontSize: '18px',
+    border: 'none',
+    borderRadius: '8px',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease, transform 0.3s ease',
   },
   submitBtnHover: {
     background: '#155a9c',
