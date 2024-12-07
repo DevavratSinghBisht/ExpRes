@@ -19,7 +19,7 @@ class ResDBQueries:
         if transactionId == "Missing":
            print("building new asset data")
            asset_data = AssetData(transactionId=transactionId, sender_username=sender_username,
-                                  receiver_username=recipient_username, content=message)
+                                  receiver_username=recipient_username, content = message)
            query = self.resDBConnect.build_post_query_payload("CREATE", 1, signer_public_key, signer_private_key,
                                                               recipient_public_key, asset_data)
         else:
