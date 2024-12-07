@@ -14,7 +14,7 @@ class UserInfoController(BaseController):
         super().forward()
 
         # User data retrieval
-        resp = self.mongoConnect.getUserInfo(data)
+        resp = self.mongoConnect.getUserInfo(data.username)
 
         response = UserInfoResp(username = resp["username"],email = resp["email"],
                                 profile_picture = resp["profilePicture"],

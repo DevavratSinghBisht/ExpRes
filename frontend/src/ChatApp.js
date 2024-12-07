@@ -17,18 +17,49 @@ function ChatApp() {
 
 
 
-  // Fetch friend list from API
-  useEffect(() => {
-    const mockFriends = [
-      { username: "Alice", email: "alice@example.com", is_active: true, isReported: false },
-      { username: "Bob", email: "bob@example.com", is_active: true, isReported: true },
-      { username: "Charlie", email: "charlie@example.com", is_active: true, isReported: false },
-    ];
-    setFriends(mockFriends);
+    useEffect(() => {
+    // Function to fetch friends data dynamically
+    const fetchFriends = async () => {
+      try {
+        // Get the username from localStorage
+        const username = localStorage.getItem("parentUsername");
+
+        if (!username) {
+          console.error("Username not found in localStorage.");
+          return;
+        }
+
+        // Example: Fetching data from an API
+        const response = await fetch("http://localhost:8000/getFriendsList", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: username, // Pass the username in the request
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch friends data");
+        }
+
+        const data = await response.json(); // Assuming API returns an object with `friend_list`
+
+        // Update the friends state with the data
+        setFriends(data.friend_list); // Ensure we handle the case if `friend_list` is not returned
+      } catch (error) {
+        console.error("Error fetching friends data:", error);
+        setFriends([]); // Set empty friends list if fetch fails
+      }
+    };
+
+    fetchFriends(); // Call the fetch function when the component mounts
+
   }, []);
 
   const handleFriendClick = (friend) => {
-    if (friend.isReported) {
+    if (friend.isBanned) {
       alert("You cannot chat with a reported user.");
       return;
     }

@@ -143,8 +143,8 @@ class MongoConnect:
             posts.append(resp_post)
         return posts
 
-    def getUserInfo(self, req: UserInfoReq):
-        user = self.users.find_one({"username": req.username})
+    def getUserInfo(self, username: str):
+        user = self.users.find_one({"username": username})
         print(user)
         return user
 
