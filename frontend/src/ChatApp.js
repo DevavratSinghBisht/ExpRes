@@ -13,6 +13,8 @@ function ChatApp() {
   const [isLoading, setIsLoading] = useState(false);
   const { sendMessage, ws } = useWebSocket();
   const [forwardedMessage, setForwardedMessage] = useState(null);
+  const [chats, setChats] = useState({});
+
 
 
   // Fetch friend list from API
@@ -30,23 +32,26 @@ function ChatApp() {
       alert("You cannot chat with a reported user.");
       return;
     }
-
+  
     setActiveFriend(friend);
-    fetchMessages(friend.username);
+  
+    // Fetch messages only if not already loaded
+    if (!chats[friend.username]) {
+      fetchMessages(friend.username);
+    }
   };
 
   const fetchMessages = async (receiver) => {
     setIsLoading(true);
 
     try {
-      console.log("Current user name is : ", localStorage.getItem("parentUsername"))
       const response = await fetch("http://localhost:8000/getChatHistory", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          sender_username: localStorage.getItem("parentUsername"), // Replace with actual sender's username
+          sender_username: localStorage.getItem("parentUsername"),
           receiver_username: receiver,
         }),
       });
@@ -58,9 +63,12 @@ function ChatApp() {
 
       const chatHistory = await response.json();
 
-      // Since the API returns a list of messages directly, we set the state with that list
-      if (Array.isArray(chatHistory)) {
-        setMessages(chatHistory); // Set messages directly if the response is an array
+      // Ensure chat history is stored for the active friend only
+      if (chatHistory && Array.isArray(chatHistory.messages)) {
+        setChats((prevChats) => ({
+          ...prevChats,
+          [receiver]: chatHistory.messages, // Update messages for this receiver
+        }));
       } else {
         console.error("Chat history is not an array:", chatHistory);
       }
@@ -72,14 +80,14 @@ function ChatApp() {
   };
 
 
+
   const handleSendMessage = async () => {
     const senderUsername = localStorage.getItem("parentUsername");
     if (!senderUsername) {
       console.error("User is not logged in or username is not set.");
       return;
     }
-
-    // Step 1: Check the user's status before sending a message
+  
     const userInfoResponse = await fetch(`http://localhost:8000/getUserInfo?username=${senderUsername}&isReported=false`);
     const userInfo = await userInfoResponse.json();
     console.log("Current user is : ", senderUsername);
@@ -89,18 +97,16 @@ function ChatApp() {
       alert('You cannot send messages as you are blocked or flagged.');
       return; // Prevent sending the message if the user is blocked/flagged
     }
-
-    // Step 2: If the user is not blocked/flagged, proceed with sending the message
     if (!m.trim()) return;
-
+  
     const messageData = {
       sender_username: senderUsername,
       receiver_username: activeFriend.username,
       message: m,
-      isForwarded: false,  // Set to false unless it's a forwarded message
+      isForwarded: false,
       transactionId: "Missing",
     };
-
+  
     try {
       const response = await fetch("http://localhost:8000/sendMessage", {
         method: "POST",
@@ -109,17 +115,23 @@ function ChatApp() {
         },
         body: JSON.stringify(messageData),
       });
-
+  
       const result = await response.json();
-      console.log("Response", result);
-
+  
       if (response.ok && result.transactionId) {
         messageData.transactionId = result.transactionId;
-        setMessages((prevMessages) => [...prevMessages, messageData]);
+  
+        setChats((prevChats) => ({
+          ...prevChats,
+          [activeFriend.username]: [
+            ...(prevChats[activeFriend.username] || []),
+            messageData,
+          ],
+        }));
       } else {
         console.error("Error sending message:", result);
       }
-
+  
       setMessage(""); // Reset message input
     } catch (error) {
       console.error("Error sending message:", error);
@@ -208,8 +220,10 @@ function ChatApp() {
   };
 
   return (
-    <div className="chat-app" style={{ color: "black", height: "500px", background: 'linear-gradient(to right, #1B1833, #00d2ff)', 
-          paddingTop: '100px', paddingBottom: '80px', paddingLeft:'100px', paddingRight: '10px'}}>
+    <div className="chat-app" style={{
+      color: "black", height: "500px", background: 'linear-gradient(to right, #1B1833, #00d2ff)',
+      paddingTop: '100px', paddingBottom: '80px', paddingLeft: '100px', paddingRight: '10px'
+    }}>
       <div className="sidebar">
         <FriendList friends={friends} onFriendClick={handleFriendClick} />
       </div>
@@ -218,12 +232,12 @@ function ChatApp() {
           <>
             <h2>Chat with {activeFriend.username}</h2>
             {isLoading ? (
-              <p style={{color: 'whitesmoke'}}>Loading messages...</p>
+              <p style={{ color: 'whitesmoke' }}>Loading messages...</p>
             ) : (
               <ChatBox
-                messages={messages}
-                onForwardMessage={handleForwardMessage}  // Forward function passed here
-                onReportMessage={handleReportMessage}  // Your report handler (if implemented)
+                messages={chats[activeFriend.username] || []} // Pass messages specific to the active friend
+                onForwardMessage={handleForwardMessage}
+                onReportMessage={handleReportMessage}
                 isLoading={isLoading}
               />
             )}
@@ -240,7 +254,7 @@ function ChatApp() {
             </div>
           </>
         ) : (
-          <p style={{color: 'white'}}>Select a friend to chat with.</p>
+          <p style={{ color: 'white' }}>Select a friend to chat with.</p>
         )}
       </div>
     </div>
