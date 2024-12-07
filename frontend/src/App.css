@@ -58,7 +58,7 @@ video {
   max-width: 600px; /* Max width for better responsiveness */
   margin: 50px auto; /* Center the container */
   padding: 20px;
-  background-color: #CBDCEB;
+  background-color: #84CAFF;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -470,9 +470,9 @@ html {
   color: #ffd700; /* Change color on hover */
 }
 
-.chat-app {
+/* .chat-app {
   display: flex;
-}
+} */
 
 .sidebar {
   width: 250px;
@@ -508,11 +508,11 @@ html {
   font-size: 12px;
 }
 
-.chat-box {
+/* .chat-box {
   flex-grow: 1;
   padding: 20px;
   background-color: #fff;
-}
+} */
 
 .input-section {
   display: flex;
@@ -528,10 +528,10 @@ html {
   padding: 10px;
 }
 
-.chat-box-messages {
+/* .chat-box-messages {
   max-height: 300px;
   overflow-y: scroll;
-}
+} */
 
 .message {
   padding: 10px;

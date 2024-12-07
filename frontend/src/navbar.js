@@ -18,24 +18,24 @@ const NavBar = () => {
           <li>
             <Link to="/">Home</Link>
           </li>
+          <li>
+            <Link to="/about">About</Link>
+          </li>
           <li><a href="/posts">Post</a></li>
           <li>
             <Link to="/ChatApp">ExpRes Chat</Link>
           </li>
           <li>
-            <Link to="/about">About</Link>
+            <Link to="/FriendSearch"> Search Friend</Link>
+          </li>
+          <li>
+            <Link to="/ProfilePage"> Profile</Link>
           </li>
           <li>
             <Link to="/login">Login</Link>
           </li>
           <li>
             <Link to="/RegistrationForm">Register</Link>
-          </li>
-          <li>
-            <Link to="/ProfilePage"> Profile</Link>
-          </li>
-          <li>
-            <Link to="/FriendSearch"> Search Friend</Link>
           </li>
         </ul>
       </div>

@@ -208,7 +208,8 @@ function ChatApp() {
   };
 
   return (
-    <div className="chat-app" style={{ color: "black", height: "500px" }}>
+    <div className="chat-app" style={{ color: "black", height: "500px", background: 'linear-gradient(to right, #1B1833, #00d2ff)', 
+          paddingTop: '100px', paddingBottom: '80px', paddingLeft:'100px', paddingRight: '10px'}}>
       <div className="sidebar">
         <FriendList friends={friends} onFriendClick={handleFriendClick} />
       </div>
@@ -217,7 +218,7 @@ function ChatApp() {
           <>
             <h2>Chat with {activeFriend.username}</h2>
             {isLoading ? (
-              <p>Loading messages...</p>
+              <p style={{color: 'whitesmoke'}}>Loading messages...</p>
             ) : (
               <ChatBox
                 messages={messages}
@@ -239,7 +240,7 @@ function ChatApp() {
             </div>
           </>
         ) : (
-          <p>Select a friend to chat with.</p>
+          <p style={{color: 'white'}}>Select a friend to chat with.</p>
         )}
       </div>
     </div>

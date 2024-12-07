@@ -483,12 +483,14 @@ const ProfilePage = () => {
 
   return (
     <div style={containerStyle}>
-      <div style={cardContainerStyle}>
     <div style={{
-      backgroundColor: '#0f172a',
+      background: 'linear-gradient(to right, #1B1833, #00d2ff)',
       minHeight: '100vh',
       padding: '2rem',
-      color: '#ffffff'
+      color: '#ffffff',
+      margin: '0 auto',
+      width: '80%',
+      borderRadius: '12px',
     }}>
       <div style={{
         maxWidth: '800px',
@@ -499,7 +501,7 @@ const ProfilePage = () => {
       }}>
         {/* Profile Header */}
         <div style={{
-          backgroundColor: '#1e293b',
+          backgroundColor: '#84CAFF',
           padding: '2rem',
           borderRadius: '16px',
           boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
@@ -517,7 +519,7 @@ const ProfilePage = () => {
                 fontSize: '1.875rem',
                 fontWeight: '700',
                 marginBottom: '1rem',
-                color: '#ffffff'
+                color: 'rgba(30,41,59)'
               }}>{profileData.username}</h2>
               <div style={{ display: 'flex', gap: '2rem' }}>
                 <></>
@@ -530,10 +532,10 @@ const ProfilePage = () => {
                       textAlign: 'center'
                     }}
                   >
-                    <div style={{ fontSize: '1', fontWeight: '700', color: '#3b82f6' }}>
+                    <div style={{ fontSize: '2', fontWeight: '700', color: 'white' }}>
                       {posts.length}
                     </div>
-                    <div style={{ color: '#94a3b8' }}>Posts</div>
+                    <div style={{ color: '#494D52' }}>Posts</div>
                   </div>
                   <div
                     onClick={() => setShowModal({ type: 'followers', data: profileData?.followers })}
@@ -544,10 +546,10 @@ const ProfilePage = () => {
                       textAlign: 'center'
                     }}
                   >
-                    <div style={{ fontSize: '1', fontWeight: '700', color: '#3b82f6' }}>
+                    <div style={{ fontSize: '2', fontWeight: '700', color: 'white' }}>
                       {profileData?.followers?.length}
                     </div>
-                    <div style={{ color: '#94a3b8' }}>Followers</div>
+                    <div style={{ color: '#494D52' }}>Followers</div>
                   </div>
                   <div
                     onClick={() => setShowModal({ type: 'following', data: profileData?.following })}
@@ -558,10 +560,10 @@ const ProfilePage = () => {
                       textAlign: 'center'
                     }}
                   >
-                    <div style={{ fontSize: '1', fontWeight: '700', color: '#3b82f6' }}>
+                    <div style={{ fontSize: '2', fontWeight: '700', color: 'white' }}>
                       {profileData?.following?.length}
                     </div>
-                    <div style={{ color: '#94a3b8' }}>Following</div>
+                    <div style={{ color: '#494D52' }}>Following</div>
                   </div>
                 </div>
                 {
@@ -585,7 +587,7 @@ const ProfilePage = () => {
                         fontSize: '1',
                         fontWeight: '700',
                         marginBottom: '4px',
-                        color: '#3b82f6'
+                        color: 'white'
                       }}>
                         {
                           pendingRequestsUserNames.filter(function(n) {
@@ -593,7 +595,7 @@ const ProfilePage = () => {
                           })?.length
                         }
                       </div>
-                      <div style={{ color: '#94a3b8' }}>Pending Requests</div>
+                      <div style={{ color: '#494D52' }}>Pending Requests</div>
                     </div>
                 }
               </div>
@@ -725,7 +727,6 @@ const ProfilePage = () => {
             </div>
           ))}
         </div>
-        </div>
     </div>
         {/* Modals */}
         <Modal
@@ -772,14 +773,5 @@ const ProfilePage = () => {
 const containerStyle = {
   minHeight: '100vh',
   padding: '24px',
-};
-
-const cardContainerStyle = {
-  maxWidth: '1000px',
-  margin: '0 auto',
-  backgroundColor: '#0f172a',
-  borderRadius: '15px',
-  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-  padding: '32px'
 };
 export default ProfilePage;

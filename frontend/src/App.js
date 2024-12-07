@@ -93,11 +93,11 @@ const HomePage = () => {
         <p>
           Our team is composed of passionate professionals with expertise in various fields, including software development, design, and user experience. We work together to build something great!
           <ul>
-            <li>Devavrat Singh Bisht</li>
-            <li>Kunjal Agrawal</li>
-            <li>Priyadarshini Ganeshkumar</li>
-            <li>Purva Khadke</li>
             <li>Vrushali Harane</li>
+            <li>Kunjal Agrawal</li>
+            <li>Purva Khadke</li>
+            <li>Devavrat Singh Bisht</li>
+            <li>Priyadarshini Ganeshkumar</li>
           </ul>
         </p>
         {/* <h2 style={{ paddingLeft: "310px" }}>Contact</h2> */}
@@ -137,13 +137,13 @@ const App = () => {
       <NavBar />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/about" element={<About />} />
         <Route path="/posts" element={<PostPage />} />
         <Route path="/ChatApp" element={<ChatApp/>} />
-        <Route path="/about" element={<About />} />
+        <Route path="/friendSearch" element={<FriendSearch />} />
+        <Route path="/ProfilePage" element={<ProfilePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/RegistrationForm" element={<RegistrationForm />} />
-        <Route path="/ProfilePage" element={<ProfilePage />} />
-        <Route path="/friendSearch" element={<FriendSearch />} />
       </Routes>
     </Router>
   );
