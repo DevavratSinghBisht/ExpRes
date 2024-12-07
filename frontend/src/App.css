@@ -226,7 +226,7 @@ html {
   margin-top: 20px;
   /* padding-top: 100px; */
   font-size: 40px;
-  color: #ffd700;
+  color: white;
   text-decoration: none;
   animation: bounce 2s infinite;
 }
@@ -250,7 +250,7 @@ html {
   display: inline-block;
   font-size: 3rem;
   font-weight: bold;
-  color: #ffd700;
+  color: white;
   white-space: nowrap; /* Prevent text wrapping */
   overflow: hidden; /* Hide text outside the container */
   border-right: 3px solid transparent; /* Initially hide the cursor */
@@ -261,7 +261,7 @@ html {
 .blinking-cursor {
   display: inline-block;
   width: 3px; /* Define the cursor width */
-  background-color: #ffd700; /* Cursor color */
+  background-color: white; /* Cursor color */
   animation: blink 0.5s step-end infinite; /* Blinking cursor effect */
 }
 

@@ -69,8 +69,8 @@ const HomePage = () => {
           <h1 className="typing-container">Welcome to ExpRes
             <span className="blinking-cursor"></span>
           </h1>
-          <p style={{color:"#ffd700"}}>Express your thoughts with privacy and security!</p>
-          <p style={{fontSize:'15.5px', color:"#ffd700"}}>Head over to the Post section to post content</p>
+          <p style={{color:"white"}}>Express your thoughts with privacy and security!</p>
+          <p style={{fontSize:'15.5px', color:"white"}}>Head over to the Post section to post content</p>
           {/* <Link to="/posts" className="scroll-icon">
             &#8595; 
           </Link> */}
