@@ -3,95 +3,97 @@ import { Search, UserPlus, Check } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const initialFriends = [
-  {
-    "username": "johndoe92",
-    "email": "johndoe92@example.com",
-    "profile_picture": "https://example.com/profile_pics/johndoe92.jpg",
-    "is_active": true,
-    "created_at": "2024-12-03T18:12:09.408Z",
-    "last_login_at": "2024-12-03T18:12:09.408Z",
-    "visibility": false,
-    "isRequested": false,
-    "followers": [
-      "janedoe88",
-      "mike_smith22",
-      "mike_smith22",
-      "mike_smith22",
-      "mike_smith22",
-      "mike_smith22",
-      "mike_smith22",
-      "mike_smith22",
-      "mike_smith22",
-      "mike_smith22",
-      "mike_smith22",
-    ],
-    "following": [
-      "alice_jones",
-      "bob_brown",
-      "bob_brown",
-      "bob_brown",
-      "bob_brown",
-      "bob_brown",
-    ]
-  },
-  {
-    "username": "janedoe88",
-    "email": "janedoe88@example.com",
-    "profile_picture": "https://example.com/profile_pics/janedoe88.jpg",
-    "is_active": true,
-    "created_at": "2024-11-15T09:30:20.110Z",
-    "last_login_at": "2024-12-02T14:45:56.203Z",
-    "visibility": true,
-    "isRequested": false,
-    "followers": [
-      "johndoe92",
-      "alice_jones"
-    ],
-    "following": [
-      "mike_smith22",
-      "bob_brown"
-    ]
-  },
-  {
-    "username": "mike_smith22",
-    "email": "mike.smith22@example.com",
-    "profile_picture": "https://example.com/profile_pics/mike_smith22.jpg",
-    "is_active": true,
-    "created_at": "2024-09-10T14:03:35.205Z",
-    "last_login_at": "2024-12-03T09:12:47.102Z",
-    "visibility": true,
-    "isRequested": false,
-    "followers": [
-      "johndoe92",
-      "bob_brown"
-    ],
-    "following": [
-      "janedoe88",
-      "alice_jones"
-    ]
-  },
-  {
-    "username": "alice_jones",
-    "email": "alice.jones@example.com",
-    "profile_picture": "https://example.com/profile_pics/alice_jones.jpg",
-    "is_active": false,
-    "created_at": "2024-08-25T11:20:18.305Z",
-    "last_login_at": "2024-09-05T17:00:25.305Z",
-    "visibility": false,
-    "isRequested": false,
-    "followers": [
-      "johndoe92"
-    ],
-    "following": [
-      "janedoe88"
-    ]
-  }
-]
+// const initialFriends = [
+//   {
+//     "username": "johndoe92",
+//     "email": "johndoe92@example.com",
+//     "profile_picture": "https://example.com/profile_pics/johndoe92.jpg",
+//     "is_active": true,
+//     "created_at": "2024-12-03T18:12:09.408Z",
+//     "last_login_at": "2024-12-03T18:12:09.408Z",
+//     "visibility": false,
+//     "isRequested": false,
+//     "followers": [
+//       "janedoe88",
+//       "mike_smith22",
+//       "mike_smith22",
+//       "mike_smith22",
+//       "mike_smith22",
+//       "mike_smith22",
+//       "mike_smith22",
+//       "mike_smith22",
+//       "mike_smith22",
+//       "mike_smith22",
+//       "mike_smith22",
+//     ],
+//     "following": [
+//       "alice_jones",
+//       "bob_brown",
+//       "bob_brown",
+//       "bob_brown",
+//       "bob_brown",
+//       "bob_brown",
+//     ]
+//   },
+//   {
+//     "username": "janedoe88",
+//     "email": "janedoe88@example.com",
+//     "profile_picture": "https://example.com/profile_pics/janedoe88.jpg",
+//     "is_active": true,
+//     "created_at": "2024-11-15T09:30:20.110Z",
+//     "last_login_at": "2024-12-02T14:45:56.203Z",
+//     "visibility": true,
+//     "isRequested": false,
+//     "followers": [
+//       "johndoe92",
+//       "alice_jones"
+//     ],
+//     "following": [
+//       "mike_smith22",
+//       "bob_brown"
+//     ]
+//   },
+//   {
+//     "username": "mike_smith22",
+//     "email": "mike.smith22@example.com",
+//     "profile_picture": "https://example.com/profile_pics/mike_smith22.jpg",
+//     "is_active": true,
+//     "created_at": "2024-09-10T14:03:35.205Z",
+//     "last_login_at": "2024-12-03T09:12:47.102Z",
+//     "visibility": true,
+//     "isRequested": false,
+//     "followers": [
+//       "johndoe92",
+//       "bob_brown"
+//     ],
+//     "following": [
+//       "janedoe88",
+//       "alice_jones"
+//     ]
+//   },
+//   {
+//     "username": "alice_jones",
+//     "email": "alice.jones@example.com",
+//     "profile_picture": "https://example.com/profile_pics/alice_jones.jpg",
+//     "is_active": false,
+//     "created_at": "2024-08-25T11:20:18.305Z",
+//     "last_login_at": "2024-09-05T17:00:25.305Z",
+//     "visibility": false,
+//     "isRequested": false,
+//     "followers": [
+//       "johndoe92"
+//     ],
+//     "following": [
+//       "janedoe88"
+//     ]
+//   }
+// ]
 
 const FriendSearch = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [friends, setFriends] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
   const [requestedUsers, setRequestedUsers] = useState(new Set());
   const navigate = useNavigate();
   const parentUsername = localStorage.getItem("parentUsername")
@@ -250,6 +252,39 @@ const FriendSearch = () => {
     }
   };
 
+  const Modal = ({ isOpen, onClose, message }) => {
+    if (!isOpen) return null;
+  
+    return (
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+        <div style={{
+        background: 'white',
+        padding: '40px',
+        borderRadius: '8px',
+        width: '200px',
+        height: '100px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      }}>
+          <p>{message}</p>
+          <button onClick={onClose}>Close</button>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div style={containerStyle}>
       <div style={cardContainerStyle}>
@@ -282,7 +317,8 @@ const FriendSearch = () => {
                 style={usernameTitleStyle}
                 onClick={() => {
                   if(friend.is_banned){
-                    alert("This user is banned");
+                    setModalMessage("This user is banned");
+                    setIsModalOpen(true);
                     return;
                   }
                   navigate('/ProfilePage', { state: { username: friend.username } });
@@ -341,6 +377,11 @@ const FriendSearch = () => {
           </p>
         )}
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        message={modalMessage}
+      />
     </div>
   );
 };
