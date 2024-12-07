@@ -9,6 +9,7 @@ class ResDBQueries:
         self.resDBConnect = ResDBConnect()
         self.mongoConnect = MongoConnect()
 
+
     def saveMessageinResDB(self, message : str, sender_username: str,
                            recipient_username: str, transactionId: str):
         print("Entering ReSDB Code:")
