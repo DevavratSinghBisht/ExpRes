@@ -235,6 +235,7 @@ class MongoConnect:
             transactionIds.append(id)
         return transactionIds[-5:]
 
+
     def getAllUsers(self):
         all_users = self.users.find()
         users = []
@@ -242,7 +243,7 @@ class MongoConnect:
             print(user)
             one_user = UserInfoResp(username = user["username"], email = user["email"],
                                     followers = user["followers"], following = user["following"],
-                                    created_at = user["created_at"],
+                                    created_at = user["created_at"], is_banned = user["isBanned"],
                                     last_login_at = user["last_login_at"])
             users.append(one_user)
         return users
