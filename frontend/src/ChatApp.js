@@ -151,7 +151,7 @@ function ChatApp() {
   
       if (response.ok && result.transactionId) {
         messageData.transactionId = result.transactionId;
-  
+        
         setChats((prevChats) => ({
           ...prevChats,
           [activeFriend.username]: [
@@ -181,7 +181,7 @@ function ChatApp() {
     }
 
     const reportData = {
-      reporter_username: "currentUsername",
+      reporter_username: localStorage.getItem("parentUsername"),
       reported_username: activeFriend.username,
       message: message.message,
       reason: reason,
@@ -226,7 +226,7 @@ function ChatApp() {
     // Prompt the user to select a recipient (exclude reported users, current user, and active friend)
     const selectedReceiver = prompt(
       "Enter the username of the person you'd like to forward the message to:\n" +
-      friends.filter(friend => friend.username !== "currentUsername" && friend.username !== activeFriend.username && !friend.isReported) // Excluding reported users
+      friends.filter(friend => friend.username !== localStorage.getItem("parentUsername") && friend.username !== activeFriend.username && !friend.isReported) // Excluding reported users
         .map(friend => friend.username).join("\n")
     );
 
@@ -248,7 +248,14 @@ function ChatApp() {
     };
 
     // Add the forwarded message to the messages list
-    setMessages(prevMessages => [...prevMessages, forwardedMessage]);
+    // setChats(prevMessages => [...prevMessages, forwardedMessage]);
+    setChats((prevChats) => ({
+      ...prevChats,
+      [activeFriend.username]: [
+        ...(prevChats[activeFriend.username] || []),
+        forwardedMessage,
+      ],
+    }));
     alert(`Message forwarded to ${receiver.username}`);
   };
 
