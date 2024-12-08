@@ -13,7 +13,7 @@ const ChatBox = ({ messages, onReportMessage, onForwardMessage, isLoading }) => 
         validMessages.map((msg, index) => (
           <div key={index} className={`chat-message ${msg.sender_username === currentUser ? 'sent' : 'received'}`}>
             <div className="message-content">
-              <strong>{msg.sender_username}:</strong> {msg.message}
+              <strong>{currentUser}:</strong> {msg.message}
             </div>
             <div className="message-actions">
               {/* Report Message Icon */}

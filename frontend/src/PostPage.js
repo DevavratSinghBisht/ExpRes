@@ -9,7 +9,7 @@ const PostPage = () => {
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    const username = localStorage.getItem('username');
+    const username = localStorage.getItem('parentUsername');
     axios
       .post('http://localhost:8000/getUserInfo', { username: username, isReported: false })
       .then((response) => setCurrentUser(response.data))
@@ -22,6 +22,7 @@ const PostPage = () => {
         .post('http://localhost:8000/getAllPosts')
         .then((response) => {
           setPosts(response.data.posts);
+          console.log("The posts : ", response.data.posts);
         })
         .catch((error) => console.error('Error fetching posts:', error));
     }
@@ -33,7 +34,8 @@ const PostPage = () => {
       return;
     }
     const postData = {
-      username: currentUser ? currentUser.username : 'Anonymous',
+      username: currentUser ? localStorage.getItem("parentUsername")
+        : 'Anonymous',
       content: newPost,
       id: Date.now().toString(),
     };
@@ -101,7 +103,7 @@ const PostPage = () => {
               className="post-textarea"
               style={{ width: '100%', height: '100px', marginBottom: '10px' }}
             />
-            <button onClick={handlePostSubmit} className="post-button" style={{color:"white"}}>Post</button>
+            <button onClick={handlePostSubmit} className="post-button" style={{ color: "white" }}>Post</button>
           </div>
           <div className="posts-container" style={{ marginTop: '20px' }}>
             {posts.length === 0 ? (

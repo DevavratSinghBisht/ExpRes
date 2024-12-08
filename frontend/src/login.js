@@ -27,6 +27,7 @@ const Login = () => {
             if (response.data.login_status === "Login successful") {
                 localStorage.setItem("authToken", "someToken");
                 localStorage.setItem("parentUsername", response.data.username);
+                console.log("The current user is : ", response.data.username);
                 alert("Login successful!");
                 navigate("/posts");
             } else {

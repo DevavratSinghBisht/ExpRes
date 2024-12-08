@@ -194,11 +194,9 @@ const ProfilePage = () => {
   const navigate = useNavigate();
   const username = location.state?.username;
   const pendingRequestsUserNames = [
-    "tuser",
-    "john_doe",
-    "rudie_john",
+    "alice",
     "jason_smith",
-    "trust_france"
+    "john_doe"
   ]
   const parentUsername = localStorage.getItem("parentUsername")
 
