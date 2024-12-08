@@ -3,76 +3,6 @@ import { Heart, X, Flag, Send, Check, XIcon } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-// const autoProfileData = {
-//   "username": "johndoe92",
-//   "email": "johndoe92@example.com",
-//   "profile_picture": "https://example.com/profile_pics/johndoe92.jpg",
-//   "is_active": true,
-//   "created_at": "2024-12-03T18:12:09.408Z",
-//   "last_login_at": "2024-12-03T18:12:09.408Z",
-//   "visibility": false,
-//   "isRequested": false,
-//   "followers": [
-//     "janedoe88",
-//     "mike_smith22",
-//     "mike_smith22",
-//     "mike_smith22",
-//     "mike_smith22",
-//     "mike_smith22",
-//     "mike_smith22",
-//     "mike_smith22",
-//     "mike_smith22",
-//     "mike_smith22",
-//     "mike_smith22",
-//   ],
-//   "following": [
-//     "alice_jones",
-//     "bob_brown",
-//     "bob_brown",
-//     "bob_brown",
-//     "bob_brown",
-//     "bob_brown",
-//   ],
-//   "pendingRequests": [
-//     "charlie_davis",
-//     "emma_wilson",
-//     "george_miller"
-//   ]
-// };
-
-// const autoPosts = [
-//   {
-//     id: "1",
-//     content: "Exploring the beauty of nature today! 🌲🌅 The forest is a place of peace and rejuvenation. #NatureLover #FreshAir",
-//     likes: 45,
-//     created_at: "2024-12-04T03:10:43.489Z"
-//   },
-//   {
-//     id: "2",
-//     content: "Just finished a long hike up the mountain, and the view is absolutely breathtaking. 🌄 Feeling on top of the world! 🏞️ #MountainViews #Adventure",
-//     likes: 67,
-//     created_at: "2024-12-03T03:12:50.123Z"
-//   },
-//   {
-//     id: "3",
-//     content: "Started reading a new book on mindfulness. 📖 The journey to inner peace begins with a single page. ✨ #Mindfulness #Books #SelfCare",
-//     likes: 32,
-//     created_at: "2024-12-02T03:15:00.456Z"
-//   },
-//   {
-//     id: "4",
-//     content: "Trying out a new recipe today! 🥘 Who knew cooking could be so therapeutic? 🍴🍅 Can’t wait to dig in! #Foodie #HomeCooking #HealthyEats",
-//     likes: 58,
-//     created_at: "2022-12-04T03:18:30.789Z"
-//   },
-//   {
-//     id: "5",
-//     content: "Feeling grateful for all the amazing people in my life. 💕 It’s the little moments and big hearts that make life so special. #Gratitude #Love #CherishEveryMoment",
-//     likes: 85,
-//     created_at: "2021-12-04T03:20:10.012Z"
-//   }
-// ];
-
 const Modal = ({ isOpen, onClose, title, children }) => {
   if (!isOpen) return null;
 
@@ -127,19 +57,16 @@ const Modal = ({ isOpen, onClose, title, children }) => {
 
 const humanizeTimeDifference = (givenDate) => {
   const today = new Date();
-  // Example UTC date
   const utcDate = new Date(givenDate);
-
-  // Subtract 8 hours (for PST, which is UTC - 8)
   const pstDate = new Date(utcDate.getTime() - (8 * 60 * 60 * 1000));
-  const timeDiff = today - new Date(pstDate); // Difference in milliseconds
+  const timeDiff = today - new Date(pstDate);
 
   const seconds = Math.floor(timeDiff / 1000);
   const minutes = Math.floor(seconds / 60);
   const hours = Math.floor(minutes / 60);
   const days = Math.floor(hours / 24);
-  const months = Math.floor(days / 30); // Approximate
-  const years = Math.floor(days / 365); // Approximate
+  const months = Math.floor(days / 30);
+  const years = Math.floor(days / 365);
 
   if (seconds < 60) {
     return seconds === 1 ? "Just now" : `${seconds} seconds ago`;
@@ -155,30 +82,6 @@ const humanizeTimeDifference = (givenDate) => {
     return years === 1 ? "1 year ago" : `${years} years ago`;
   }
 }
-
-// const UserList = ({ users }) => (
-//   <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-//     {users.map((user, index) => (
-//       <div key={index} style={{
-//         display: 'flex',
-//         alignItems: 'center',
-//         padding: '12px',
-//         borderRadius: '12px',
-//         backgroundColor: 'rgba(255, 255, 255, 0.05)',
-//         transition: 'background-color 0.2s'
-//       }}>
-//         <div style={{
-//           width: '40px',
-//           height: '40px',
-//           borderRadius: '50%',
-//           background: 'linear-gradient(45deg, #3b82f6, #2563eb)',
-//           marginRight: '1rem'
-//         }} />
-//         <span style={{ color: '#ffffff', fontWeight: '500' }}>{user}</span>
-//       </div>
-//     ))}
-//   </div>
-// );
 
 const ProfilePage = () => {
   const [posts, setPosts] = useState([]);
@@ -196,7 +99,6 @@ const ProfilePage = () => {
   const pendingRequestsUserNames = [
     "alice",
     "jason_smith",
-    // "john_doe"
   ]
   const parentUsername = localStorage.getItem("parentUsername")
 
@@ -225,24 +127,6 @@ const ProfilePage = () => {
     ));
   };
 
-  // const handleReport = async (postContent, postId) => {
-  //   await axios.post('http://localhost:8000/reportPost', {
-  //     "content": postContent,
-  //     "id": postId,
-  //     "username": parentUsername
-  //   })
-  //     .then((res) => {
-  //       setPosts(prevPosts => prevPosts.map(post => 
-  //         post.id === postId ? { ...post, is_reported: true } : post
-  //       ));
-  //       localStorage.setItem(`post_${postId}_reported`, 'true');
-  //       // getUserPosts();
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     })
-  // };
-
   const handleMessageUser = (username) => {
     console.log(`Messaging user: ${username}`);
     alert(`Opening chat with ${username}`);
@@ -250,20 +134,6 @@ const ProfilePage = () => {
   };
 
   const handleAcceptRequest = async (requestingUser) => {
-    //TODO: Remove 236 to 246
-    // const updatedPendingRequests = profileData.pendingRequests.filter(user => user !== requestingUser);
-    // const updatedFollowers = [...profileData.followers, requestingUser];
-    // const updatedFollowing = [...profileData.following, requestingUser];
-
-    // // Update profile data
-    // setProfileData(prevData => ({
-    //   ...prevData,
-    //   followers: updatedFollowers,
-    //   following: updatedFollowing,
-    //   pendingRequests: updatedPendingRequests
-    // }));
-
-    //TODO: Uncomment and implement actual API call
     await axios.post('http://localhost:8000/responseToFriendRequest', { 
       sender_username: requestingUser,
       curr_username: parentUsername,
@@ -271,7 +141,7 @@ const ProfilePage = () => {
     })
     .then((res) => {
       setShowModal({ type: null, data: null });
-      getUserData(); //TODO: Uncomment this
+      getUserData();
     })
     .catch((err) => {
       console.log(err)
@@ -279,14 +149,6 @@ const ProfilePage = () => {
   };
 
   const handleRejectRequest = async (requestingUser) => {
-    //TODO: Remove 265 to 269
-    // const updatedPendingRequests = profileData.pendingRequests.filter(user => user !== requestingUser);
-    // setProfileData(prevData => ({
-    //   ...prevData,
-    //   pendingRequests: updatedPendingRequests
-    // }));
-
-    // TODO: Uncomment and implement actual API call
     await axios.post('http://localhost:8000/responseToFriendRequest', { 
       sender_username: requestingUser,
       curr_username: parentUsername,
@@ -294,7 +156,7 @@ const ProfilePage = () => {
     })
     .then((res) => {
       setShowModal({ type: null, data: null });
-      getUserData() //TODO: Uncomment this
+      getUserData()
     })
     .catch((err) => {
       console.log(err)
@@ -449,7 +311,7 @@ const ProfilePage = () => {
       isReported: false
     })
       .then((res) => {
-        setProfileData(res.data) //TODO: Uncomment this code
+        setProfileData(res.data)
       })
       .catch((err) => {
         console.log(err)
@@ -462,13 +324,8 @@ const ProfilePage = () => {
       limit: 0
     })
       .then((res) => {
-        setPosts(res.data.posts) //TODO: Uncomment this code
+        setPosts(res.data.posts)
       })
-      // const updatedPosts = res.data.posts.map(post => ({
-      //   ...post,
-      //   is_reported: localStorage.getItem(`post_${post.id}_reported`) === 'true'
-      // }));
-      // setPosts(updatedPosts);
       .catch((err) => {
         console.log(err)
       })
@@ -698,27 +555,6 @@ const ProfilePage = () => {
                       <Heart size={20} />
                       <span>{post.likes}</span>
                     </button>
-                    {/* <button
-                      onClick={() => {
-                        handleReport(post.content, post.id)
-                      }}
-                      style={{
-                        background: 'none',
-                        border: 'none',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.5rem',
-                        color: post.is_reported ? '#718096' : '#ef4444',
-                        padding: '0.5rem',
-                        borderRadius: '8px',
-                        transition: 'background-color 0.2s'
-                      }}
-                      disabled={post.is_reported}
-                    >
-                      <Flag size={20} />
-                      <span>{post.is_reported ? 'Reported' : 'Report'}</span>
-                    </button> */}
                   </div>
                 </div>
               </div>
