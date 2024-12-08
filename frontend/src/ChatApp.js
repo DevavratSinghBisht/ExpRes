@@ -94,12 +94,9 @@ function ChatApp() {
 
       const chatHistory = await response.json();
 
-      // Ensure chat history is stored for the active friend only
-      if (chatHistory && Array.isArray(chatHistory.messages)) {
-        setChats((prevChats) => ({
-          ...prevChats,
-          [receiver]: chatHistory.messages, // Update messages for this receiver
-        }));
+      // Since the API returns a list of messages directly, we set the state with that list
+      if (Array.isArray(chatHistory.messages)) {
+        setMessages(chatHistory.messages); // Set messages directly if the response is an array
       } else {
         console.error("Chat history is not an array:", chatHistory);
       }
@@ -151,7 +148,7 @@ function ChatApp() {
   
       if (response.ok && result.transactionId) {
         messageData.transactionId = result.transactionId;
-        
+       setMessages((prevMessages) => [...prevMessages, messageData]);
         setChats((prevChats) => ({
           ...prevChats,
           [activeFriend.username]: [
