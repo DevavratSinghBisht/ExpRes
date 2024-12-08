@@ -119,7 +119,7 @@ function ChatApp() {
       return;
     }
   
-    const userInfoResponse = await fetch(`http://localhost:8000/getUserInfo?username=${senderUsername}&isReported=false`);
+    const userInfoResponse = await fetch(`http://localhost:8000/getUserInfo?username=${senderUsername}&&isReported=false`);
     const userInfo = await userInfoResponse.json();
     console.log("Current user is : ", senderUsername);
     console.log("Response is : ", userInfoResponse);
@@ -159,6 +159,8 @@ function ChatApp() {
             messageData,
           ],
         }));
+        console.log("The receiver is : ", activeFriend.username);
+        console.log("The sender is : ", setChats[activeFriend.username]);
       } else {
         console.error("Error sending message:", result);
       }
@@ -266,9 +268,10 @@ function ChatApp() {
               <p style={{ color: 'whitesmoke' }}>Loading messages...</p>
             ) : (
               <ChatBox
-                messages={messages}
-                onForwardMessage={handleForwardMessage}  // Forward function passed here
-                onReportMessage={handleReportMessage}  // Your report handler (if implemented)
+
+                messages={chats[activeFriend.username] || []} // Pass messages specific to the active friend
+                onReportMessage={handleReportMessage}
+                onForwardMessage={handleForwardMessage}
                 isLoading={isLoading}
               />
             )}

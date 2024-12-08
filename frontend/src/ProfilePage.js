@@ -196,7 +196,7 @@ const ProfilePage = () => {
   const pendingRequestsUserNames = [
     "alice",
     "jason_smith",
-    "john_doe"
+    // "john_doe"
   ]
   const parentUsername = localStorage.getItem("parentUsername")
 

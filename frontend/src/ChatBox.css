@@ -3,11 +3,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-radius: 5px;
 }
 
 .chat-message.sent {
   justify-content: flex-end;
   background-color: rgb(30,41,59);
+  width: fit-content;
+  border-radius: 5px;
+  /* justify-content: flex-start; */
   /* Light blue for sent messages */
 }
 
@@ -15,6 +19,9 @@
   justify-content: flex-start;
   background-color: rgb(30,41,59);
   /* Light grey for received messages */
+  width: fit-content;
+  border-radius: 5px;
+  /* justify-content: flex-start; */
 }
 
 .message-content {
@@ -37,12 +44,13 @@
 }
 
 .sent .message-content {
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
   /* Green background for sent messages */
   color: black;
 }
 
 .received .message-content {
-  background-color: #f1f1f1;
+  /* background-color: #f1f1f1; */
   color: black;
+
 }
