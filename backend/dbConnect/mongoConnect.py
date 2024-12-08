@@ -209,25 +209,27 @@ class MongoConnect:
 
     def saveMessage(self, sender: str, receiver: str, transactionId: str):
         # Check if a message between sender and receiver exists
-        message = self.messages.find_one({"sender": sender, "receiver": receiver})
+        users = sorted([sender, receiver])
+        message = self.messages.find_one({"sender": users[0], "receiver": users[1]})
 
         if message is None:
             # Insert new message document if none exists
             message = {
-                "sender": sender,
-                "receiver": receiver,
+                "sender": users[0],
+                "receiver": users[1],
                 "transactionIds": [transactionId]
             }
             self.messages.insert_one(message)
         else:
             # Append the transactionId to the existing document's transactionIds array
             self.messages.update_one(
-                {"sender": sender, "receiver": receiver},
+                {"sender": users[0], "receiver": users[1]},
                 {"$push": {"transactionIds": transactionId}}
             )
 
     def getTransactionIds(self, sender: str, receiver: str):
-        message = self.messages.find_one({"sender": sender, "receiver": receiver})
+        users = sorted([sender, receiver])
+        message = self.messages.find_one({"sender": users[0], "receiver": users[1]})
         ids = message["transactionIds"]
         transactionIds = []
         for id in ids:
