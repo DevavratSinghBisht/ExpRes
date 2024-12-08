@@ -162,7 +162,7 @@ function ChatApp() {
       } else {
         console.error("Error sending message:", result);
       }
-  
+
       setMessage(""); // Reset message input
     } catch (error) {
       console.error("Error sending message:", error);
@@ -179,7 +179,7 @@ function ChatApp() {
     }
 
     const reportData = {
-      reporter_username: "Aayush",
+      reporter_username: "currentUsername",
       reported_username: activeFriend.username,
       message: message.message,
       reason: reason,
@@ -224,7 +224,7 @@ function ChatApp() {
     // Prompt the user to select a recipient (exclude reported users, current user, and active friend)
     const selectedReceiver = prompt(
       "Enter the username of the person you'd like to forward the message to:\n" +
-      friends.filter(friend => friend.username !== "Aayush" && friend.username !== activeFriend.username && !friend.isReported) // Excluding reported users
+      friends.filter(friend => friend.username !== "currentUsername" && friend.username !== activeFriend.username && !friend.isReported) // Excluding reported users
         .map(friend => friend.username).join("\n")
     );
 
@@ -266,9 +266,9 @@ function ChatApp() {
               <p style={{ color: 'whitesmoke' }}>Loading messages...</p>
             ) : (
               <ChatBox
-                messages={chats[activeFriend.username] || []} // Pass messages specific to the active friend
-                onForwardMessage={handleForwardMessage}
-                onReportMessage={handleReportMessage}
+                messages={messages}
+                onForwardMessage={handleForwardMessage}  // Forward function passed here
+                onReportMessage={handleReportMessage}  // Your report handler (if implemented)
                 isLoading={isLoading}
               />
             )}
