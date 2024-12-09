@@ -1,0 +1,549 @@
+.HomePage {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  min-height: 100vh; /* Ensure the background covers the full height */
+  position: relative; /* To position content over the GIF */
+}
+
+.HomePage-header {
+  background-color: #007bff;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+
+.main-page {
+  position: relative;
+  width: 1526px;
+  height: 588px;
+  overflow: hidden;
+}
+
+video {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  z-index: -1;
+}
+
+/* .create-post-container {
+  margin: 80px auto;
+  max-width: 400px;
+  background-color: white;
+  padding: 0px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  color: white;
+} */
+
+/* .post-textarea {
+  width: 100%;
+  padding: 50px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+} */
+
+/* Style for the container */
+.create-post-container {
+  width: 100%;
+  max-width: 600px; /* Max width for better responsiveness */
+  margin: 50px auto; /* Center the container */
+  padding: 20px;
+  background-color: #001F3F;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for the textarea */
+.post-textarea {
+  width: 100%;
+  min-height: 100px;  /* Set a minimum height */
+  max-height: 200px;  /* Max height to avoid over-expansion */
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  background-color: #ffffff;
+  border-radius: 8px;
+  resize: vertical; /* Allow the user to resize vertically */
+  margin-bottom: 15px; /* Space between textarea and button */
+  box-sizing: border-box; /* Ensure padding is included in the width calculation */
+  outline: none; /* Remove outline */
+  transition: border-color 0.2s ease;
+}
+
+.post-textarea:focus {
+  border-color: #007bff; /* Focus border color */
+}
+
+/* Style for the button */
+.post-button {
+  padding: 10px 20px;
+  background-color: #0056b3;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s ease;
+}
+
+.post-button:hover {
+  background-color: #0056b3;
+}
+
+/* Optional: Ensure proper responsiveness */
+@media (max-width: 768px) {
+  .create-post-container {
+    width: 90%;
+    padding: 15px;
+  }
+}
+
+.submit-post-button {
+  background-color: #007bff;
+  color: white;
+  padding: 50px 50px;
+  border: none;
+  border-radius: 5px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.submit-post-button:hover {
+  background-color: #0056b3;
+}
+
+.posts-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; 
+  max-width: 800px;
+  margin: 0 auto; 
+  color: white;
+  padding: 20px; 
+}
+
+.post-card {
+  background-color: white;
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+}
+
+.profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.username {
+  font-weight: bold;
+}
+
+.post-content {
+  margin-top: 10px;
+}
+
+.post-actions {
+  margin-top: 15px;
+}
+
+.like-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 5px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.like-button:hover {
+  background-color: #218838;
+}
+
+.comment-section {
+  margin-top: 15px;
+}
+
+.comment-textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.comment-button {
+  background-color: #007bff;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.comment-button:hover {
+  background-color: #0056b3;
+}
+
+.comments-list {
+  margin-top: 10px;
+}
+
+.comment {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Scroll Icon */
+.scroll-icon {
+  display: inline-block;
+  margin-top: 20px;
+  /* padding-top: 100px; */
+  font-size: 40px;
+  color: white;
+  text-decoration: none;
+  animation: bounce 2s infinite;
+}
+
+.scroll-icon:hover {
+  color: #ffa500;
+}
+
+/* Bounce Animation */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+}
+
+/* Typing effect container */
+.typing-container {
+  display: inline-block;
+  font-size: 3rem;
+  font-weight: bold;
+  color: white;
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden; /* Hide text outside the container */
+  border-right: 3px solid transparent; /* Initially hide the cursor */
+  animation: typing 3s steps(30, end) forwards; /* Typing effect animation */
+}
+
+/* Separate blinking cursor effect */
+.blinking-cursor {
+  display: inline-block;
+  width: 3px; /* Define the cursor width */
+  background-color: white; /* Cursor color */
+  animation: blink 0.5s step-end infinite; /* Blinking cursor effect */
+}
+
+/* Typing animation */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%; /* Reveal the full text */
+  }
+}
+
+/* Blinking cursor animation */
+@keyframes blink {
+  50% {
+    background-color: transparent; /* Hide the cursor */
+  }
+}
+
+
+
+
+
+
+/* General Styles */
+/* body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  color: #fff;
+  background-color: #001F3F;
+} */
+
+/* Video Background */
+.video-overlay {
+  position: relative;
+  height: 85vh;
+  overflow: hidden;
+}
+
+.video-overlay video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.6);
+}
+
+.video-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.video-content h1 {
+  font-size: 48px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.video-content p {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+/* Content Section */
+.content-section {
+  margin: auto;
+  padding: 20px;
+  width: 90%;
+  max-width: 1200px;
+  height: 600px;
+}
+
+.create-post {
+  /* background: #112233; */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.create-post h3 {
+  margin: 0 0 10px;
+  font-size: 24px;
+  color: #FFD700;
+}
+
+.create-post textarea {
+  width: 100%;
+  height: 100px;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.create-post button {
+  display: block;
+  margin: 10px auto 0;
+  background: #FFD700;
+  color: #001F3F;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.create-post button:hover {
+  background: #FFA500;
+}
+
+/* Post Cards */
+.posts-container {
+  margin-top: 20px;
+}
+
+.post-card {
+  background: #223344;
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+}
+
+.post-header img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.post-header h2 {
+  font-size: 18px;
+  color: #FFD700;
+}
+
+.post-footer {
+  margin-top: 10px;
+}
+
+.post-footer button {
+  background: #FFD700;
+  color: #001F3F;
+  border: none;
+  padding: 5px 10px;
+  margin-right: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.post-footer button:hover {
+  background: #FFA500;
+}
+
+/* Footer Styling */
+.footer {
+  background-color: #1F4287;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  position: relative;
+  bottom: 0;
+  width: 1486px;
+}
+
+.footer a {
+  color: #ffd700;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.footer .social-icons {
+  margin: 10px 0;
+}
+
+.footer .social-icons img {
+  width: 30px;
+  height: 30px;
+  margin: 0 10px;
+}
+
+.about-link {
+  margin-top: 200px;
+  text-align: center;
+  height: 450px;
+}
+
+.about-link-text {
+  font-size: 18px;
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.about-link-text:hover {
+  color: #ffd700; /* Change color on hover */
+}
+
+/* .chat-app {
+  display: flex;
+} */
+
+.sidebar {
+  width: 250px;
+  background-color: #f4f4f4;
+  padding: 10px;
+}
+
+.friend-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.friend-item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.friend-item img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.friend-item .reported-tag {
+  background-color: red;
+  color: white;
+  padding: 3px 6px;
+  margin-left: 10px;
+  font-size: 12px;
+}
+
+/* .chat-box {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #fff;
+} */
+
+.input-section {
+  display: flex;
+  margin-top: 10px;
+}
+
+.input-section input {
+  flex-grow: 1;
+  padding: 10px;
+}
+
+.input-section button {
+  padding: 10px;
+}
+
+/* .chat-box-messages {
+  max-height: 300px;
+  overflow-y: scroll;
+} */
+
+.message {
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.message.sent {
+  background-color: #e0f7fa;
+  text-align: right;
+}
+
+.message.received {
+  background-color: #f1f1f1;
+  text-align: left;
+}

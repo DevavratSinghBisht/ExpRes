@@ -1,4 +1,8 @@
 from pydantic import BaseModel
+from typing import Optional
 
 class UserRegResp(BaseModel):
-    status : bool
+    username: str
+    email: str
+    message: str
+    profilePicture: Optional[str] = None 

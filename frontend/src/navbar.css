@@ -1,0 +1,67 @@
+/* General Styles */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Navbar Container */
+.navbar {
+  background-color: #071E3D; /* Navy Blue */
+  padding: 0rem 5rem;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Navbar Content Alignment */
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo Styling */
+.navbar-logo {
+  color: #ffffff; /* White */
+  font-size: 25px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Navbar Links */
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 10px 85px;
+  font-size: 25px;
+  /* left:10px; */
+}
+
+/* Individual Link Styles */
+.navbar-links li a {
+  text-decoration: none;
+  color: #ffffff; /* White */
+  font-size: 18px;
+  transition: color 0.1s ease;
+  padding: 18px;
+}
+
+/* Hover Effects */
+.navbar-links li a:hover {
+  color: #ffd700; /* Bright Yellow */
+  font-size: 22px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar-links {
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem
+  }
+}  

@@ -1,4 +1,5 @@
 from pydantic import BaseModel
 
 class UserLoginResp(BaseModel):
-    status : bool
+    username: str
+    login_status: str

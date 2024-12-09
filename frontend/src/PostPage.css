@@ -1,0 +1,86 @@
+/* PostPage.css */
+
+/* General layout and styling for the PostPage */
+.post-page {
+  padding: 20px;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+}
+
+/* Style for individual post cards */
+.post-card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.post-header h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.post-card p {
+  font-size: 1rem;
+  color: #666;
+}
+
+.post-card button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.post-card button:hover {
+  background-color: #45a049;
+}
+
+.post-card button:focus {
+  outline: none;
+}
+
+/* Styling for empty state (if no posts are available) */
+.empty-state {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #888;
+  margin-top: 50px;
+}
+
+/* Add some responsiveness for mobile screens */
+@media (max-width: 768px) {
+  .post-card {
+    padding: 15px;
+  }
+
+  .post-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .post-card p {
+    font-size: 0.9rem;
+  }
+
+  .post-card button {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+}
+
+

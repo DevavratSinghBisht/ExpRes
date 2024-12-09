@@ -1,3 +1,6 @@
 fastapi[all] == 0.112.2
 uvicorn[standard] == 0.20.0
 websockets == 10.4
+requests
+pynacl
+pymongo == 4.8.0

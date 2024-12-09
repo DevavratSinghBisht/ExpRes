@@ -1,0 +1,56 @@
+.chat-message {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.chat-message.sent {
+  justify-content: flex-end;
+  background-color: rgb(30,41,59);
+  width: fit-content;
+  border-radius: 5px;
+  /* justify-content: flex-start; */
+  /* Light blue for sent messages */
+}
+
+.chat-message.received {
+  justify-content: flex-start;
+  background-color: rgb(30,41,59);
+  /* Light grey for received messages */
+  width: fit-content;
+  border-radius: 5px;
+  /* justify-content: flex-start; */
+}
+
+.message-content {
+  max-width: 60%;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.message-actions {
+  padding-left:10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.report-icon,
+.forward-icon {
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.sent .message-content {
+  /* background-color: #ffffff; */
+  /* Green background for sent messages */
+  color: black;
+}
+
+.received .message-content {
+  /* background-color: #f1f1f1; */
+  color: black;
+
+}

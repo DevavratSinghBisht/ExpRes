@@ -1,0 +1,14 @@
+mutation { postTransaction(data: {
+operation: "CREATE"
+amount: 50
+signerPublicKey: "8fPAqJvAFAkqGs8GdmDDrkHyR7hHsscVjes39TVVfN54"
+signerPrivateKey: "5R4ER6smR6c6fsWt3unPqP6Rhjepbn82Us7hoSj5ZYCc"
+recipientPublicKey: "ECJksQuF9UWi3DPCYvQqJPjF6BqSbXrnDiXUjdiVvkyH"
+asset: """{
+            "data": { "time": 1690881023169
+            },
+          }"""
+      }) {
+  id
+  }
+}
