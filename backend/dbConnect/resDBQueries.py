@@ -2,6 +2,7 @@ from model.resDBReq.assetData import AssetData
 
 from dbConnect.resDBConnect import ResDBConnect
 from dbConnect.mongoConnect import MongoConnect
+from utils.cryptographyUtils import generate_keys
 import ast
 
 class ResDBQueries:
@@ -13,9 +14,7 @@ class ResDBQueries:
     def saveMessageinResDB(self, message : str, sender_username: str,
                            recipient_username: str, transactionId: str):
         print("Entering ReSDB Code:")
-        signer_private_key = "5R4ER6smR6c6fsWt3unPqP6Rhjepbn82Us7hoSj5ZYCc"
-        signer_public_key = "8fPAqJvAFAkqGs8GdmDDrkHyR7hHsscVjes39TVVfN54"
-        recipient_public_key = "ECJksQuF9UWi3DPCYvQqJPjF6BqSbXrnDiXUjdiVvkyH"
+        signer_private_key, signer_public_key, recipient_public_key = generate_keys()
         print(transactionId)
         if transactionId == "Missing":
            print("building new asset data")
