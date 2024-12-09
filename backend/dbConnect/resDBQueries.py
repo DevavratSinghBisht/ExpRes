@@ -14,6 +14,7 @@ class ResDBQueries:
     def saveMessageinResDB(self, message : str, sender_username: str,
                            recipient_username: str, transactionId: str):
         print("Entering ReSDB Code:")
+
         signer_private_key, signer_public_key, recipient_public_key = generate_keys()
         print(transactionId)
         if transactionId == "Missing":
