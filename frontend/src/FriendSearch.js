@@ -3,92 +3,6 @@ import { Search, UserPlus, Check } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-// const initialFriends = [
-//   {
-//     "username": "johndoe92",
-//     "email": "johndoe92@example.com",
-//     "profile_picture": "https://example.com/profile_pics/johndoe92.jpg",
-//     "is_active": true,
-//     "created_at": "2024-12-03T18:12:09.408Z",
-//     "last_login_at": "2024-12-03T18:12:09.408Z",
-//     "visibility": false,
-//     "isRequested": false,
-//     "followers": [
-//       "janedoe88",
-//       "mike_smith22",
-//       "mike_smith22",
-//       "mike_smith22",
-//       "mike_smith22",
-//       "mike_smith22",
-//       "mike_smith22",
-//       "mike_smith22",
-//       "mike_smith22",
-//       "mike_smith22",
-//       "mike_smith22",
-//     ],
-//     "following": [
-//       "alice_jones",
-//       "bob_brown",
-//       "bob_brown",
-//       "bob_brown",
-//       "bob_brown",
-//       "bob_brown",
-//     ]
-//   },
-//   {
-//     "username": "janedoe88",
-//     "email": "janedoe88@example.com",
-//     "profile_picture": "https://example.com/profile_pics/janedoe88.jpg",
-//     "is_active": true,
-//     "created_at": "2024-11-15T09:30:20.110Z",
-//     "last_login_at": "2024-12-02T14:45:56.203Z",
-//     "visibility": true,
-//     "isRequested": false,
-//     "followers": [
-//       "johndoe92",
-//       "alice_jones"
-//     ],
-//     "following": [
-//       "mike_smith22",
-//       "bob_brown"
-//     ]
-//   },
-//   {
-//     "username": "mike_smith22",
-//     "email": "mike.smith22@example.com",
-//     "profile_picture": "https://example.com/profile_pics/mike_smith22.jpg",
-//     "is_active": true,
-//     "created_at": "2024-09-10T14:03:35.205Z",
-//     "last_login_at": "2024-12-03T09:12:47.102Z",
-//     "visibility": true,
-//     "isRequested": false,
-//     "followers": [
-//       "johndoe92",
-//       "bob_brown"
-//     ],
-//     "following": [
-//       "janedoe88",
-//       "alice_jones"
-//     ]
-//   },
-//   {
-//     "username": "alice_jones",
-//     "email": "alice.jones@example.com",
-//     "profile_picture": "https://example.com/profile_pics/alice_jones.jpg",
-//     "is_active": false,
-//     "created_at": "2024-08-25T11:20:18.305Z",
-//     "last_login_at": "2024-09-05T17:00:25.305Z",
-//     "visibility": false,
-//     "isRequested": false,
-//     "followers": [
-//       "johndoe92"
-//     ],
-//     "following": [
-//       "janedoe88"
-//     ]
-//   }
-// ]
-
 const FriendSearch = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [friends, setFriends] = useState([]);
@@ -101,13 +15,11 @@ const FriendSearch = () => {
   const getFriendsData = async () => {
     await axios.post('http://localhost:8000/getAllUsers', { username: parentUsername })
       .then((res) => {
-        setFriends(res.data.users); //TODO: Uncomment this code
+        setFriends(res.data.users);
       })
       .catch((err) => {
         console.log(err)
       })
-      
-      // setFriends(initialFriends); // comment this when uncommenting above
   }
 
   useEffect(() => {
@@ -165,7 +77,7 @@ const FriendSearch = () => {
     flexDirection: 'column',
     gap: '16px',
     padding: '16px',
-    maxWidth: '800px', 
+    maxWidth: '800px',
     margin: '0 auto'
   };
 
@@ -254,7 +166,7 @@ const FriendSearch = () => {
 
   const Modal = ({ isOpen, onClose, message }) => {
     if (!isOpen) return null;
-  
+
     return (
       <div style={{
         position: 'fixed',
@@ -268,16 +180,16 @@ const FriendSearch = () => {
         justifyContent: 'center',
       }}>
         <div style={{
-        background: 'white',
-        padding: '40px',
-        borderRadius: '8px',
-        width: '200px',
-        height: '100px',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      }}>
+          background: 'white',
+          padding: '40px',
+          borderRadius: '8px',
+          width: '200px',
+          height: '100px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
           <p>{message}</p>
           <button onClick={onClose}>Close</button>
         </div>
@@ -289,10 +201,10 @@ const FriendSearch = () => {
     <div style={containerStyle}>
       <div style={cardContainerStyle}>
         <h1 style={headerStyle}>Search For Friends</h1>
-        
+
         <div style={searchContainerStyle}>
-          <input 
-            type="text" 
+          <input
+            type="text"
             placeholder="Search by username"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -303,7 +215,7 @@ const FriendSearch = () => {
 
         <div style={gridStyle}>
           {filteredFriends.map(friend => (
-            <div 
+            <div
               key={friend.username}
               style={cardStyle}
               onMouseEnter={(e) => {
@@ -313,17 +225,17 @@ const FriendSearch = () => {
                 e.currentTarget.style.boxShadow = 'none';
               }}
             >
-              <h2 
+              <h2
                 style={usernameTitleStyle}
                 onClick={() => {
-                  if(friend.is_banned){
+                  if (friend.is_banned) {
                     setModalMessage("This user is banned");
                     setIsModalOpen(true);
                     return;
                   }
                   navigate('/ProfilePage', { state: { username: friend.username } });
                 }}>
-                  {friend.username}
+                {friend.username}
               </h2>
               <p style={emailStyle}>{friend.email}</p>
 
@@ -332,7 +244,7 @@ const FriendSearch = () => {
                 <div style={followerListStyle}>
                   {friend.followers?.slice(0, 3).map((follower, index) => (
                     <span key={index}>
-                      {follower}{index !== Math.min(2, friend.followers?.length - 1) ? ',' : ''} 
+                      {follower}{index !== Math.min(2, friend.followers?.length - 1) ? ',' : ''}
                     </span>
                   ))}
                   {friend.followers?.length > 3 && <span>...</span>}
@@ -344,14 +256,14 @@ const FriendSearch = () => {
                 <div style={followerListStyle}>
                   {friend.following?.slice(0, 3).map((following, index) => (
                     <span key={index}>
-                      {following}{index !== Math.min(2, friend.following?.length - 1) ? ',' : ''} 
+                      {following}{index !== Math.min(2, friend.following?.length - 1) ? ',' : ''}
                     </span>
                   ))}
                   {friend.following?.length > 3 && <span>...</span>}
                 </div>
               </div>
 
-              <button 
+              <button
                 onClick={() => handleFriendRequest(friend.username)}
                 style={buttonStyle(requestedUsers.has(friend.username))}
               >
